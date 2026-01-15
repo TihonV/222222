@@ -3,755 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury</title>
-    <style>
-        :root {
-            --primary-color: #007BFF;
-            --secondary-color: #6c757d;
-            --background-color: #f5f5f5;
-            --card-background: white;
-            --text-color: #333;
-            --border-color: #ddd;
-            --shadow-color: rgba(0,0,0,0.1);
-            --hover-color: #e9ecef;
-            --notification-bg: #28a745;
-            --notification-text: white;
-            --error-bg: #dc3545;
-            --error-text: white;
-            --dark-bg: #121212;
-            --dark-card: #1e1e1e;
-            --dark-text: #ffffff;
-            --dark-border: #333;
-            --dark-shadow: rgba(0,0,0,0.3);
-            --dark-hover: #2d2d2d;
-        }
-
-        [data-theme="dark"] {
-            --background-color: #121212;
-            --card-background: #1e1e1e;
-            --text-color: #ffffff;
-            --border-color: #333;
-            --shadow-color: rgba(0,0,0,0.3);
-            --hover-color: #2d2d2d;
-            --notification-bg: #28a745;
-            --notification-text: white;
-            --error-bg: #dc3545;
-            --error-text: white;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease;
-        }
-
-        header {
-            background-color: var(--card-background);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px var(--shadow-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .icon {
-            cursor: pointer;
-            font-size: 20px;
-            color: var(--text-color);
-        }
-
-        .search-bar {
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            width: 100%;
-            max-width: 400px;
-            background-color: var(--card-background);
-            color: var(--text-color);
-        }
-
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 15px 20px;
-            background-color: var(--card-background);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .filter-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .filter-checkbox {
-            accent-color: var(--primary-color);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .product-card {
-            background: var(--card-background);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px var(--shadow-color);
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #eee;
-        }
-
-        .product-info {
-            padding: 15px;
-        }
-
-        .product-category {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .product-title {
-            font-size: 16px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .product-price {
-            font-size: 20px;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .purchased-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            z-index: 5;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: var(--card-background);
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 5px 20px var(--shadow-color);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1001;
-            color: var(--text-color);
-        }
-
-        .modal-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            background: #eee;
-        }
-
-        .modal-info {
-            padding: 20px;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .modal-category {
-            font-size: 14px;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        .modal-price {
-            font-size: 28px;
-            color: var(--primary-color);
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .modal-description {
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .add-to-cart {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .add-to-cart:hover {
-            background-color: #0056b3;
-        }
-
-        .add-to-cart.disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .cart-count {
-            position: relative;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #ff4444;
-            color: white;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-        }
-
-        .search-suggestions {
-            position: absolute;
-            background: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-top: none;
-            width: 100%;
-            max-width: 400px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-            box-shadow: 0 5px 10px var(--shadow-color);
-            display: none;
-        }
-
-        .suggestion-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .suggestion-item:hover {
-            background-color: var(--hover-color);
-        }
-
-        .loading-message {
-            padding: 10px 15px;
-            color: var(--secondary-color);
-            font-style: italic;
-        }
-
-        .skeleton-card {
-            background: var(--hover-color);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px var(--shadow-color);
-            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.8;
-            }
-        }
-
-        .skeleton-image {
-            width: 100%;
-            height: 200px;
-            background: var(--border-color);
-        }
-
-        .skeleton-info {
-            padding: 15px;
-        }
-
-        .skeleton-category {
-            height: 12px;
-            background: var(--border-color);
-            margin-bottom: 5px;
-            border-radius: 4px;
-        }
-
-        .skeleton-title {
-            height: 16px;
-            background: var(--border-color);
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-
-        .skeleton-price {
-            height: 20px;
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 5px;
-            color: var(--notification-text);
-            background-color: var(--notification-bg);
-            z-index: 1001;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background-color: var(--error-bg);
-        }
-
-        /* Cart Page */
-        .cart-page {
-            display: none;
-            padding: 20px;
-        }
-
-        .cart-header {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .cart-item {
-            background: var(--card-background);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 10px var(--shadow-color);
-        }
-
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-title {
-            font-size: 16px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .cart-item-price {
-            font-size: 18px;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .cart-remove {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .cart-remove:hover {
-            background: #5a6268;
-        }
-
-        .cart-total {
-            font-size: 20px;
-            margin: 20px 0;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .checkout-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .checkout-button:hover {
-            background-color: #0056b3;
-        }
-
-        .checkout-button.disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-
-        .cancel-checkout-button {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            max-width: 300px;
-            margin: 10px auto 0;
-            display: block;
-        }
-
-        .cart-empty {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-        }
-
-        /* Profile Page */
-        .profile-page {
-            display: none;
-            padding: 20px;
-        }
-
-        .profile-header {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .profile-form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background-color: var(--card-background);
-            color: var(--text-color);
-        }
-
-        .form-error {
-            color: var(--error-bg);
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .profile-notifications {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .profile-save {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .profile-save:hover {
-            background-color: #0056b3;
-        }
-
-        /* History Page */
-        .history-page {
-            display: none;
-            padding: 20px;
-        }
-
-        .history-header {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .orders-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .orders-item {
-            background: var(--card-background);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px var(--shadow-color);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .order-number {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .order-date {
-            color: var(--secondary-color);
-        }
-
-        .order-items {
-            margin-bottom: 15px;
-        }
-
-        .order-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .order-item-image {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .order-item-info {
-            flex: 1;
-        }
-
-        .order-item-title {
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .order-item-price {
-            font-size: 16px;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .order-total {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-align: right;
-        }
-
-        .orders-empty {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-        }
-
-        /* Remove Confirmation Modal */
-        .remove-confirm-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .remove-confirm-content {
-            background: var(--card-background);
-            border-radius: 8px;
-            padding: 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 5px 20px var(--shadow-color);
-        }
-
-        .remove-confirm-title {
-            font-size: 20px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .remove-confirm-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .remove-confirm-btn {
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .remove-confirm-btn.cancel {
-            background: #6c757d;
-            color: white;
-        }
-
-        .remove-confirm-btn.confirm {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            cursor: pointer;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .cart-item-image {
-                width: 100%;
-                height: 150px;
-            }
-            
-            .cart-remove {
-                width: 100%;
-                margin-top: 10px;
-            }
-            
-            .checkout-button,
-            .cancel-checkout-button,
-            .profile-save {
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
+    <title>Luxury Store - Роскошь для избранных</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <a href="/" class="logo" data-test-id="menu-shop">Luxury</a>
+        <a href="/" class="logo" data-test-id="menu-shop">LUXURY</a>
         <div class="header-icons">
-            <div class="icon" data-test-id="search-icon">🔍</div>
+            <div class="icon search-icon" data-test-id="search-icon">🔍</div>
             <div class="icon cart-count" data-test-id="menu-cart">
                 🛒
                 <span class="cart-badge" data-test-id="cart-badge">0</span>
@@ -762,195 +21,159 @@
         </div>
     </header>
 
-    <!-- Product List Page -->
-    <div id="product-list-page">
-        <input type="text" class="search-bar" placeholder="Поиск товаров..." data-test-id="search-input">
-        <div class="search-suggestions" data-test-id="search-suggestions"></div>
-        
-        <div class="filters">
-            <div class="filter-item">
-                <input type="checkbox" id="yacht-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="yacht-filter">Яхта</label>
+    <main>
+        <!-- Product List Page -->
+        <div id="product-list-page" class="page active">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Поиск яхт, самолетов, особняков..." data-test-id="search-input">
+                <div class="search-suggestions" data-test-id="search-suggestions"></div>
             </div>
-            <div class="filter-item">
-                <input type="checkbox" id="plane-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="plane-filter">Самолет</label>
+            
+            <div class="filters">
+                <div class="filter-item">
+                    <input type="checkbox" id="yacht-filter" class="filter-checkbox" data-test-id="filter">
+                    <label for="yacht-filter">Яхта</label>
+                </div>
+                <div class="filter-item">
+                    <input type="checkbox" id="plane-filter" class="filter-checkbox" data-test-id="filter">
+                    <label for="plane-filter">Самолет</label>
+                </div>
+                <div class="filter-item">
+                    <input type="checkbox" id="mansion-filter" class="filter-checkbox" data-test-id="filter">
+                    <label for="mansion-filter">Особняк</label>
+                </div>
+                <div class="filter-item">
+                    <input type="checkbox" id="island-filter" class="filter-checkbox" data-test-id="filter">
+                    <label for="island-filter">Остров</label>
+                </div>
+                <button class="clear-filters" data-test-id="clear-filters">Сбросить</button>
             </div>
-            <div class="filter-item">
-                <input type="checkbox" id="mansion-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="mansion-filter">Особняк</label>
+
+            <div class="products-grid" data-test-id="product-list"></div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cart-page" class="page">
+            <div class="page-header">
+                <h1 class="page-title">🛒 Корзина</h1>
+                <button class="back-button" data-test-id="back-button">← Назад</button>
             </div>
-            <div class="filter-item">
-                <input type="checkbox" id="island-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="island-filter">Остров</label>
+            <div class="cart-list" data-test-id="cart-list"></div>
+            <div class="cart-summary">
+                <div class="cart-total" data-test-id="cart-total">Итого: $0</div>
+                <button class="checkout-button" data-test-id="checkout-button">Оформить заказ</button>
+                <div class="cart-empty" data-test-id="cart-empty" style="display: none;">
+                    <p>Ваша корзина пуста</p>
+                    <button class="continue-shopping" data-test-id="continue-shopping">Продолжить покупки</button>
+                </div>
             </div>
         </div>
 
-        <div class="products-grid" data-test-id="product-list"></div>
-    </div>
-
-    <!-- Cart Page -->
-    <div id="cart-page" class="cart-page">
-        <h1 class="cart-header">Корзина</h1>
-        <div class="cart-list" data-test-id="cart-list"></div>
-        <div class="cart-total" data-test-id="cart-total">Итого: $0</div>
-        <button class="checkout-button" data-test-id="checkout-button">Оформить заказ</button>
-        <button class="checkout-button" style="display:none;" data-test-id="login-to-place-order">Войти для оформления заказа</button>
-    </div>
-
-    <!-- Profile Page -->
-    <div id="profile-page" class="profile-page">
-        <h1 class="profile-header">Профиль</h1>
-        <form class="profile-form">
-            <div class="form-group">
-                <label class="form-label" for="profile-name">Имя</label>
-                <input type="text" id="profile-name" class="form-input" data-test-id="profile-name" required>
-                <div class="form-error" id="name-error"></div>
+        <!-- Profile Page -->
+        <div id="profile-page" class="page">
+            <div class="page-header">
+                <h1 class="page-title">👤 Профиль</h1>
+                <button class="back-button">← Назад</button>
             </div>
-            <div class="form-group">
-                <label class="form-label" for="profile-email">E-mail</label>
-                <input type="email" id="profile-email" class="form-input" data-test-id="profile-email" required>
-                <div class="form-error" id="email-error"></div>
-            </div>
-            <div class="profile-notifications" data-test-id="profile-notifications">
-                <input type="checkbox" id="notifications">
-                <label for="notifications">Получать уведомления о новых товарах</label>
-            </div>
-            <button type="button" class="profile-save" data-test-id="profile-save">Сохранить</button>
-        </form>
-    </div>
+            <form class="profile-form">
+                <div class="form-group">
+                    <label class="form-label" for="profile-name">Имя</label>
+                    <input type="text" id="profile-name" class="form-input" data-test-id="profile-name" placeholder="Введите ваше имя" required>
+                    <div class="form-error" id="name-error"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="profile-email">E-mail</label>
+                    <input type="email" id="profile-email" class="form-input" data-test-id="profile-email" placeholder="example@luxury.com" required>
+                    <div class="form-error" id="email-error"></div>
+                </div>
+                <div class="profile-notifications" data-test-id="profile-notifications">
+                    <input type="checkbox" id="notifications" data-test-id="notifications-toggle">
+                    <label for="notifications">Получать уведомления о новых эксклюзивных предложениях</label>
+                </div>
+                <div class="profile-actions">
+                    <button type="button" class="profile-save" data-test-id="profile-save">Сохранить изменения</button>
+                    <button type="button" class="profile-logout" data-test-id="logout-button">Выйти</button>
+                </div>
+            </form>
+        </div>
 
-    <!-- History Page -->
-    <div id="history-page" class="history-page">
-        <h1 class="history-header">История заказов</h1>
-        <div class="orders-list" data-test-id="orders-list"></div>
-        <div class="orders-empty" data-test-id="orders-empty" style="display:none;">История заказов пуста</div>
-    </div>
+        <!-- History Page -->
+        <div id="history-page" class="page">
+            <div class="page-header">
+                <h1 class="page-title">⏱️ История заказов</h1>
+                <button class="back-button">← Назад</button>
+            </div>
+            <div class="orders-container">
+                <div class="orders-list" data-test-id="orders-list"></div>
+                <div class="orders-empty" data-test-id="orders-empty" style="display:none;">
+                    <p>У вас пока нет заказов</p>
+                    <button class="continue-shopping" data-test-id="continue-shopping-history">Начать покупки</button>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Modals -->
     <div class="modal" id="product-modal" data-test-id="modal">
         <div class="modal-content">
             <span class="close-modal" data-test-id="modal-close">&times;</span>
-            <img src="" alt="Товар" class="modal-image" id="modal-image">
+            <div class="modal-image-container">
+                <img src="" alt="Товар" class="modal-image" id="modal-image">
+                <div class="modal-badge" id="modal-badge"></div>
+            </div>
             <div class="modal-info">
                 <h2 class="modal-title" data-test-id="modal-title" id="modal-title"></h2>
                 <div class="modal-category" data-test-id="modal-type" id="modal-category"></div>
                 <div class="modal-price" data-test-id="modal-price" id="modal-price"></div>
                 <p class="modal-description" data-test-id="modal-description" id="modal-description"></p>
-                <button class="add-to-cart" data-test-id="add-to-cart" id="add-to-cart">Добавить в корзину</button>
+                <div class="modal-specs" id="modal-specs"></div>
+                <div class="modal-actions">
+                    <button class="add-to-cart" data-test-id="add-to-cart" id="add-to-cart">Добавить в корзину</button>
+                    <button class="buy-now" data-test-id="buy-now" id="buy-now">Купить сейчас</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="remove-confirm-modal" id="remove-confirm-modal" data-test-id="remove-confirm-modal">
-        <div class="remove-confirm-content">
-            <div class="remove-confirm-title">Вы уверены, что хотите удалить этот товар?</div>
-            <div class="remove-confirm-buttons">
-                <button class="remove-confirm-btn cancel" id="cancel-remove">Отмена</button>
-                <button class="remove-confirm-btn confirm" id="confirm-remove">Удалить</button>
+    <div class="modal" id="remove-confirm-modal" data-test-id="remove-confirm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Подтверждение удаления</h3>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить этот товар из корзины?</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-remove">Отмена</button>
+                <button class="btn btn-primary" id="confirm-remove">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="order-success-modal" data-test-id="order-success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🎉 Заказ оформлен!</h3>
+            </div>
+            <div class="modal-body">
+                <p>Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время для уточнения деталей.</p>
+                <div class="order-details">
+                    <p><strong>Номер заказа:</strong> <span id="order-id"></span></p>
+                    <p><strong>Сумма:</strong> <span id="order-total"></span></p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="view-order-history">Посмотреть историю</button>
+                <button class="btn btn-secondary" id="continue-shopping-modal">Продолжить покупки</button>
             </div>
         </div>
     </div>
 
     <!-- Notifications -->
-    <div class="notification" id="notification"></div>
+    <div class="notification-container">
+        <div class="notification" id="notification"></div>
+    </div>
 
-    <script>
-        // Global state
-        let products = [];
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
-        let currentProductId = null;
-        let theme = 'light';
-        let isCartPage = false;
-        let isProfilePage = false;
-        let isHistoryPage = false;
-        let searchTimeout = null;
-        let removeConfirmModalProductId = null;
-
-        // DOM elements
-        const productListPage = document.getElementById('product-list-page');
-        const cartPage = document.getElementById('cart-page');
-        const profilePage = document.getElementById('profile-page');
-        const historyPage = document.getElementById('history-page');
-        const productsGrid = document.querySelector('.products-grid');
-        const searchInput = document.querySelector('.search-bar');
-        const searchSuggestions = document.querySelector('.search-suggestions');
-        const cartBadge = document.querySelector('.cart-badge');
-        const cartList = document.querySelector('.cart-list');
-        const cartTotal = document.querySelector('.cart-total');
-        const checkoutButton = document.querySelector('.checkout-button');
-        const loginToPlaceOrderButton = document.querySelector('[data-test-id="login-to-place-order"]');
-        const profileNameInput = document.getElementById('profile-name');
-        const profileEmailInput = document.getElementById('profile-email');
-        const profileSaveButton = document.querySelector('.profile-save');
-        const ordersList = document.querySelector('.orders-list');
-        const ordersEmpty = document.querySelector('.orders-empty');
-        const modal = document.getElementById('product-modal');
-        const closeModal = document.querySelector('.close-modal');
-        const modalImage = document.getElementById('modal-image');
-        const modalTitle = document.getElementById('modal-title');
-        const modalCategory = document.getElementById('modal-category');
-        const modalPrice = document.getElementById('modal-price');
-        const modalDescription = document.getElementById('modal-description');
-        const addToCartBtn = document.getElementById('add-to-cart');
-        const removeConfirmModal = document.getElementById('remove-confirm-modal');
-        const cancelRemoveBtn = document.getElementById('cancel-remove');
-        const confirmRemoveBtn = document.getElementById('confirm-remove');
-        const notification = document.getElementById('notification');
-        const themeToggle = document.querySelector('.theme-toggle');
-
-        // Initialize
-        function init() {
-            // Load theme from localStorage
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                theme = savedTheme;
-                document.documentElement.setAttribute('data-theme', theme);
-                updateThemeIcon();
-            }
-
-            // Load data
-            loadProducts();
-
-            // Check current page
-            checkCurrentPage();
-
-            // Update cart count
-            updateCartCount();
-
-            // Add event listeners
-            addEventListeners();
-        }
-
-        function loadProducts() {
-            // Show skeletons
-            showSkeletons();
-            
-            // Try to load from localStorage first
-            const savedProducts = localStorage.getItem('products');
-            if (savedProducts) {
-                try {
-                    products = JSON.parse(savedProducts);
-                    setTimeout(() => {
-                        renderProducts();
-                    }, 1500);
-                    return;
-                } catch (e) {
-                    console.log('Failed to parse saved products');
-                }
-            }
-            
-            // If no saved products, create sample data with image paths from images/ folder
-            setTimeout(() => {
-                products = [
-                    // Yachts (5 items)
-                    {
-                        id: 1,
-                        category: "Яхта",
-                        title: "Ocean Master 77",
-                        price: 3500000,
-                        image: "images/y-1.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Яхта+1",
-                        description: "Ocean Master 77 — это шедевр морской инженерии, оснащенный передовыми навигационными системами, роскошными интерьерами с итальянским мрамором и просторной солнечной палубой для развлечений.
+    <script src="script.js"></script>
+</body>
+</html>
