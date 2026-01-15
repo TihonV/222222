@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,6 +138,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+            background: #eee;
         }
 
         .product-info {
@@ -218,6 +219,7 @@
             width: 100%;
             height: 300px;
             object-fit: cover;
+            background: #eee;
         }
 
         .modal-info {
@@ -749,7 +751,7 @@
     <header>
         <a href="/" class="logo" data-test-id="menu-shop">Luxury</a>
         <div class="header-icons">
-            <div class="icon" data-test-id="search-icon">Поиск</div>
+            <div class="icon" data-test-id="search-icon">🔍</div>
             <div class="icon cart-count" data-test-id="menu-cart">
                 🛒
                 <span class="cart-badge" data-test-id="cart-badge">0</span>
@@ -762,25 +764,25 @@
 
     <!-- Product List Page -->
     <div id="product-list-page">
-        <input type="text" class="search-bar" placeholder="Search products..." data-test-id="search-input">
+        <input type="text" class="search-bar" placeholder="Поиск товаров..." data-test-id="search-input">
         <div class="search-suggestions" data-test-id="search-suggestions"></div>
         
         <div class="filters">
             <div class="filter-item">
                 <input type="checkbox" id="yacht-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="yacht-filter">Yacht</label>
+                <label for="yacht-filter">Яхта</label>
             </div>
             <div class="filter-item">
                 <input type="checkbox" id="plane-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="plane-filter">Plane</label>
+                <label for="plane-filter">Самолет</label>
             </div>
             <div class="filter-item">
                 <input type="checkbox" id="mansion-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="mansion-filter">Mansion</label>
+                <label for="mansion-filter">Особняк</label>
             </div>
             <div class="filter-item">
                 <input type="checkbox" id="island-filter" class="filter-checkbox" data-test-id="filter">
-                <label for="island-filter">Island</label>
+                <label for="island-filter">Остров</label>
             </div>
         </div>
 
@@ -789,19 +791,19 @@
 
     <!-- Cart Page -->
     <div id="cart-page" class="cart-page">
-        <h1 class="cart-header">Shopping Cart</h1>
+        <h1 class="cart-header">Корзина</h1>
         <div class="cart-list" data-test-id="cart-list"></div>
-        <div class="cart-total" data-test-id="cart-total">Total: $0</div>
-        <button class="checkout-button" data-test-id="checkout-button">Place order</button>
-        <button class="checkout-button" style="display:none;" data-test-id="login-to-place-order">Login to place an order</button>
+        <div class="cart-total" data-test-id="cart-total">Итого: $0</div>
+        <button class="checkout-button" data-test-id="checkout-button">Оформить заказ</button>
+        <button class="checkout-button" style="display:none;" data-test-id="login-to-place-order">Войти для оформления заказа</button>
     </div>
 
     <!-- Profile Page -->
     <div id="profile-page" class="profile-page">
-        <h1 class="profile-header">Profile</h1>
+        <h1 class="profile-header">Профиль</h1>
         <form class="profile-form">
             <div class="form-group">
-                <label class="form-label" for="profile-name">Name</label>
+                <label class="form-label" for="profile-name">Имя</label>
                 <input type="text" id="profile-name" class="form-input" data-test-id="profile-name" required>
                 <div class="form-error" id="name-error"></div>
             </div>
@@ -812,40 +814,40 @@
             </div>
             <div class="profile-notifications" data-test-id="profile-notifications">
                 <input type="checkbox" id="notifications">
-                <label for="notifications">Receive notifications about new products</label>
+                <label for="notifications">Получать уведомления о новых товарах</label>
             </div>
-            <button type="button" class="profile-save" data-test-id="profile-save">Save</button>
+            <button type="button" class="profile-save" data-test-id="profile-save">Сохранить</button>
         </form>
     </div>
 
     <!-- History Page -->
     <div id="history-page" class="history-page">
-        <h1 class="history-header">Order History</h1>
+        <h1 class="history-header">История заказов</h1>
         <div class="orders-list" data-test-id="orders-list"></div>
-        <div class="orders-empty" data-test-id="orders-empty" style="display:none;">Order history is empty</div>
+        <div class="orders-empty" data-test-id="orders-empty" style="display:none;">История заказов пуста</div>
     </div>
 
     <!-- Modals -->
     <div class="modal" id="product-modal" data-test-id="modal">
         <div class="modal-content">
             <span class="close-modal" data-test-id="modal-close">&times;</span>
-            <img src="" alt="Product" class="modal-image" id="modal-image">
+            <img src="" alt="Товар" class="modal-image" id="modal-image">
             <div class="modal-info">
                 <h2 class="modal-title" data-test-id="modal-title" id="modal-title"></h2>
                 <div class="modal-category" data-test-id="modal-type" id="modal-category"></div>
                 <div class="modal-price" data-test-id="modal-price" id="modal-price"></div>
                 <p class="modal-description" data-test-id="modal-description" id="modal-description"></p>
-                <button class="add-to-cart" data-test-id="add-to-cart" id="add-to-cart">Add to cart</button>
+                <button class="add-to-cart" data-test-id="add-to-cart" id="add-to-cart">Добавить в корзину</button>
             </div>
         </div>
     </div>
 
     <div class="remove-confirm-modal" id="remove-confirm-modal" data-test-id="remove-confirm-modal">
         <div class="remove-confirm-content">
-            <div class="remove-confirm-title">Are you sure you want to remove this item?</div>
+            <div class="remove-confirm-title">Вы уверены, что хотите удалить этот товар?</div>
             <div class="remove-confirm-buttons">
-                <button class="remove-confirm-btn cancel" id="cancel-remove">Cancel</button>
-                <button class="remove-confirm-btn confirm" id="confirm-remove">Remove</button>
+                <button class="remove-confirm-btn cancel" id="cancel-remove">Отмена</button>
+                <button class="remove-confirm-btn confirm" id="confirm-remove">Удалить</button>
             </div>
         </div>
     </div>
@@ -940,859 +942,15 @@
                 }
             }
             
-            // If no saved products, create sample data with provided image URLs
+            // If no saved products, create sample data with image paths from images/ folder
             setTimeout(() => {
                 products = [
                     // Yachts (5 items)
                     {
                         id: 1,
-                        category: "Yacht",
+                        category: "Яхта",
                         title: "Ocean Master 77",
                         price: 3500000,
-                        image: "https://naked-science.ru/wp-content/uploads/2020/01/001-4.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800&h=600&fit=crop",
-                        description: "The Ocean Master 77 is a masterpiece of nautical engineering, featuring state-of-the-art navigation systems, luxurious interiors with Italian marble, and a spacious sun deck perfect for entertaining. With a range of 3,500 nautical miles, this yacht is ideal for transoceanic voyages."
-                    },
-                    {
-                        id: 2,
-                        category: "Yacht",
-                        title: "Silver Wave 85",
-                        price: 4200000,
-                        image: "https://i.pinimg.com/474x/a4/23/ff/a423ff287206ab644c9e69706ab09acd.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1515427518472-3a4b15b0bf7a?w=800&h=600&fit=crop",
-                        description: "Silver Wave 85 combines elegance with performance, featuring twin 2,000hp engines and a hydrodynamic hull design. The interior showcases handcrafted woodwork, a cinema room, and a master suite with panoramic ocean views. Perfect for both coastal cruising and long-distance voyages."
-                    },
-                    {
-                        id: 3,
-                        category: "Yacht",
-                        title: "Royal Cruiser 92",
-                        price: 5800000,
-                        image: "https://i.ytimg.com/vi/kmwTUc9CFZw/maxresdefault.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1519861531473-920034658307?w=800&h=600&fit=crop",
-                        description: "The Royal Cruiser 92 offers unparalleled luxury with its six ensuite cabins, professional-grade galley, and entertainment lounge. Features include a Jacuzzi on the flybridge, water sports equipment, and a dedicated crew quarters. Ideal for hosting large gatherings or family vacations."
-                    },
-                    {
-                        id: 4,
-                        category: "Yacht",
-                        title: "Horizon Seeker 78",
-                        price: 7500000,
-                        image: "https://marinepoint.com/upload/iblock/9b7/ww2zh28odwy1viyxnqlanzok4a9t6941.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=800&h=600&fit=crop",
-                        description: "Horizon Seeker 78 features innovative stabilization technology for maximum comfort at sea. The yacht includes a gym, sauna, and dive center. With its eco-friendly hybrid propulsion system, it offers both performance and environmental responsibility."
-                    },
-                    {
-                        id: 5,
-                        category: "Yacht",
-                        title: "Azure Dream 95",
-                        price: 6200000,
-                        image: "https://avatars.mds.yandex.net/i?id=336c3f4630671bbefd85a5f784e22561_l-8219873-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1536152471326-642d7bb3d0af?w=800&h=600&fit=crop",
-                        description: "Azure Dream 95 showcases contemporary design with floor-to-ceiling windows, minimalist interiors, and smart home automation. Features include a helipad, infinity pool, and underwater observation lounge. A true technological marvel on the seas."
-                    },
-                    // Planes (5 items)
-                    {
-                        id: 6,
-                        category: "Plane",
-                        title: "Global Express XRS",
-                        price: 75000000,
-                        image: "https://avatars.mds.yandex.net/i?id=2e9e40197363229ed2bea59223e2489a98c79005-7134052-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=600&fit=crop",
-                        description: "The Global Express XRS offers intercontinental range with exceptional cabin comfort. Features include a stand-up cabin, fully equipped galley, and state-of-the-art avionics. The aircraft can accommodate up to 19 passengers in complete luxury."
-                    },
-                    {
-                        id: 7,
-                        category: "Plane",
-                        title: "Falcon 900LX",
-                        price: 73000000,
-                        image: "https://naked-science.ru/wp-content/uploads/2025/05/Bez-imeni-1-3-1200x675.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
-                        description: "Falcon 900LX combines trijet safety with exceptional performance. The cabin features three distinct zones, including a private stateroom and conference area. Advanced noise reduction technology ensures a quiet and productive environment."
-                    },
-                    {
-                        id: 8,
-                        category: "Plane",
-                        title: "Challenger 850",
-                        price: 58000000,
-                        image: "https://avatars.mds.yandex.net/i?id=8e4f5bf4dea20d8dbe367102c4c96c169d81dd76-8810682-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1555993533-ee78ba1d6d58?w=800&h=600&fit=crop",
-                        description: "The Challenger 850 offers exceptional value with its spacious cabin and transcontinental range. Features include a full-size lavatory, ample baggage space, and advanced weather radar. Perfect for business travelers requiring both comfort and efficiency."
-                    },
-                    {
-                        id: 9,
-                        category: "Plane",
-                        title: "Citation Sovereign",
-                        price: 27000000,
-                        image: "https://avatars.mds.yandex.net/i?id=5d1c038991d42f17d75edfad616e7e786f6e27d9-4567411-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop",
-                        description: "Citation Sovereign delivers outstanding performance with its efficient engines and impressive payload capacity. The cabin features a flat floor, large windows, and comfortable seating for up to 12 passengers. Ideal for regional travel with luxury amenities."
-                    },
-                    {
-                        id: 10,
-                        category: "Plane",
-                        title: "Embraer Legacy 650",
-                        price: 9500000,
-                        image: "https://unisky.aero/upload/iblock/400/o30iygsaogctod75qi9cvapeqjc773n9.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1555993473-9bb22d8df912?w=800&h=600&fit=crop",
-                        description: "The Embraer Legacy 650 offers exceptional cabin space and transoceanic capability. Features include a private master suite, conference area, and fully stocked galley. Advanced flight management systems ensure smooth and efficient operations."
-                    },
-                    // Mansions (5 items)
-                    {
-                        id: 11,
-                        category: "Mansion",
-                        title: "Beverly Hills Villa",
-                        price: 125000000,
-                        image: "https://avatars.mds.yandex.net/i?id=c9e5a545fd202b08a3a47b43b95eb472877e139f-5303121-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop",
-                        description: "This magnificent Beverly Hills villa spans 15,000 square feet with panoramic city views. Features include a home theater, wine cellar, infinity pool, and professional tennis court. The property includes smart home automation and 24/7 security."
-                    },
-                    {
-                        id: 12,
-                        category: "Mansion",
-                        title: "Malibu Oceanfront Estate",
-                        price: 85000000,
-                        image: "https://avatars.mds.yandex.net/i?id=2ae9253f46f3e7c004d188aae0244303ff30b3ec-10100414-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop",
-                        description: "Perched on the cliffs of Malibu, this oceanfront estate offers direct beach access and breathtaking sunset views. The property includes a private gym, spa, meditation garden, and multiple entertainment terraces with fire pits and outdoor kitchens."
-                    },
-                    {
-                        id: 13,
-                        category: "Mansion",
-                        title: "Manhattan Penthouse",
-                        price: 95000000,
-                        image: "https://www.terra.ru/uploads/catalog/gallery/source/b6197146dbb740988fda62033e969c02.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
-                        description: "Located in the heart of Manhattan, this penthouse offers 360-degree city views from its wraparound terrace. Features include a private elevator, chef's kitchen with premium appliances, and custom-built wine display. The interior showcases designer finishes and smart home integration."
-                    },
-                    {
-                        id: 14,
-                        category: "Mansion",
-                        title: "Miami Modern Villa",
-                        price: 65000000,
-                        image: "https://atrealty.ru/wp-content/uploads/2020/06/1-1.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop",
-                        description: "This Miami modern villa features sleek architecture and seamless indoor-outdoor living. The property includes a resort-style pool, outdoor kitchen, rooftop terrace, and smart irrigation system. Located in a gated community with private marina access."
-                    },
-                    {
-                        id: 15,
-                        category: "Mansion",
-                        title: "Aspen Mountain Chalet",
-                        price: 75000000,
-                        image: "https://www.vfstroy.ru/upload/resize_cache/iblock/6f1/s1xd4o0tu9ixo00e3ctxmjxhkzh5d9m9/1920_1000_1950b2a85580a405838b18d88b5154cde/674qqgkq35i82eid2mm2zwdtkwxiskl9.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
-                        description: "Nestled in the Colorado Rockies, this mountain chalet offers ski-in/ski-out access and breathtaking mountain views. Features include a stone fireplace, rustic-chic interiors, hot tub, and dedicated ski room with boot warmers. Perfect for year-round mountain living."
-                    },
-                    // Islands (5 items)
-                    {
-                        id: 16,
-                        category: "Island",
-                        title: "Caribbean Paradise Isle",
-                        price: 250000000,
-                        image: "https://avatars.mds.yandex.net/i?id=c9093ee5f5fca492cef0804af37d87d73ba973e2-8497900-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
-                        description: "This 150-acre Caribbean island features pristine white sand beaches, lush tropical vegetation, and crystal-clear turquoise waters. The property includes a main villa, guest cottages, staff quarters, and facilities for water sports. Complete privacy with modern amenities."
-                    },
-                    {
-                        id: 17,
-                        category: "Island",
-                        title: "Pacific Atoll Retreat",
-                        price: 180000000,
-                        image: "https://img.prian.ru/2017_04/1/201704010651211109804392o.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&h=600&fit=crop",
-                        description: "A breathtaking Pacific atoll with vibrant coral reefs and abundant marine life. The island features eco-friendly accommodations, solar power, rainwater harvesting, and organic gardens. Perfect for conservation efforts or sustainable luxury living."
-                    },
-                    {
-                        id: 18,
-                        category: "Island",
-                        title: "Mediterranean Private Island",
-                        price: 150000000,
-                        image: "https://arenda-ostrova.com/image/cache/catalog/1prodaja/Duval%20Island/duval-island-23-700x700.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&fit=crop",
-                        description: "Located in the Mediterranean Sea, this island offers a perfect blend of natural beauty and cultural richness. Features include olive groves, vineyards, stone villas, and private coves. Easy access to nearby historical sites and luxury marinas."
-                    },
-                    {
-                        id: 19,
-                        category: "Island",
-                        title: "Tropical Archipelago",
-                        price: 220000000,
-                        image: "https://arenda-ostrova.com/image/cache/catalog/1prodaja/Little%20Pipe%20Cay/little-pipe-cay-01-700x700.jpg",
-                        backupImage: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=600&fit=crop",
-                        description: "This archipelago consists of three interconnected islands, each serving a different purpose: residential, recreational, and agricultural. Features include private bridges, airstrip, marina, and sustainable farming operations. A self-sufficient paradise."
-                    },
-                    {
-                        id: 20,
-                        category: "Island",
-                        title: "South Pacific Haven",
-                        price: 190000000,
-                        image: "https://avatars.mds.yandex.net/i?id=96ed70239c7a3c982226325bf41889bb86180870-4860197-images-thumbs&n=13",
-                        backupImage: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&h=600&fit=crop",
-                        description: "A secluded South Pacific island with dramatic volcanic landscapes, rainforests, and black sand beaches. The property includes luxury eco-lodges, research facilities, and conservation programs. Ideal for those seeking privacy and environmental stewardship."
-                    }
-                ];
-                
-                // Save to localStorage
-                localStorage.setItem('products', JSON.stringify(products));
-                renderProducts();
-            }, 1500);
-        }
-
-        function showSkeletons() {
-            productsGrid.innerHTML = '';
-            for (let i = 0; i < 8; i++) {
-                const skeletonCard = document.createElement('div');
-                skeletonCard.className = 'skeleton-card';
-                skeletonCard.dataset.testId = 'skeleton-card';
-                
-                skeletonCard.innerHTML = `
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-info">
-                        <div class="skeleton-category"></div>
-                        <div class="skeleton-title"></div>
-                        <div class="skeleton-price"></div>
-                    </div>
-                `;
-                
-                productsGrid.appendChild(skeletonCard);
-            }
-        }
-
-        function renderProducts() {
-            productsGrid.innerHTML = '';
-            const filteredProducts = filterProducts();
-            
-            if (filteredProducts.length === 0) {
-                productsGrid.innerHTML = '<div class="empty-state">No products found</div>';
-                return;
-            }
-            
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.dataset.id = product.id;
-                productCard.dataset.testId = 'product-card';
-                
-                // Check if product is purchased
-                const isPurchased = purchasedItems.includes(product.id);
-                
-                productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}" class="product-image" onerror="this.onerror=null; this.src='${product.backupImage}'" data-test-id="product-image">
-                    <div class="product-info">
-                        <div class="product-category" data-test-id="product-type">${product.category}</div>
-                        <div class="product-title" data-test-id="product-title">${product.title}</div>
-                        <div class="product-price" data-test-id="product-price">$${product.price.toLocaleString()}</div>
-                    </div>
-                    ${isPurchased ? '<div class="purchased-overlay">PURCHASED</div>' : ''}
-                `;
-                
-                if (!isPurchased) {
-                    productCard.addEventListener('click', () => showProductModal(product));
-                }
-                
-                productsGrid.appendChild(productCard);
-            });
-        }
-
-        function filterProducts() {
-            const yachtChecked = document.getElementById('yacht-filter').checked;
-            const planeChecked = document.getElementById('plane-filter').checked;
-            const mansionChecked = document.getElementById('mansion-filter').checked;
-            const islandChecked = document.getElementById('island-filter').checked;
-            
-            let filteredProducts = [...products];
-            
-            // Apply filters
-            if (yachtChecked || planeChecked || mansionChecked || islandChecked) {
-                filteredProducts = filteredProducts.filter(product => {
-                    if (yachtChecked && product.category === 'Yacht') return true;
-                    if (planeChecked && product.category === 'Plane') return true;
-                    if (mansionChecked && product.category === 'Mansion') return true;
-                    if (islandChecked && product.category === 'Island') return true;
-                    return false;
-                });
-            }
-            
-            // Apply search
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            if (searchTerm) {
-                filteredProducts = filteredProducts.filter(product => 
-                    product.title.toLowerCase().includes(searchTerm) ||
-                    product.description.toLowerCase().includes(searchTerm)
-                );
-            }
-            
-            return filteredProducts;
-        }
-
-        function showProductModal(product) {
-            // Set main image with fallback
-            modalImage.src = product.image;
-            modalImage.onerror = () => { 
-                modalImage.src = product.backupImage;
-            };
-            modalTitle.textContent = product.title;
-            modalCategory.textContent = product.category;
-            modalPrice.textContent = `$${product.price.toLocaleString()}`;
-            modalDescription.textContent = product.description;
-            currentProductId = product.id;
-            
-            // Update button text based on cart status
-            const isInCart = cart.some(item => item.id === product.id);
-            if (isInCart) {
-                addToCartBtn.textContent = 'Remove from cart';
-                addToCartBtn.dataset.testId = 'remove-from-cart';
-            } else {
-                addToCartBtn.textContent = 'Add to cart';
-                addToCartBtn.dataset.testId = 'add-to-cart';
-            }
-            
-            modal.style.display = 'flex';
-        }
-
-        function closeProductModal() {
-            modal.style.display = 'none';
-        }
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            
-            const isInCart = cart.some(item => item.id === productId);
-            
-            if (isInCart) {
-                // Remove from cart
-                cart = cart.filter(item => item.id !== productId);
-                addToCartBtn.textContent = 'Removed';
-                addToCartBtn.classList.add('disabled');
-                addToCartBtn.disabled = true;
-                
-                setTimeout(() => {
-                    addToCartBtn.textContent = 'Add to cart';
-                    addToCartBtn.classList.remove('disabled');
-                    addToCartBtn.disabled = false;
-                    addToCartBtn.dataset.testId = 'add-to-cart';
-                    showNotification('Looking for something better?');
-                }, 2000);
-            } else {
-                // Add to cart
-                cart.push({
-                    id: productId,
-                    title: product.title,
-                    price: product.price,
-                    image: product.image,
-                    backupImage: product.backupImage,
-                    category: product.category
-                });
-                addToCartBtn.textContent = 'Added';
-                addToCartBtn.classList.add('disabled');
-                addToCartBtn.disabled = true;
-                
-                setTimeout(() => {
-                    addToCartBtn.textContent = 'Remove from cart';
-                    addToCartBtn.classList.remove('disabled');
-                    addToCartBtn.disabled = false;
-                    addToCartBtn.dataset.testId = 'remove-from-cart';
-                    showNotification('Excellent choice!');
-                }, 2000);
-            }
-            
-            // Save cart to localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            updateCartPage();
-        }
-
-        function updateCartCount() {
-            cartBadge.textContent = cart.length;
-            if (cart.length === 0) {
-                cartBadge.style.display = 'none';
-            } else {
-                cartBadge.style.display = 'flex';
-            }
-        }
-
-        function updateCartPage() {
-            if (!isCartPage) return;
-            
-            cartList.innerHTML = '';
-            
-            if (cart.length === 0) {
-                cartList.innerHTML = '<div class="cart-empty" data-test-id="cart-empty">Cart is empty</div>';
-                cartTotal.textContent = 'Total: $0';
-                checkoutButton.style.display = 'none';
-                loginToPlaceOrderButton.style.display = 'none';
-                return;
-            }
-            
-            let total = 0;
-            
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.dataset.testId = 'cart-item';
-                cartItem.dataset.id = item.id;
-                
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}" class="cart-item-image" onerror="this.onerror=null; this.src='${item.backupImage}'">
-                    <div class="cart-item-info">
-                        <div class="cart-item-title" data-test-id="cart-item-title">${item.title}</div>
-                        <div class="cart-item-price" data-test-id="cart-item-price">$${item.price.toLocaleString()}</div>
-                    </div>
-                    <button class="cart-remove" data-test-id="cart-remove">Remove</button>
-                `;
-                
-                cartList.appendChild(cartItem);
-                total += item.price;
-                
-                // Add event listener for remove button
-                cartItem.querySelector('.cart-remove').addEventListener('click', () => {
-                    removeConfirmModalProductId = item.id;
-                    removeConfirmModal.style.display = 'flex';
-                });
-            });
-            
-            cartTotal.textContent = `Total: $${total.toLocaleString()}`;
-            
-            // Check if user is authorized
-            const userProfile = getUserProfile();
-            if (userProfile && userProfile.name && userProfile.email) {
-                checkoutButton.style.display = 'block';
-                loginToPlaceOrderButton.style.display = 'none';
-            } else {
-                checkoutButton.style.display = 'none';
-                loginToPlaceOrderButton.style.display = 'block';
-            }
-        }
-
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            updateCartPage();
-            showNotification('Looking for something better?');
-        }
-
-        function placeOrder() {
-            if (cart.length === 0) return;
-            
-            const userProfile = getUserProfile();
-            if (!userProfile || !userProfile.name || !userProfile.email) {
-                // Show login to place order button
-                checkoutButton.style.display = 'none';
-                loginToPlaceOrderButton.style.display = 'block';
-                return;
-            }
-            
-            // Create order
-            const timestamp = Date.now();
-            const order = {
-                id: `ORD-${timestamp}`,
-                date: new Date(timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
-                items: [...cart],
-                total: cart.reduce((sum, item) => sum + item.price, 0)
-            };
-            
-            // Add to orders
-            orders.unshift(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            
-            // Add items to purchased items
-            cart.forEach(item => {
-                if (!purchasedItems.includes(item.id)) {
-                    purchasedItems.push(item.id);
-                }
-            });
-            localStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
-            
-            // Clear cart
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            
-            // Update UI
-            updateCartCount();
-            
-            // Show cancel button for 1.5 seconds
-            checkoutButton.style.display = 'none';
-            const cancelCheckoutButton = document.createElement('button');
-            cancelCheckoutButton.className = 'cancel-checkout-button';
-            cancelCheckoutButton.textContent = 'Cancel';
-            cancelCheckoutButton.dataset.testId = 'cancel-checkout-button';
-            cartPage.appendChild(cancelCheckoutButton);
-            
-            // Auto-redirect after 1.5 seconds
-            const redirectTimeout = setTimeout(() => {
-                cancelCheckoutButton.remove();
-                checkoutButton.style.display = 'block';
-                // Redirect to history page
-                window.location.hash = '#history';
-                checkCurrentPage();
-            }, 1500);
-            
-            // Cancel checkout functionality
-            cancelCheckoutButton.addEventListener('click', () => {
-                clearTimeout(redirectTimeout);
-                cancelCheckoutButton.remove();
-                checkoutButton.style.display = 'block';
-                showNotification('Order cancelled');
-            });
-        }
-
-        function updateHistoryPage() {
-            if (!isHistoryPage) return;
-            
-            ordersList.innerHTML = '';
-            
-            if (orders.length === 0) {
-                ordersEmpty.style.display = 'block';
-                return;
-            }
-            
-            ordersEmpty.style.display = 'none';
-            
-            orders.forEach(order => {
-                const orderItem = document.createElement('div');
-                orderItem.className = 'orders-item';
-                orderItem.dataset.testId = 'orders-item';
-                
-                orderItem.innerHTML = `
-                    <div class="order-header">
-                        <div class="order-number" data-test-id="order-number">${order.id}</div>
-                        <div class="order-date" data-test-id="order-date">${order.date}</div>
-                    </div>
-                    <div class="order-items">
-                        ${order.items.map(item => `
-                            <div class="order-item">
-                                <img src="${item.image}" alt="${item.title}" class="order-item-image" onerror="this.onerror=null; this.src='${item.backupImage}'">
-                                <div class="order-item-info">
-                                    <div class="order-item-title" data-test-id="order-item-title">${item.title}</div>
-                                    <div class="order-item-price" data-test-id="order-item-price">$${item.price.toLocaleString()}</div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="order-total" data-test-id="order-total">Total: $${order.total.toLocaleString()}</div>
-                `;
-                
-                ordersList.appendChild(orderItem);
-            });
-        }
-
-        function updateProfilePage() {
-            if (!isProfilePage) return;
-            
-            // Load user profile from localStorage
-            const userProfile = getUserProfile();
-            if (userProfile) {
-                profileNameInput.value = userProfile.name || '';
-                profileEmailInput.value = userProfile.email || '';
-                document.getElementById('notifications').checked = userProfile.notifications || false;
-            }
-        }
-
-        function saveUserProfile() {
-            const name = profileNameInput.value.trim();
-            const email = profileEmailInput.value.trim();
-            const notifications = document.getElementById('notifications').checked;
-            
-            // Validate inputs
-            let isValid = true;
-            
-            if (!name) {
-                showError('name-error', 'Name is required');
-                isValid = false;
-            } else {
-                clearError('name-error');
-            }
-            
-            if (!email) {
-                showError('email-error', 'Email is required');
-                isValid = false;
-            } else if (!isValidEmail(email)) {
-                showError('email-error', 'Invalid email format');
-                isValid = false;
-            } else {
-                clearError('email-error');
-            }
-            
-            if (!isValid) return;
-            
-            // Save profile
-            const userProfile = {
-                name: name,
-                email: email,
-                notifications: notifications
-            };
-            
-            localStorage.setItem('userProfile', JSON.stringify(userProfile));
-            showNotification('Data saved');
-        }
-
-        function isValidEmail(email) {
-            // Simple email validation: must have one @ and at most one dot after @
-            const atIndex = email.indexOf('@');
-            if (atIndex === -1 || atIndex === 0 || atIndex === email.length - 1) {
-                return false;
-            }
-            
-            const afterAt = email.substring(atIndex + 1);
-            const dotCount = afterAt.split('.').length - 1;
-            if (dotCount > 1) {
-                return false;
-            }
-            
-            return true;
-        }
-
-        function getUserProfile() {
-            const savedProfile = localStorage.getItem('userProfile');
-            if (savedProfile) {
-                try {
-                    return JSON.parse(savedProfile);
-                } catch (e) {
-                    return null;
-                }
-            }
-            return null;
-        }
-
-        function showNotification(message, isError = false) {
-            notification.textContent = message;
-            if (isError) {
-                notification.classList.add('error');
-            } else {
-                notification.classList.remove('error');
-            }
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 2000);
-        }
-
-        function showError(elementId, message) {
-            const element = document.getElementById(elementId);
-            element.textContent = message;
-            element.style.display = 'block';
-        }
-
-        function clearError(elementId) {
-            const element = document.getElementById(elementId);
-            element.textContent = '';
-            element.style.display = 'none';
-        }
-
-        function toggleTheme() {
-            theme = theme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            updateThemeIcon();
-        }
-
-        function updateThemeIcon() {
-            themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
-        }
-
-        function checkCurrentPage() {
-            const hash = window.location.hash;
-            
-            if (hash === '#cart') {
-                isCartPage = true;
-                isProfilePage = false;
-                isHistoryPage = false;
-                productListPage.style.display = 'none';
-                cartPage.style.display = 'block';
-                profilePage.style.display = 'none';
-                historyPage.style.display = 'none';
-                updateCartPage();
-            } else if (hash === '#profile') {
-                isCartPage = false;
-                isProfilePage = true;
-                isHistoryPage = false;
-                productListPage.style.display = 'none';
-                cartPage.style.display = 'none';
-                profilePage.style.display = 'block';
-                historyPage.style.display = 'none';
-                updateProfilePage();
-            } else if (hash === '#history') {
-                isCartPage = false;
-                isProfilePage = false;
-                isHistoryPage = true;
-                productListPage.style.display = 'none';
-                cartPage.style.display = 'none';
-                profilePage.style.display = 'none';
-                historyPage.style.display = 'block';
-                updateHistoryPage();
-            } else {
-                isCartPage = false;
-                isProfilePage = false;
-                isHistoryPage = false;
-                productListPage.style.display = 'block';
-                cartPage.style.display = 'none';
-                profilePage.style.display = 'none';
-                historyPage.style.display = 'none';
-                renderProducts();
-            }
-        }
-
-        function addEventListeners() {
-            // Filter checkboxes
-            document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', renderProducts);
-            });
-            
-            // Search input
-            searchInput.addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    renderProducts();
-                    
-                    // Show suggestions
-                    const searchTerm = searchInput.value.trim().toLowerCase();
-                    if (searchTerm) {
-                        searchSuggestions.style.display = 'block';
-                        searchSuggestions.innerHTML = '<div class="loading-message">Loading...</div>';
-                        
-                        setTimeout(() => {
-                            const suggestions = products
-                                .filter(product => product.title.toLowerCase().includes(searchTerm) && !purchasedItems.includes(product.id))
-                                .sort((a, b) => a.title.localeCompare(b.title))
-                                .slice(0, 3);
-                            
-                            searchSuggestions.innerHTML = '';
-                            
-                            if (suggestions.length === 0) {
-                                searchSuggestions.innerHTML = '<div class="suggestion-item">No results found</div>';
-                            } else {
-                                suggestions.forEach(suggestion => {
-                                    const suggestionItem = document.createElement('div');
-                                    suggestionItem.className = 'suggestion-item';
-                                    suggestionItem.dataset.testId = 'suggestion-item';
-                                    suggestionItem.textContent = suggestion.title;
-                                    suggestionItem.addEventListener('click', () => {
-                                        // Reset filters
-                                        document.getElementById('yacht-filter').checked = false;
-                                        document.getElementById('plane-filter').checked = false;
-                                        document.getElementById('mansion-filter').checked = false;
-                                        document.getElementById('island-filter').checked = false;
-                                        
-                                        // Set search term
-                                        searchInput.value = suggestion.title;
-                                        
-                                        // Filter products
-                                        renderProducts();
-                                        
-                                        // Open modal if not purchased
-                                        if (!purchasedItems.includes(suggestion.id)) {
-                                            showProductModal(suggestion);
-                                        }
-                                        
-                                        searchSuggestions.style.display = 'none';
-                                    });
-                                    searchSuggestions.appendChild(suggestionItem);
-                                });
-                            }
-                        }, 1500);
-                    } else {
-                        searchSuggestions.style.display = 'none';
-                    }
-                }, 300);
-            });
-            
-            // Search input blur
-            searchInput.addEventListener('blur', () => {
-                setTimeout(() => {
-                    searchSuggestions.style.display = 'none';
-                }, 200);
-            });
-            
-            // Search input keydown
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    renderProducts();
-                }
-            });
-            
-            // Close modal
-            closeModal.addEventListener('click', closeProductModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeProductModal();
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeProductModal();
-                }
-            });
-            
-            // Add to cart button
-            addToCartBtn.addEventListener('click', () => {
-                addToCart(currentProductId);
-            });
-            
-            // Cart icon click
-            document.querySelector('.cart-count').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.hash = '#cart';
-                checkCurrentPage();
-            });
-            
-            // Profile icon click
-            document.querySelector('[data-test-id="menu-profile"]').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.hash = '#profile';
-                checkCurrentPage();
-            });
-            
-            // History icon click
-            document.querySelector('[data-test-id="menu-history"]').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.hash = '#history';
-                checkCurrentPage();
-            });
-            
-            // Shop icon click
-            document.querySelector('[data-test-id="menu-shop"]').addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.hash = '';
-                checkCurrentPage();
-            });
-            
-            // Checkout button
-            checkoutButton.addEventListener('click', placeOrder);
-            
-            // Login to place order button
-            loginToPlaceOrderButton.addEventListener('click', () => {
-                window.location.hash = '#profile';
-                checkCurrentPage();
-            });
-            
-            // Remove confirmation modal
-            cancelRemoveBtn.addEventListener('click', () => {
-                removeConfirmModal.style.display = 'none';
-            });
-            
-            confirmRemoveBtn.addEventListener('click', () => {
-                removeFromCart(removeConfirmModalProductId);
-                removeConfirmModal.style.display = 'none';
-            });
-            
-            removeConfirmModal.addEventListener('click', (e) => {
-                if (e.target === removeConfirmModal) {
-                    removeConfirmModal.style.display = 'none';
-                }
-            });
-            
-            // Profile save button
-            profileSaveButton.addEventListener('click', saveUserProfile);
-            
-            // Theme toggle
-            themeToggle.addEventListener('click', toggleTheme);
-            
-            // Hash change detection
-            window.addEventListener('hashchange', checkCurrentPage);
-        }
-
-        // Initialize the app
-        init();
-    </script>
-</body>
-</html>
+                        image: "images/y-1.jpg",
+                        backupImage: "https://via.placeholder.com/800x600?text=Яхта+1",
+                        description: "Ocean Master 77 — это шедевр морской инженерии, оснащенный передовыми навигационными системами, роскошными интерьерами с итальянским мрамором и просторной солнечной палубой для развлечений.
