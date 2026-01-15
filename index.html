@@ -856,9 +856,9 @@
     <script>
         // Global state
         let products = [];
-        let cart = [];
-        let orders = [];
-        let purchasedItems = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
         let currentProductId = null;
         let theme = 'light';
         let isCartPage = false;
@@ -909,18 +909,21 @@
                 updateThemeIcon();
             }
 
-            // Load data from localStorage or fetch from data.json
+            // Load data
             loadProducts();
 
             // Check current page
             checkCurrentPage();
+
+            // Update cart count
+            updateCartCount();
 
             // Add event listeners
             addEventListeners();
         }
 
         function loadProducts() {
-            // Simulate loading with skeleton
+            // Show skeletons
             showSkeletons();
             
             // Try to load from localStorage first
@@ -928,203 +931,208 @@
             if (savedProducts) {
                 try {
                     products = JSON.parse(savedProducts);
-                    renderProducts();
+                    setTimeout(() => {
+                        renderProducts();
+                    }, 1500);
                     return;
                 } catch (e) {
                     console.log('Failed to parse saved products');
                 }
             }
             
-            // If no saved products, simulate fetching from data.json
+            // If no saved products, create sample data with provided image URLs
             setTimeout(() => {
-                // Mock data.json content
-                const mockProducts = [
+                products = [
+                    // Yachts (5 items)
                     {
                         id: 1,
                         category: "Yacht",
-                        title: "Azimut 77 Yacht",
+                        title: "Ocean Master 77",
                         price: 3500000,
-                        image: "https://www.azimutyachts.ru/prev1200x630/i/goods/1-LV6T..jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Azimut+77+Yacht",
-                        description: "The Azimut 77 Yacht combines elegance with performance. Featuring luxurious interiors, spacious decks, and state-of-the-art navigation systems, this yacht offers the perfect blend of comfort and adventure for discerning sailors."
+                        image: "https://naked-science.ru/wp-content/uploads/2020/01/001-4.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?w=800&h=600&fit=crop",
+                        description: "The Ocean Master 77 is a masterpiece of nautical engineering, featuring state-of-the-art navigation systems, luxurious interiors with Italian marble, and a spacious sun deck perfect for entertaining. With a range of 3,500 nautical miles, this yacht is ideal for transoceanic voyages."
                     },
                     {
                         id: 2,
                         category: "Yacht",
-                        title: "Sunseeker 86 Yacht",
+                        title: "Silver Wave 85",
                         price: 4200000,
-                        image: "https://www.azimutyachts.ru/prev1200x630/i/goods/2-scWM..jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Sunseeker+86+Yacht",
-                        description: "Experience luxury at sea with the Sunseeker 86 Yacht. This magnificent vessel features multiple entertainment areas, a spacious master suite, and advanced technology throughout, making it ideal for long voyages or weekend getaways."
+                        image: "https://i.pinimg.com/474x/a4/23/ff/a423ff287206ab644c9e69706ab09acd.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1515427518472-3a4b15b0bf7a?w=800&h=600&fit=crop",
+                        description: "Silver Wave 85 combines elegance with performance, featuring twin 2,000hp engines and a hydrodynamic hull design. The interior showcases handcrafted woodwork, a cinema room, and a master suite with panoramic ocean views. Perfect for both coastal cruising and long-distance voyages."
                     },
                     {
                         id: 3,
                         category: "Yacht",
-                        title: "Ferretti 960 Yacht",
+                        title: "Royal Cruiser 92",
                         price: 5800000,
-                        image: "https://marinepoint.com/upload/iblock/ad2/del690fqff8z9qamfzb0hdqxsy879dry.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Ferretti+960+Yacht",
-                        description: "The Ferretti 960 Yacht represents the pinnacle of Italian design and engineering. With its sleek lines, sophisticated interior, and exceptional performance capabilities, this yacht is designed for those who demand nothing but the best."
+                        image: "https://i.ytimg.com/vi/kmwTUc9CFZw/maxresdefault.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1519861531473-920034658307?w=800&h=600&fit=crop",
+                        description: "The Royal Cruiser 92 offers unparalleled luxury with its six ensuite cabins, professional-grade galley, and entertainment lounge. Features include a Jacuzzi on the flybridge, water sports equipment, and a dedicated crew quarters. Ideal for hosting large gatherings or family vacations."
                     },
                     {
                         id: 4,
                         category: "Yacht",
-                        title: "Lürssen 120 Yacht",
+                        title: "Horizon Seeker 78",
                         price: 7500000,
-                        image: "https://burevestnik.ru/upload/iblock/8db/940.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Lürssen+120+Yacht",
-                        description: "The Lürssen 120 Yacht is a masterpiece of naval architecture, offering unparalleled luxury and comfort. From its expansive sun deck to its private owner's quarters, every detail has been meticulously crafted for ultimate indulgence."
+                        image: "https://marinepoint.com/upload/iblock/9b7/ww2zh28odwy1viyxnqlanzok4a9t6941.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=800&h=600&fit=crop",
+                        description: "Horizon Seeker 78 features innovative stabilization technology for maximum comfort at sea. The yacht includes a gym, sauna, and dive center. With its eco-friendly hybrid propulsion system, it offers both performance and environmental responsibility."
                     },
                     {
                         id: 5,
                         category: "Yacht",
-                        title: "Benetti 100 Yacht",
+                        title: "Azure Dream 95",
                         price: 6200000,
-                        image: "https://ruyachts.com/images/cantiere-delle-marche/nauta-air-90/navigation/cantiere-delle-marche-nauta-air-90-navigation-49.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Benetti+100+Yacht",
-                        description: "The Benetti 100 Yacht showcases timeless elegance and modern sophistication. With its innovative layout, luxurious amenities, and exceptional craftsmanship, this yacht provides an unforgettable experience for owners and guests alike."
+                        image: "https://avatars.mds.yandex.net/i?id=336c3f4630671bbefd85a5f784e22561_l-8219873-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1536152471326-642d7bb3d0af?w=800&h=600&fit=crop",
+                        description: "Azure Dream 95 showcases contemporary design with floor-to-ceiling windows, minimalist interiors, and smart home automation. Features include a helipad, infinity pool, and underwater observation lounge. A true technological marvel on the seas."
                     },
+                    // Planes (5 items)
                     {
                         id: 6,
                         category: "Plane",
-                        title: "Gulfstream G650ER",
+                        title: "Global Express XRS",
                         price: 75000000,
-                        image: "https://www.breezeyachting.swiss/wp-content/uploads/2025/07/Oceanco-Yachts-For-Sale-3.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Gulfstream+G650ER",
-                        description: "The Gulfstream G650ER sets new standards in business aviation with its unmatched range, speed, and comfort. Featuring a spacious cabin, advanced technology, and whisper-quiet operation, it's the ultimate choice for global travelers."
+                        image: "https://avatars.mds.yandex.net/i?id=2e9e40197363229ed2bea59223e2489a98c79005-7134052-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=600&fit=crop",
+                        description: "The Global Express XRS offers intercontinental range with exceptional cabin comfort. Features include a stand-up cabin, fully equipped galley, and state-of-the-art avionics. The aircraft can accommodate up to 19 passengers in complete luxury."
                     },
                     {
                         id: 7,
                         category: "Plane",
-                        title: "Bombardier Global 7500",
+                        title: "Falcon 900LX",
                         price: 73000000,
-                        image: "https://marinepoint.com/upload/resize_cache/webp/iblock/65b/io3izwx3om82h6zx550qpxj2d0mj70tr.webp",
-                        backupImage: "https://via.placeholder.com/800x600?text=Bombardier+Global+7500",
-                        description: "The Bombardier Global 7500 offers the longest range and most spacious cabin in its class. With four distinct living spaces, advanced connectivity, and unparalleled comfort, it redefines private air travel for executives and families."
+                        image: "https://naked-science.ru/wp-content/uploads/2025/05/Bez-imeni-1-3-1200x675.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+                        description: "Falcon 900LX combines trijet safety with exceptional performance. The cabin features three distinct zones, including a private stateroom and conference area. Advanced noise reduction technology ensures a quiet and productive environment."
                     },
                     {
                         id: 8,
                         category: "Plane",
-                        title: "Dassault Falcon 8X",
+                        title: "Challenger 850",
                         price: 58000000,
-                        image: "https://sunseeker-russia.com/uploads/2024/12/main.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Dassault+Falcon+8X",
-                        description: "The Dassault Falcon 8X combines exceptional range with superior comfort and efficiency. Its trijet configuration ensures safety and reliability, while its luxurious interior provides a serene environment for productive work or relaxation."
+                        image: "https://avatars.mds.yandex.net/i?id=8e4f5bf4dea20d8dbe367102c4c96c169d81dd76-8810682-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1555993533-ee78ba1d6d58?w=800&h=600&fit=crop",
+                        description: "The Challenger 850 offers exceptional value with its spacious cabin and transcontinental range. Features include a full-size lavatory, ample baggage space, and advanced weather radar. Perfect for business travelers requiring both comfort and efficiency."
                     },
                     {
                         id: 9,
                         category: "Plane",
-                        title: "Cessna Citation Longitude",
+                        title: "Citation Sovereign",
                         price: 27000000,
-                        image: "https://podmoskovnaya-riviera.ru/wp-content/uploads/2024/04/gulf_craft_85.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Cessna+Citation+Longitude",
-                        description: "The Cessna Citation Longitude offers the perfect balance of performance, comfort, and value. With its spacious cabin, advanced avionics, and impressive range, it's ideal for business travelers seeking efficiency without compromising on luxury."
+                        image: "https://avatars.mds.yandex.net/i?id=5d1c038991d42f17d75edfad616e7e786f6e27d9-4567411-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop",
+                        description: "Citation Sovereign delivers outstanding performance with its efficient engines and impressive payload capacity. The cabin features a flat floor, large windows, and comfortable seating for up to 12 passengers. Ideal for regional travel with luxury amenities."
                     },
                     {
                         id: 10,
                         category: "Plane",
-                        title: "Embraer Phenom 300E",
+                        title: "Embraer Legacy 650",
                         price: 9500000,
-                        image: "https://www.azimutyachts.ru/i/boat/750-W-magellano-66-2019-0.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Embraer+Phenom+300E",
-                        description: "The Embraer Phenom 300E is the world's fastest and most efficient light jet. Combining exceptional performance with luxurious comfort, it offers an outstanding value proposition for those seeking premium private aviation experiences."
+                        image: "https://unisky.aero/upload/iblock/400/o30iygsaogctod75qi9cvapeqjc773n9.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1555993473-9bb22d8df912?w=800&h=600&fit=crop",
+                        description: "The Embraer Legacy 650 offers exceptional cabin space and transoceanic capability. Features include a private master suite, conference area, and fully stocked galley. Advanced flight management systems ensure smooth and efficient operations."
                     },
+                    // Mansions (5 items)
                     {
                         id: 11,
                         category: "Mansion",
-                        title: "Beverly Hills Mansion",
+                        title: "Beverly Hills Villa",
                         price: 125000000,
-                        image: "https://naked-science.ru/wp-content/uploads/2020/01/001-4.jpg",
-                        backupImage: "https://via.placeholder.com/800x600?text=Beverly+Hills+Mansion",
-                        description: "This iconic Beverly Hills mansion features breathtaking views, sprawling grounds, and luxurious amenities including a private cinema, spa, and infinity pool. Designed for entertaining on a grand scale, it's the epitome of California luxury living."
+                        image: "https://avatars.mds.yandex.net/i?id=c9e5a545fd202b08a3a47b43b95eb472877e139f-5303121-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop",
+                        description: "This magnificent Beverly Hills villa spans 15,000 square feet with panoramic city views. Features include a home theater, wine cellar, infinity pool, and professional tennis court. The property includes smart home automation and 24/7 security."
                     },
                     {
                         id: 12,
                         category: "Mansion",
-                        title: "Malibu Beachfront Estate",
+                        title: "Malibu Oceanfront Estate",
                         price: 85000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Malibu+Beachfront+Estate",
-                        description: "Perched on the cliffs of Malibu, this beachfront estate offers panoramic ocean views, direct beach access, and contemporary design. The property includes a private gym, wine cellar, and outdoor entertainment areas perfect for coastal living."
+                        image: "https://avatars.mds.yandex.net/i?id=2ae9253f46f3e7c004d188aae0244303ff30b3ec-10100414-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop",
+                        description: "Perched on the cliffs of Malibu, this oceanfront estate offers direct beach access and breathtaking sunset views. The property includes a private gym, spa, meditation garden, and multiple entertainment terraces with fire pits and outdoor kitchens."
                     },
                     {
                         id: 13,
                         category: "Mansion",
-                        title: "New York Penthouse",
+                        title: "Manhattan Penthouse",
                         price: 95000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=New+York+Penthouse",
-                        description: "This exclusive New York penthouse offers stunning city views, floor-to-ceiling windows, and designer finishes throughout. Features include a private rooftop terrace, chef's kitchen, and spa-quality bathrooms, providing urban luxury at its finest."
+                        image: "https://www.terra.ru/uploads/catalog/gallery/source/b6197146dbb740988fda62033e969c02.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
+                        description: "Located in the heart of Manhattan, this penthouse offers 360-degree city views from its wraparound terrace. Features include a private elevator, chef's kitchen with premium appliances, and custom-built wine display. The interior showcases designer finishes and smart home integration."
                     },
                     {
                         id: 14,
                         category: "Mansion",
-                        title: "Miami Modern Oasis",
+                        title: "Miami Modern Villa",
                         price: 65000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Miami+Modern+Oasis",
-                        description: "This Miami modern oasis blends tropical living with contemporary design. The property features an infinity pool, lush landscaping, and seamless indoor-outdoor flow. Perfect for entertaining with its open-plan living spaces and gourmet kitchen."
+                        image: "https://atrealty.ru/wp-content/uploads/2020/06/1-1.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&h=600&fit=crop",
+                        description: "This Miami modern villa features sleek architecture and seamless indoor-outdoor living. The property includes a resort-style pool, outdoor kitchen, rooftop terrace, and smart irrigation system. Located in a gated community with private marina access."
                     },
                     {
                         id: 15,
                         category: "Mansion",
-                        title: "Aspen Mountain Retreat",
+                        title: "Aspen Mountain Chalet",
                         price: 75000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Aspen+Mountain+Retreat",
-                        description: "Nestled in the Colorado mountains, this Aspen retreat offers ski-in/ski-out access, rustic-chic interiors, and panoramic mountain views. Amenities include a heated outdoor pool, spa, and dedicated ski room, making it perfect for year-round mountain living."
+                        image: "https://www.vfstroy.ru/upload/resize_cache/iblock/6f1/s1xd4o0tu9ixo00e3ctxmjxhkzh5d9m9/1920_1000_1950b2a85580a405838b18d88b5154cde/674qqgkq35i82eid2mm2zwdtkwxiskl9.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
+                        description: "Nestled in the Colorado Rockies, this mountain chalet offers ski-in/ski-out access and breathtaking mountain views. Features include a stone fireplace, rustic-chic interiors, hot tub, and dedicated ski room with boot warmers. Perfect for year-round mountain living."
                     },
+                    // Islands (5 items)
                     {
                         id: 16,
                         category: "Island",
-                        title: "Private Caribbean Island",
+                        title: "Caribbean Paradise Isle",
                         price: 250000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Private+Caribbean+Island",
-                        description: "Own your own private paradise in the Caribbean. This island features pristine beaches, lush vegetation, and crystal-clear waters. Includes a main residence, guest villas, and facilities for water sports, making it the ultimate escape from the ordinary."
+                        image: "https://avatars.mds.yandex.net/i?id=c9093ee5f5fca492cef0804af37d87d73ba973e2-8497900-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
+                        description: "This 150-acre Caribbean island features pristine white sand beaches, lush tropical vegetation, and crystal-clear turquoise waters. The property includes a main villa, guest cottages, staff quarters, and facilities for water sports. Complete privacy with modern amenities."
                     },
                     {
                         id: 17,
                         category: "Island",
-                        title: "South Pacific Atoll",
+                        title: "Pacific Atoll Retreat",
                         price: 180000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=South+Pacific+Atoll",
-                        description: "This South Pacific atoll offers untouched natural beauty with turquoise lagoons, coral reefs, and abundant marine life. The island includes sustainable eco-lodges, a research station, and opportunities for conservation efforts alongside luxury living."
+                        image: "https://img.prian.ru/2017_04/1/201704010651211109804392o.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&h=600&fit=crop",
+                        description: "A breathtaking Pacific atoll with vibrant coral reefs and abundant marine life. The island features eco-friendly accommodations, solar power, rainwater harvesting, and organic gardens. Perfect for conservation efforts or sustainable luxury living."
                     },
                     {
                         id: 18,
                         category: "Island",
-                        title: "Mediterranean Private Isle",
+                        title: "Mediterranean Private Island",
                         price: 150000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Mediterranean+Private+Isle",
-                        description: "This Mediterranean private isle combines classic European charm with modern luxury. Featuring stone villas, olive groves, vineyards, and private coves, it offers a sophisticated lifestyle with easy access to nearby cultural destinations."
+                        image: "https://arenda-ostrova.com/image/cache/catalog/1prodaja/Duval%20Island/duval-island-23-700x700.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&fit=crop",
+                        description: "Located in the Mediterranean Sea, this island offers a perfect blend of natural beauty and cultural richness. Features include olive groves, vineyards, stone villas, and private coves. Easy access to nearby historical sites and luxury marinas."
                     },
                     {
                         id: 19,
                         category: "Island",
-                        title: "Indian Ocean Archipelago",
+                        title: "Tropical Archipelago",
                         price: 220000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Indian+Ocean+Archipelago",
-                        description: "This Indian Ocean archipelago comprises multiple islands connected by private bridges. Each island serves a different purpose - residential, recreational, agricultural - creating a self-sustaining paradise with endless possibilities for customization and expansion."
+                        image: "https://arenda-ostrova.com/image/cache/catalog/1prodaja/Little%20Pipe%20Cay/little-pipe-cay-01-700x700.jpg",
+                        backupImage: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=600&fit=crop",
+                        description: "This archipelago consists of three interconnected islands, each serving a different purpose: residential, recreational, and agricultural. Features include private bridges, airstrip, marina, and sustainable farming operations. A self-sufficient paradise."
                     },
                     {
                         id: 20,
                         category: "Island",
-                        title: "Tropical Pacific Haven",
+                        title: "South Pacific Haven",
                         price: 190000000,
-                        image: "https://images.unsplash.com/photo-1575036619761-8e04a389d97c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        backupImage: "https://via.placeholder.com/800x600?text=Tropical+Pacific+Haven",
-                        description: "This tropical Pacific haven offers secluded beaches, dense rainforests, and volcanic landscapes. The property includes eco-friendly accommodations, a marine conservation center, and opportunities for sustainable tourism development alongside personal enjoyment."
+                        image: "https://avatars.mds.yandex.net/i?id=96ed70239c7a3c982226325bf41889bb86180870-4860197-images-thumbs&n=13",
+                        backupImage: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=800&h=600&fit=crop",
+                        description: "A secluded South Pacific island with dramatic volcanic landscapes, rainforests, and black sand beaches. The property includes luxury eco-lodges, research facilities, and conservation programs. Ideal for those seeking privacy and environmental stewardship."
                     }
                 ];
                 
-                products = mockProducts;
+                // Save to localStorage
                 localStorage.setItem('products', JSON.stringify(products));
                 renderProducts();
-            }, 1500); // Simulate loading time
+            }, 1500);
         }
 
         function showSkeletons() {
@@ -1151,6 +1159,11 @@
             productsGrid.innerHTML = '';
             const filteredProducts = filterProducts();
             
+            if (filteredProducts.length === 0) {
+                productsGrid.innerHTML = '<div class="empty-state">No products found</div>';
+                return;
+            }
+            
             filteredProducts.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
@@ -1161,13 +1174,13 @@
                 const isPurchased = purchasedItems.includes(product.id);
                 
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}" class="product-image" onerror="this.src='${product.backupImage}'" data-test-id="product-image">
+                    <img src="${product.image}" alt="${product.title}" class="product-image" onerror="this.onerror=null; this.src='${product.backupImage}'" data-test-id="product-image">
                     <div class="product-info">
                         <div class="product-category" data-test-id="product-type">${product.category}</div>
                         <div class="product-title" data-test-id="product-title">${product.title}</div>
                         <div class="product-price" data-test-id="product-price">$${product.price.toLocaleString()}</div>
                     </div>
-                    ${isPurchased ? '<div class="purchased-overlay">КУПЛЕНО</div>' : ''}
+                    ${isPurchased ? '<div class="purchased-overlay">PURCHASED</div>' : ''}
                 `;
                 
                 if (!isPurchased) {
@@ -1201,7 +1214,8 @@
             const searchTerm = searchInput.value.trim().toLowerCase();
             if (searchTerm) {
                 filteredProducts = filteredProducts.filter(product => 
-                    product.title.toLowerCase().includes(searchTerm)
+                    product.title.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
                 );
             }
             
@@ -1209,8 +1223,11 @@
         }
 
         function showProductModal(product) {
+            // Set main image with fallback
             modalImage.src = product.image;
-            modalImage.onerror = () => { modalImage.src = product.backupImage; };
+            modalImage.onerror = () => { 
+                modalImage.src = product.backupImage;
+            };
             modalTitle.textContent = product.title;
             modalCategory.textContent = product.category;
             modalPrice.textContent = `$${product.price.toLocaleString()}`;
@@ -1243,13 +1260,15 @@
             if (isInCart) {
                 // Remove from cart
                 cart = cart.filter(item => item.id !== productId);
-                addToCartBtn.textContent = 'Added';
+                addToCartBtn.textContent = 'Removed';
                 addToCartBtn.classList.add('disabled');
-                addToCartBtn.dataset.testId = 'add-to-cart';
+                addToCartBtn.disabled = true;
                 
                 setTimeout(() => {
                     addToCartBtn.textContent = 'Add to cart';
                     addToCartBtn.classList.remove('disabled');
+                    addToCartBtn.disabled = false;
+                    addToCartBtn.dataset.testId = 'add-to-cart';
                     showNotification('Looking for something better?');
                 }, 2000);
             } else {
@@ -1259,16 +1278,19 @@
                     title: product.title,
                     price: product.price,
                     image: product.image,
+                    backupImage: product.backupImage,
                     category: product.category
                 });
                 addToCartBtn.textContent = 'Added';
                 addToCartBtn.classList.add('disabled');
-                addToCartBtn.dataset.testId = 'remove-from-cart';
+                addToCartBtn.disabled = true;
                 
                 setTimeout(() => {
                     addToCartBtn.textContent = 'Remove from cart';
                     addToCartBtn.classList.remove('disabled');
-                    showNotification('Great choice!');
+                    addToCartBtn.disabled = false;
+                    addToCartBtn.dataset.testId = 'remove-from-cart';
+                    showNotification('Excellent choice!');
                 }, 2000);
             }
             
@@ -1309,7 +1331,7 @@
                 cartItem.dataset.id = item.id;
                 
                 cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                    <img src="${item.image}" alt="${item.title}" class="cart-item-image" onerror="this.onerror=null; this.src='${item.backupImage}'">
                     <div class="cart-item-info">
                         <div class="cart-item-title" data-test-id="cart-item-title">${item.title}</div>
                         <div class="cart-item-price" data-test-id="cart-item-price">$${item.price.toLocaleString()}</div>
@@ -1353,8 +1375,9 @@
             
             const userProfile = getUserProfile();
             if (!userProfile || !userProfile.name || !userProfile.email) {
-                // Redirect to profile page
-                window.location.href = '/profile.html';
+                // Show login to place order button
+                checkoutButton.style.display = 'none';
+                loginToPlaceOrderButton.style.display = 'block';
                 return;
             }
             
@@ -1371,9 +1394,20 @@
             orders.unshift(order);
             localStorage.setItem('orders', JSON.stringify(orders));
             
+            // Add items to purchased items
+            cart.forEach(item => {
+                if (!purchasedItems.includes(item.id)) {
+                    purchasedItems.push(item.id);
+                }
+            });
+            localStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+            
             // Clear cart
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update UI
+            updateCartCount();
             
             // Show cancel button for 1.5 seconds
             checkoutButton.style.display = 'none';
@@ -1383,12 +1417,22 @@
             cancelCheckoutButton.dataset.testId = 'cancel-checkout-button';
             cartPage.appendChild(cancelCheckoutButton);
             
-            setTimeout(() => {
+            // Auto-redirect after 1.5 seconds
+            const redirectTimeout = setTimeout(() => {
                 cancelCheckoutButton.remove();
                 checkoutButton.style.display = 'block';
                 // Redirect to history page
-                window.location.href = '/history.html';
+                window.location.hash = '#history';
+                checkCurrentPage();
             }, 1500);
+            
+            // Cancel checkout functionality
+            cancelCheckoutButton.addEventListener('click', () => {
+                clearTimeout(redirectTimeout);
+                cancelCheckoutButton.remove();
+                checkoutButton.style.display = 'block';
+                showNotification('Order cancelled');
+            });
         }
 
         function updateHistoryPage() {
@@ -1416,10 +1460,10 @@
                     <div class="order-items">
                         ${order.items.map(item => `
                             <div class="order-item">
-                                <img src="${item.image}" alt="${item.title}" class="order-item-image">
+                                <img src="${item.image}" alt="${item.title}" class="order-item-image" onerror="this.onerror=null; this.src='${item.backupImage}'">
                                 <div class="order-item-info">
                                     <div class="order-item-title" data-test-id="order-item-title">${item.title}</div>
-                                    <div class="order-item-price" data-testId="order-item-price">$${item.price.toLocaleString()}</div>
+                                    <div class="order-item-price" data-test-id="order-item-price">$${item.price.toLocaleString()}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -1547,9 +1591,9 @@
         }
 
         function checkCurrentPage() {
-            const path = window.location.pathname;
+            const hash = window.location.hash;
             
-            if (path.endsWith('/cart.html')) {
+            if (hash === '#cart') {
                 isCartPage = true;
                 isProfilePage = false;
                 isHistoryPage = false;
@@ -1558,7 +1602,7 @@
                 profilePage.style.display = 'none';
                 historyPage.style.display = 'none';
                 updateCartPage();
-            } else if (path.endsWith('/profile.html')) {
+            } else if (hash === '#profile') {
                 isCartPage = false;
                 isProfilePage = true;
                 isHistoryPage = false;
@@ -1567,7 +1611,7 @@
                 profilePage.style.display = 'block';
                 historyPage.style.display = 'none';
                 updateProfilePage();
-            } else if (path.endsWith('/history.html')) {
+            } else if (hash === '#history') {
                 isCartPage = false;
                 isProfilePage = false;
                 isHistoryPage = true;
@@ -1608,7 +1652,7 @@
                         
                         setTimeout(() => {
                             const suggestions = products
-                                .filter(product => product.title.toLowerCase().includes(searchTerm))
+                                .filter(product => product.title.toLowerCase().includes(searchTerm) && !purchasedItems.includes(product.id))
                                 .sort((a, b) => a.title.localeCompare(b.title))
                                 .slice(0, 3);
                             
@@ -1673,7 +1717,7 @@
                     closeProductModal();
                 }
             });
-            window.addEventListener('keydown', (e) => {
+            document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     closeProductModal();
                 }
@@ -1685,18 +1729,31 @@
             });
             
             // Cart icon click
-            document.querySelector('.cart-count').addEventListener('click', () => {
-                window.location.href = '/cart.html';
+            document.querySelector('.cart-count').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = '#cart';
+                checkCurrentPage();
             });
             
             // Profile icon click
-            document.querySelector('[data-test-id="menu-profile"]').addEventListener('click', () => {
-                window.location.href = '/profile.html';
+            document.querySelector('[data-test-id="menu-profile"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = '#profile';
+                checkCurrentPage();
             });
             
             // History icon click
-            document.querySelector('[data-test-id="menu-history"]').addEventListener('click', () => {
-                window.location.href = '/history.html';
+            document.querySelector('[data-test-id="menu-history"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = '#history';
+                checkCurrentPage();
+            });
+            
+            // Shop icon click
+            document.querySelector('[data-test-id="menu-shop"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = '';
+                checkCurrentPage();
             });
             
             // Checkout button
@@ -1704,7 +1761,8 @@
             
             // Login to place order button
             loginToPlaceOrderButton.addEventListener('click', () => {
-                window.location.href = '/profile.html';
+                window.location.hash = '#profile';
+                checkCurrentPage();
             });
             
             // Remove confirmation modal
@@ -1717,14 +1775,20 @@
                 removeConfirmModal.style.display = 'none';
             });
             
+            removeConfirmModal.addEventListener('click', (e) => {
+                if (e.target === removeConfirmModal) {
+                    removeConfirmModal.style.display = 'none';
+                }
+            });
+            
             // Profile save button
             profileSaveButton.addEventListener('click', saveUserProfile);
             
             // Theme toggle
             themeToggle.addEventListener('click', toggleTheme);
             
-            // URL change detection
-            window.addEventListener('popstate', checkCurrentPage);
+            // Hash change detection
+            window.addEventListener('hashchange', checkCurrentPage);
         }
 
         // Initialize the app
