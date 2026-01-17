@@ -1,213 +1,368 @@
-// Глобальное состояние приложения
-const state = {
-    products: [],
-    cart: JSON.parse(localStorage.getItem('luxury_cart')) || [],
-    orders: JSON.parse(localStorage.getItem('luxury_orders')) || [],
-    purchasedItems: JSON.parse(localStorage.getItem('luxury_purchased')) || [],
-    profile: JSON.parse(localStorage.getItem('luxury_profile')) || {
-        name: '',
-        email: '',
-        notifications: true
-    },
-    currentProductId: null,
-    theme: localStorage.getItem('luxury_theme') || 'light',
-    currentPage: 'products',
-    searchTerm: '',
-    activeFilters: new Set(),
-    removeProductId: null
-};
-
-// DOM элементы
-const elements = {
-    // Основные страницы
-    pages: {
-        products: document.getElementById('product-list-page'),
-        cart: document.getElementById('cart-page'),
-        profile: document.getElementById('profile-page'),
-        history: document.getElementById('history-page')
-    },
-    
-    // Навигация
-    nav: {
-        shop: document.querySelector('[data-test-id="menu-shop"]'),
-        cart: document.querySelector('[data-test-id="menu-cart"]'),
-        profile: document.querySelector('[data-test-id="menu-profile"]'),
-        history: document.querySelector('[data-test-id="menu-history"]'),
-        backButtons: document.querySelectorAll('.back-button'),
-        continueShopping: document.querySelectorAll('.continue-shopping')
-    },
-    
-    // Поиск и фильтры
-    search: {
-        input: document.querySelector('.search-bar'),
-        suggestions: document.querySelector('.search-suggestions'),
-        icon: document.querySelector('.search-icon'),
-        clearFilters: document.querySelector('.clear-filters')
-    },
-    
-    // Сетка товаров
-    productsGrid: document.querySelector('.products-grid'),
-    
-    // Корзина
-    cart: {
-        list: document.querySelector('.cart-list'),
-        total: document.querySelector('.cart-total'),
-        badge: document.querySelector('.cart-badge'),
-        checkoutBtn: document.querySelector('.checkout-button'),
-        empty: document.querySelector('.cart-empty')
-    },
-    
-    // Профиль
-    profile: {
-        form: document.querySelector('.profile-form'),
-        nameInput: document.getElementById('profile-name'),
-        emailInput: document.getElementById('profile-email'),
-        notifications: document.getElementById('notifications'),
-        saveBtn: document.querySelector('.profile-save'),
-        logoutBtn: document.querySelector('.profile-logout'),
-        errors: {
-            name: document.getElementById('name-error'),
-            email: document.getElementById('email-error')
-        }
-    },
-    
-    // История заказов
-    history: {
-        list: document.querySelector('.orders-list'),
-        empty: document.querySelector('.orders-empty')
-    },
-    
-    // Модальные окна
-    modals: {
-        product: document.getElementById('product-modal'),
-        removeConfirm: document.getElementById('remove-confirm-modal'),
-        orderSuccess: document.getElementById('order-success-modal')
-    },
-    
-    // Кнопки модальных окон
-    modalBtns: {
-        close: document.querySelector('.close-modal'),
-        cancelRemove: document.getElementById('cancel-remove'),
-        confirmRemove: document.getElementById('confirm-remove'),
-        viewOrderHistory: document.getElementById('view-order-history'),
-        continueShoppingModal: document.getElementById('continue-shopping-modal')
-    },
-    
-    // Элементы модального окна товара
-    productModal: {
-        image: document.getElementById('modal-image'),
-        title: document.getElementById('modal-title'),
-        category: document.getElementById('modal-category'),
-        price: document.getElementById('modal-price'),
-        description: document.getElementById('modal-description'),
-        specs: document.getElementById('modal-specs'),
-        badge: document.getElementById('modal-badge'),
-        addToCartBtn: document.getElementById('add-to-cart'),
-        buyNowBtn: document.getElementById('buy-now')
-    },
-    
-    // Уведомления
-    notification: document.getElementById('notification'),
-    
-    // Переключение темы
-    themeToggle: document.querySelector('.theme-toggle')
-};
-
 // Данные товаров
-const productsData = [
+const products = [
     {
         id: 1,
-        category: "Яхта",
-        title: "Ocean Master 77",
+        category: "YACHT",
+        title: "Azimut 77 Yacht",
         price: 3500000,
-        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Ocean Master 77 — это шедевр морской инженерии, оснащенный передовыми навигационными системами, роскошными интерьерами с итальянским мрамором и просторной солнечной палубой для развлечений. Идеально подходит для трансатлантических переходов и роскошных круизов.",
-        specs: [
-            { label: "Длина", value: "77 футов" },
-            { label: "Год постройки", value: "2023" },
-            { label: "Количество кают", value: "5" },
-            { label: "Макс. скорость", value: "35 узлов" },
-            { label: "Экипаж", value: "4 человека" },
-            { label: "Гостей", value: "10 человек" }
-        ],
-        features: ["Wi-Fi на борту", "Джакузи", "Вертолетная площадка", "Подводное освещение"]
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Luxury yacht with modern design and premium amenities"
     },
     {
         id: 2,
-        category: "Яхта",
-        title: "Royal Cruiser 90",
-        price: 8500000,
-        image: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Эксклюзивная яхта класса люкс с вертолетной площадкой, подводным светодиодным освещением и системой стабилизации для максимального комфорта в любую погоду.",
-        specs: [
-            { label: "Длина", value: "90 футов" },
-            { label: "Год постройки", value: "2024" },
-            { label: "Количество кают", value: "6" },
-            { label: "Макс. скорость", value: "40 узлов" },
-            { label: "Экипаж", value: "5 человек" },
-            { label: "Гостей", value: "12 человек" }
-        ],
-        features: ["Вертолетная площадка", "Кинотеатр", "Спа-салон", "Тренажерный зал"]
+        category: "PLANE",
+        title: "Gulfstream G650ER",
+        price: 75000000,
+        image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Private jet with long range and luxurious interior"
     },
     {
         id: 3,
-        category: "Яхта",
-        title: "Sea Dream 65",
-        price: 2200000,
-        image: "https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Идеальный выбор для средиземноморских круизов. Современный дизайн, экономичный расход топлива и все удобства для комфортного отдыха.",
-        specs: [
-            { label: "Длина", value: "65 футов" },
-            { label: "Год постройки", value: "2022" },
-            { label: "Количество кают", value: "4" },
-            { label: "Макс. скорость", value: "30 узлов" },
-            { label: "Экипаж", value: "3 человека" },
-            { label: "Гостей", value: "8 человек" }
-        ],
-        features: ["Солнечная палуба", "Барбекю", "Гидроцикл", "Снаряжение для дайвинга"]
+        category: "MANSION",
+        title: "Beverly Hills Mansion",
+        price: 125000000,
+        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Luxurious mansion in Beverly Hills with panoramic views"
     },
     {
         id: 4,
-        category: "Самолет",
-        title: "Gulfstream G650",
-        price: 65000000,
-        image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Бизнес-джет с самой большой дальностью полета в своем классе. Салон с индивидуальным дизайном, спальными помещениями и конференц-зоной.",
-        specs: [
-            { label: "Дальность полета", value: "13,000 км" },
-            { label: "Макс. скорость", value: "982 км/ч" },
-            { label: "Вместимость", value: "19 пассажиров" },
-            { label: "Размах крыла", value: "28.5 м" },
-            { label: "Длина", value: "30.4 м" }
-        ],
-        features: ["Спальные помещения", "Конференц-зал", "Wi-Fi", "Развлекательная система"]
+        category: "ISLAND",
+        title: "Private Caribbean Island",
+        price: 250000000,
+        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Private island in the Caribbean with white sand beaches"
     },
     {
         id: 5,
-        category: "Самолет",
-        title: "Bombardier Global 7500",
-        price: 73000000,
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Четыре отдельные зоны в салоне, спальные помещения, душевая кабина и бар. Самый современный бизнес-джет на рынке.",
-        specs: [
-            { label: "Дальность полета", value: "14,260 км" },
-            { label: "Макс. скорость", value: "1,014 км/ч" },
-            { label: "Вместимость", value: "17 пассажиров" },
-            { label: "Размах крыла", value: "31.7 м" },
-            { label: "Длина", value: "33.8 м" }
-        ],
-        features: ["4 зоны отдыха", "Душевая кабина", "Бар", "Спа-зона"]
+        category: "YACHT",
+        title: "Benetti 164 Superyacht",
+        price: 45000000,
+        image: "https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Superyacht with swimming pool and helicopter pad"
     },
     {
         id: 6,
-        category: "Особняк",
-        title: "Villa Aurora",
-        price: 45000000,
-        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-        description: "Особняк в испанском стиле на побережье Коста-дель-Соль. 12 спален, винный погреб, теннисный корт и бесконечный бассейн с видом на море.",
-        specs: [
-            { label: "Площадь", value: "2,500 м²" },
-            { label: "Спальни", value: "12" },
-            { label: "Ванные", value: "14" },
-            { label: "Участок", value: "3.5 га" },
-            { label: "Бассейн", value: "Инф
+        category: "MANSION",
+        title: "Miami Beach Penthouse",
+        price: 85000000,
+        image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Penthouse with ocean views and private beach access"
+    }
+];
+
+// Данные заказов
+const orders = [
+    {
+        id: "ORD-1122334455",
+        date: "20.01.2023",
+        items: [{ name: "Test Boat", price: 250000 }],
+        total: 250000
+    },
+    {
+        id: "ORD-0987654321",
+        date: "15.01.2023",
+        items: [
+            { name: "Test Car", price: 50000 },
+            { name: "Test Bike", price: 25000 }
+        ],
+        total: 75000
+    },
+    {
+        id: "ORD-1234567890",
+        date: "01.01.2023",
+        items: [
+            { name: "Test Yacht", price: 5000000 },
+            { name: "Test Plane", price: 1000000 }
+        ],
+        total: 6000000
+    }
+];
+
+// Состояние приложения
+let cart = JSON.parse(localStorage.getItem('luxuryCart')) || [];
+let currentPage = 'main';
+let itemToRemove = null;
+
+// DOM элементы
+const pages = {
+    main: document.getElementById('main-page'),
+    cart: document.getElementById('cart-page'),
+    profile: document.getElementById('profile-page'),
+    history: document.getElementById('history-page')
+};
+
+const modals = {
+    confirm: document.getElementById('confirm-modal'),
+    orderSuccess: document.getElementById('order-success-modal')
+};
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    renderProducts();
+    renderCart();
+    renderOrders();
+    setupEventListeners();
+});
+
+// Рендеринг товаров
+function renderProducts() {
+    const grid = document.getElementById('products-grid');
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const yachtChecked = document.getElementById('yacht-filter').checked;
+    const planeChecked = document.getElementById('plane-filter').checked;
+    const mansionChecked = document.getElementById('mansion-filter').checked;
+    const islandChecked = document.getElementById('island-filter').checked;
+
+    grid.innerHTML = '';
+
+    products.forEach(product => {
+        let showProduct = false;
+        if (yachtChecked && product.category === 'YACHT') showProduct = true;
+        if (planeChecked && product.category === 'PLANE') showProduct = true;
+        if (mansionChecked && product.category === 'MANSION') showProduct = true;
+        if (islandChecked && product.category === 'ISLAND') showProduct = true;
+
+        if (searchTerm && !product.title.toLowerCase().includes(searchTerm)) {
+            showProduct = false;
+        }
+
+        if (showProduct) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <div class="product-title">${product.title}</div>
+                    <div class="product-description">${product.description}</div>
+                    <div class="product-price">$${product.price.toLocaleString()}</div>
+                    <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
+                </div>
+            `;
+            const button = card.querySelector('.add-to-cart-btn');
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addToCart(product.id);
+            });
+            grid.appendChild(card);
+        }
+    });
+}
+
+// Добавление в корзину
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            quantity: 1,
+            category: product.category
+        });
+    }
+
+    saveCart();
+    renderCart();
+    showNotification(`${product.title} added to cart`);
+}
+
+// Удаление из корзины
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCart();
+    renderCart();
+    modals.confirm.style.display = 'none';
+    showNotification('Item removed from cart');
+}
+
+// Рендеринг корзины
+function renderCart() {
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    
+    cartItems.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p>Your cart is empty</p>';
+        cartTotal.textContent = 'Total: $0';
+        return;
+    }
+
+    let total = 0;
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+        const itemElement = document.createElement('div');
+        itemElement.className = 'order-card';
+        itemElement.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-weight: bold;">${item.name}</div>
+                    <div>$${item.price.toLocaleString()} × ${item.quantity}</div>
+                </div>
+                <button class="remove-item" data-id="${item.id}" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                    Remove
+                </button>
+            </div>
+        `;
+        cartItems.appendChild(itemElement);
+    });
+
+    cartTotal.textContent = `Total: $${total.toLocaleString()}`;
+
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            itemToRemove = parseInt(button.dataset.id);
+            modals.confirm.style.display = 'flex';
+        });
+    });
+}
+
+// Рендеринг истории заказов
+function renderOrders() {
+    const ordersList = document.getElementById('orders-list');
+    ordersList.innerHTML = '';
+
+    orders.forEach(order => {
+        const orderElement = document.createElement('div');
+        orderElement.className = 'order-card';
+        
+        let itemsHtml = '';
+        order.items.forEach(item => {
+            itemsHtml += `<div class="order-item">${item.name}</div>`;
+        });
+
+        orderElement.innerHTML = `
+            <div class="order-header">
+                <div class="order-number">${order.id}</div>
+                <div class="order-date">${order.date}</div>
+            </div>
+            <div class="order-items">${itemsHtml}</div>
+            <div class="order-total">Total: $${order.total.toLocaleString()}</div>
+        `;
+        ordersList.appendChild(orderElement);
+    });
+}
+
+// Оформление заказа
+function checkout() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty');
+        return;
+    }
+
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
+    
+    document.getElementById('order-number').textContent = orderId;
+    document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
+    
+    cart = [];
+    saveCart();
+    renderCart();
+    modals.orderSuccess.style.display = 'flex';
+}
+
+// Сохранение профиля
+function saveProfile() {
+    const name = document.getElementById('profile-name').value;
+    const email = document.getElementById('profile-email').value;
+    
+    if (!name || !email) {
+        showNotification('Please fill in all fields');
+        return;
+    }
+
+    showNotification('Profile saved successfully');
+}
+
+// Показать уведомление + анимация корзины
+function showNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.display = 'block';
+    
+    const cartIcon = document.getElementById('cart-icon');
+    cartIcon.style.transform = 'scale(1.2)';
+    cartIcon.style.transition = 'transform 0.3s ease';
+    setTimeout(() => {
+        cartIcon.style.transform = 'scale(1)';
+    }, 300);
+
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+// Сохранение корзины в localStorage
+function saveCart() {
+    localStorage.setItem('luxuryCart', JSON.stringify(cart));
+}
+
+// Переключение страниц
+function navigateTo(page) {
+    Object.values(pages).forEach(p => p.classList.remove('active'));
+    pages[page].classList.add('active');
+    currentPage = page;
+}
+
+// Настройка обработчиков событий
+function setupEventListeners() {
+    document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
+    document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
+    document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
+    document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
+
+    document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
+    document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
+    document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
+
+    document.getElementById('search-input').addEventListener('input', renderProducts);
+
+    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', renderProducts);
+    });
+
+    document.getElementById('reset-filters').addEventListener('click', () => {
+        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
+        renderProducts();
+    });
+
+    document.getElementById('checkout-button').addEventListener('click', checkout);
+    document.getElementById('save-profile').addEventListener('click', saveProfile);
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        modals.confirm.style.display = 'none';
+    });
+
+    document.getElementById('close-success-modal').addEventListener('click', () => {
+        modals.orderSuccess.style.display = 'none';
+        navigateTo('main');
+    });
+
+    document.getElementById('cancel-delete').addEventListener('click', () => {
+        modals.confirm.style.display = 'none';
+        itemToRemove = null;
+    });
+
+    document.getElementById('confirm-delete').addEventListener('click', () => {
+        if (itemToRemove) {
+            removeFromCart(itemToRemove);
+        }
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modals.confirm) {
+            modals.confirm.style.display = 'none';
+        }
+        if (e.target === modals.orderSuccess) {
+            modals.orderSuccess.style.display = 'none';
+            navigateTo('main');
+        }
+    });
+}
