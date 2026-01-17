@@ -1,483 +1,413 @@
-// ===== ДАННЫЕ ТОВАРОВ С ЛОКАЛЬНЫМИ ИЗОБРАЖЕНИЯМИ =====
-const products = [
-    {
-        id: 1,
-        category: "YACHT",
-        title: "Azimut 77 Yacht",
-        price: 3500000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+",
-        description: "Luxury yacht with modern design and premium amenities."
-    },
-    {
-        id: 2,
-        category: "PLANE",
-        title: "Gulfstream G650ER",
-        price: 75000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGN5YW4iLz48L3N2Zz4=",
-        description: "Private jet with long range and luxurious interior."
-    },
-    {
-        id: 3,
-        category: "MANSION",
-        title: "Beverly Hills Mansion",
-        price: 125000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodHB1cnBsZSIvPjwvc3ZnPg==",
-        description: "Luxurious mansion in Beverly Hills with panoramic views."
-    },
-    {
-        id: 4,
-        category: "ISLAND",
-        title: "Private Caribbean Island",
-        price: 250000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodG9yYW5nZSIvPjwvc3ZnPg==",
-        description: "Private island in the Caribbean with white sand beaches."
-    },
-    {
-        id: 5,
-        category: "YACHT",
-        title: "Benetti 164 Superyacht",
-        price: 45000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+",
-        description: "Superyacht with swimming pool and helicopter pad."
-    },
-    {
-        id: 6,
-        category: "MANSION",
-        title: "Miami Beach Penthouse",
-        price: 85000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodHB1cnBsZSIvPjwvc3ZnPg==",
-        description: "Penthouse with ocean views and private beach access."
-    },
-    {
-        id: 7,
-        category: "PLANE",
-        title: "Boeing Business Jet",
-        price: 90000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGN5YW4iLz48L3N2Zz4=",
-        description: "Custom-configured Boeing business jet for ultimate comfort."
-    },
-    {
-        id: 8,
-        category: "ISLAND",
-        title: "Maldives Private Atoll",
-        price: 320000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodG9yYW5nZSIvPjwvc3ZnPg==",
-        description: "Entire private atoll in the Maldives with luxury resort."
-    },
-    {
-        id: 9,
-        category: "YACHT",
-        title: "Lürssen A+ Superyacht",
-        price: 600000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+",
-        description: "One of the world's largest and most luxurious yachts."
-    },
-    {
-        id: 10,
-        category: "MANSION",
-        title: "Dubai Sky Palace",
-        price: 200000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodHB1cnBsZSIvPjwvc3ZnPg==",
-        description: "Ultra-modern penthouse in the heart of Dubai."
-    },
-    {
-        id: 11,
-        category: "PLANE",
-        title: "Airbus ACJ320neo",
-        price: 110000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGN5YW4iLz48L3N2Zz4=",
-        description: "Next-generation private Airbus with transatlantic range."
-    },
-    {
-        id: 12,
-        category: "ISLAND",
-        title: "Fiji Hidden Paradise",
-        price: 180000000,
-        image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodG9yYW5nZSIvPjwvc3ZnPg==",
-        description: "Secluded island with rainforest, beaches, and coral reef."
-    }
-];
-
-// ===== СОСТОЯНИЕ ПРИЛОЖЕНИЯ =====
-let cart = [];
-let currentPage = 'main';
-let itemToRemove = null;
-let currentProductModalId = null;
-
-// ===== DOM ЭЛЕМЕНТЫ =====
-const pages = {
-    main: document.getElementById('main-page'),
-    cart: document.getElementById('cart-page'),
-    profile: document.getElementById('profile-page'),
-    history: document.getElementById('history-page')
-};
-
-const modals = {
-    product: document.getElementById('product-modal'),
-    confirm: document.getElementById('confirm-modal'),
-    orderSuccess: document.getElementById('order-success-modal')
-};
-
-// ===== ФУНКЦИИ =====
-
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
+:root {
+    --bg-color: #f5f5f5;
+    --card-bg: white;
+    --text-color: #333;
+    --text-secondary: #666;
+    --border-color: #ddd;
+    --shadow: rgba(0,0,0,0.1);
+    --button-bg: #333;
+    --button-hover: #555;
+    --header-bg: white;
+    --input-bg: white;
 }
 
-function toggleTheme() {
-    const current = document.body.getAttribute('data-theme');
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #f0f0f0;
+    --text-secondary: #aaa;
+    --border-color: #333;
+    --shadow: rgba(0,0,0,0.3);
+    --button-bg: #f0f0f0;
+    --button-hover: #ccc;
+    --header-bg: #1a1a1a;
+    --input-bg: #2a2a2a;
 }
 
-function updateThemeIcon(theme) {
-    const icon = document.getElementById('theme-toggle').querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-function showNotification(message) {
-    const notif = document.getElementById('notification');
-    notif.textContent = message;
-    notif.classList.add('show');
-    setTimeout(() => notif.classList.remove('show'), 3000);
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-function openModal(modal) {
-    modal.style.display = 'flex';
-    setTimeout(() => modal.classList.add('active'), 10);
+.page {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-function closeModal(modal) {
-    modal.classList.remove('active');
-    setTimeout(() => modal.style.display = 'none', 300);
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-function navigateTo(page) {
-    Object.values(pages).forEach(p => p.classList.remove('active'));
-    setTimeout(() => {
-        pages[page].classList.add('active');
-        currentPage = page;
-    }, 10);
+header {
+    background-color: var(--header-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
 }
 
-// ===== РАБОТА С КОРЗИНОЙ =====
-
-function loadCart() {
-    try {
-        const saved = localStorage.getItem('luxuryCart');
-        return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-        console.warn('Failed to load cart from localStorage:', e);
-        return [];
-    }
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: none;
 }
 
-function saveCart() {
-    try {
-        localStorage.setItem('luxuryCart', JSON.stringify(cart));
-    } catch (e) {
-        console.warn('Failed to save cart to localStorage:', e);
-    }
+.header-icons {
+    display: flex;
+    gap: 20px;
 }
 
-function renderProducts() {
-    const grid = document.getElementById('products-grid');
-    const term = document.getElementById('search-input').value.toLowerCase();
-    const filters = {
-        YACHT: document.getElementById('yacht-filter').checked,
-        PLANE: document.getElementById('plane-filter').checked,
-        MANSION: document.getElementById('mansion-filter').checked,
-        ISLAND: document.getElementById('island-filter').checked
-    };
-
-    grid.innerHTML = '';
-
-    products.forEach(product => {
-        const matchesCategory = filters[product.category];
-        const matchesSearch = !term || product.title.toLowerCase().includes(term);
-        if (matchesCategory && matchesSearch) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${product.image}" alt="${product.title}" class="product-image">
-                <div class="product-info">
-                    <div class="product-category">${product.category}</div>
-                    <div class="product-title">${product.title}</div>
-                    <div class="product-price">$${product.price.toLocaleString()}</div>
-                </div>
-            `;
-            card.addEventListener('click', () => openProductModal(product.id));
-            grid.appendChild(card);
-        }
-    });
+.icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s, transform 0.15s;
 }
 
-function openProductModal(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-
-    document.getElementById('modal-product-image').style.backgroundImage = `url(${product.image})`;
-    document.getElementById('modal-product-title').textContent = product.title;
-    document.getElementById('modal-product-category').textContent = product.category;
-    document.getElementById('modal-product-description').textContent = product.description;
-    document.getElementById('modal-product-price').textContent = `$${product.price.toLocaleString()}`;
-    
-    currentProductModalId = productId;
-    openModal(modals.product);
+.icon:hover {
+    background-color: var(--border-color);
+    transform: scale(1.05);
 }
 
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existing = cart.find(item => item.id === productId);
-
-    if (existing) {
-        existing.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.title,
-            price: product.price,
-            quantity: 1
-        });
-    }
-
-    saveCart();
-    renderCart();
-    showNotification(`${product.title} added to cart`);
+.page-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    renderCart();
-    closeModal(modals.confirm);
-    showNotification('Item removed from cart');
+.search-container {
+    position: relative;
+    margin: 20px 0;
 }
 
-function renderCart() {
-    const container = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
-    container.innerHTML = '';
-
-    if (cart.length === 0) {
-        container.innerHTML = '<p>Your cart is empty</p>';
-        totalEl.textContent = 'Total: $0';
-        return;
-    }
-
-    let total = 0;
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-        const el = document.createElement('div');
-        el.className = 'order-card';
-        el.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-weight: bold;">${item.name}</div>
-                    <div>$${item.price.toLocaleString()} × ${item.quantity}</div>
-                </div>
-                <button class="remove-item" data-id="${item.id}">Remove</button>
-            </div>
-        `;
-        container.appendChild(el);
-    });
-
-    totalEl.textContent = `Total: $${total.toLocaleString()}`;
-
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            itemToRemove = parseInt(btn.dataset.id);
-            openModal(modals.confirm);
-        });
-    });
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
-function renderOrders() {
-    const list = document.getElementById('orders-list');
-    list.innerHTML = '';
-    orders.forEach(order => {
-        const el = document.createElement('div');
-        el.className = 'order-card';
-        let itemsHtml = '';
-        order.items.forEach(item => {
-            itemsHtml += `<div class="order-item">${item.name}</div>`;
-        });
-        el.innerHTML = `
-            <div class="order-header">
-                <div class="order-number">${order.id}</div>
-                <div class="order-date">${order.date}</div>
-            </div>
-            <div class="order-items">${itemsHtml}</div>
-            <div class="order-total">Total: $${order.total.toLocaleString()}</div>
-        `;
-        list.appendChild(el);
-    });
+#suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1001;
+    display: none;
+    box-shadow: 0 4px 10px var(--shadow);
 }
 
-function checkout() {
-    if (cart.length === 0) {
-        showNotification('Your cart is empty');
-        return;
-    }
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
-    document.getElementById('order-number').textContent = orderId;
-    document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
-    cart = [];
-    saveCart();
-    renderCart();
-    openModal(modals.orderSuccess);
+#suggestions div {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: background-color 0.2s;
 }
 
-function saveProfile() {
-    const name = document.getElementById('profile-name').value.trim();
-    const email = document.getElementById('profile-email').value.trim();
-    if (!name || !email) {
-        showNotification('Please fill in all fields');
-        return;
-    }
-    showNotification('Profile saved successfully');
+#suggestions div:hover {
+    background-color: var(--border-color);
 }
 
-// ===== АВТОПОДСКАЗКИ ПРИ ПОИСКЕ =====
-function setupAutocomplete() {
-    const input = document.getElementById('search-input');
-    const suggestionsContainer = document.getElementById('suggestions');
-
-    input.addEventListener('input', () => {
-        const term = input.value.toLowerCase().trim();
-        if (!term) {
-            suggestionsContainer.style.display = 'none';
-            return;
-        }
-
-        const matches = products
-            .filter(p => p.title.toLowerCase().includes(term))
-            .slice(0, 5);
-
-        if (matches.length === 0) {
-            suggestionsContainer.style.display = 'none';
-            return;
-        }
-
-        suggestionsContainer.innerHTML = '';
-        matches.forEach(product => {
-            const item = document.createElement('div');
-            item.textContent = product.title;
-            item.style.padding = '10px 15px';
-            item.style.cursor = 'pointer';
-            item.style.color = 'var(--text-color)';
-            item.style.transition = 'background-color 0.2s';
-            item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--border-color)');
-            item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
-            item.addEventListener('click', () => {
-                input.value = product.title;
-                suggestionsContainer.style.display = 'none';
-                renderProducts();
-            });
-            suggestionsContainer.appendChild(item);
-        });
-
-        suggestionsContainer.style.display = 'block';
-    });
-
-    document.addEventListener('click', (e) => {
-        if (e.target !== input && e.target !== suggestionsContainer) {
-            suggestionsContainer.style.display = 'none';
-        }
-    });
+.filters {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow);
+    flex-wrap: wrap;
 }
 
-// ===== ЗАПУСК =====
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("🚀 Luxury App initializing...");
-
-    // Загрузить корзину
-    cart = loadCart();
-
-    // Инициализация темы
-    initTheme();
-
-    // Рендеринг
-    renderProducts();
-    renderCart();
-    renderOrders();
-
-    // Настройка событий
-    setupEventListeners();
-
-    // Автоподсказки
-    setupAutocomplete();
-
-    console.log("✅ App ready!");
-});
-
-function setupEventListeners() {
-    // Theme toggle
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
-    // Navigation
-    document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
-    document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
-    document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
-    document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
-
-    document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
-
-    // Search & filters
-    document.getElementById('search-input').addEventListener('input', renderProducts);
-    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', renderProducts));
-    document.getElementById('reset-filters').addEventListener('click', () => {
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
-        renderProducts();
-    });
-
-    // Modals
-    document.getElementById('close-product-modal').addEventListener('click', () => closeModal(modals.product));
-    document.getElementById('modal-add-to-cart').addEventListener('click', () => {
-        addToCart(currentProductModalId);
-        closeModal(modals.product);
-    });
-
-    document.getElementById('close-modal').addEventListener('click', () => closeModal(modals.confirm));
-    document.getElementById('cancel-delete').addEventListener('click', () => closeModal(modals.confirm));
-    document.getElementById('confirm-delete').addEventListener('click', () => {
-        if (itemToRemove !== null) removeFromCart(itemToRemove);
-    });
-
-    document.getElementById('close-success-modal').addEventListener('click', () => {
-        closeModal(modals.orderSuccess);
-        navigateTo('main');
-    });
-
-    // Close on outside click
-    window.addEventListener('click', (e) => {
-        if (e.target === modals.product) closeModal(modals.product);
-        if (e.target === modals.confirm) closeModal(modals.confirm);
-        if (e.target === modals.orderSuccess) {
-            closeModal(modals.orderSuccess);
-            navigateTo('main');
-        }
-    });
-
-    // Other
-    document.getElementById('checkout-button').addEventListener('click', checkout);
-    document.getElementById('save-profile').addEventListener('click', saveProfile);
+.filter-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--button-bg);
 }
 
-// ===== ДАННЫЕ ЗАКАЗОВ =====
-const orders = [
-    {
-        id: "ORD-1122334455",
-        date: "20.01.2023",
-        items: [{ name: "Azimut 77 Yacht", price: 3500000 }],
-        total: 3500000
-    }
-];
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.product-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px var(--shadow);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px var(--shadow);
+}
+
+.product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-category {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: var(--text-color);
+}
+
+.product-price {
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.add-to-cart-btn,
+.save-button,
+.checkout-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+.add-to-cart-btn,
+.save-button {
+    background-color: var(--button-bg);
+    color: var(--header-bg);
+}
+
+.add-to-cart-btn:hover,
+.save-button:hover {
+    background-color: var(--button-hover);
+}
+
+.add-to-cart-btn:active,
+.save-button:active {
+    transform: scale(0.97);
+}
+
+.checkout-button {
+    background-color: var(--button-bg);
+    color: var(--header-bg);
+    margin-top: 20px;
+}
+
+.back-button {
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: var(--border-color);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.close-modal:hover {
+    color: var(--text-color);
+}
+
+.product-modal-content {
+    max-width: 600px;
+    text-align: center;
+}
+
+.modal-product-image {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#modal-product-category {
+    color: var(--text-secondary);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+#modal-product-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+#modal-product-description {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.modal-product-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 15px 0;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--button-bg);
+    color: var(--header-bg);
+    padding: 15px 25px;
+    border-radius: 5px;
+    display: none;
+    z-index: 3000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transform: translateX(120%);
+    transition: transform 0.4s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.order-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: var(--card-bg);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-number {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.order-date {
+    color: var(--text-secondary);
+}
+
+.order-total {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right;
+    color: var(--text-color);
+}
