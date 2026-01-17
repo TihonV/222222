@@ -1,4 +1,4 @@
-// Данные товаров
+// ===== ДАННЫЕ ТОВАРОВ =====
 const products = [
     {
         id: 1,
@@ -6,7 +6,7 @@ const products = [
         title: "Azimut 77 Yacht",
         price: 3500000,
         image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Luxury yacht with modern design and premium amenities"
+        description: "Luxury yacht with modern design and premium amenities."
     },
     {
         id: 2,
@@ -14,7 +14,7 @@ const products = [
         title: "Gulfstream G650ER",
         price: 75000000,
         image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Private jet with long range and luxurious interior"
+        description: "Private jet with long range and luxurious interior."
     },
     {
         id: 3,
@@ -22,7 +22,7 @@ const products = [
         title: "Beverly Hills Mansion",
         price: 125000000,
         image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Luxurious mansion in Beverly Hills with panoramic views"
+        description: "Luxurious mansion in Beverly Hills with panoramic views."
     },
     {
         id: 4,
@@ -30,7 +30,7 @@ const products = [
         title: "Private Caribbean Island",
         price: 250000000,
         image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Private island in the Caribbean with white sand beaches"
+        description: "Private island in the Caribbean with white sand beaches."
     },
     {
         id: 5,
@@ -38,7 +38,7 @@ const products = [
         title: "Benetti 164 Superyacht",
         price: 45000000,
         image: "https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Superyacht with swimming pool and helicopter pad"
+        description: "Superyacht with swimming pool and helicopter pad."
     },
     {
         id: 6,
@@ -46,333 +46,74 @@ const products = [
         title: "Miami Beach Penthouse",
         price: 85000000,
         image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-        description: "Penthouse with ocean views and private beach access"
+        description: "Penthouse with ocean views and private beach access."
+    },
+    {
+        id: 7,
+        category: "PLANE",
+        title: "Boeing Business Jet",
+        price: 90000000,
+        image: "https://images.unsplash.com/photo-1598301251803-0f9c9a5f3e33?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Custom-configured Boeing business jet for ultimate comfort."
+    },
+    {
+        id: 8,
+        category: "ISLAND",
+        title: "Maldives Private Atoll",
+        price: 320000000,
+        image: "https://images.unsplash.com/photo-1505239522295-5aa8ac7f3ec4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Entire private atoll in the Maldives with luxury resort."
+    },
+    {
+        id: 9,
+        category: "YACHT",
+        title: "Lürssen A+ Superyacht",
+        price: 600000000,
+        image: "https://images.unsplash.com/photo-1597813179153-7d3d3dc3e2c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "One of the world's largest and most luxurious yachts."
+    },
+    {
+        id: 10,
+        category: "MANSION",
+        title: "Dubai Sky Palace",
+        price: 200000000,
+        image: "https://images.unsplash.com/photo-1618750869771-b9e1bafcbfdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Ultra-modern penthouse in the heart of Dubai."
+    },
+    {
+        id: 11,
+        category: "PLANE",
+        title: "Airbus ACJ320neo",
+        price: 110000000,
+        image: "https://images.unsplash.com/photo-1598301251803-0f9c9a5f3e33?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Next-generation private Airbus with transatlantic range."
+    },
+    {
+        id: 12,
+        category: "ISLAND",
+        title: "Fiji Hidden Paradise",
+        price: 180000000,
+        image: "https://images.unsplash.com/photo-1505239522295-5aa8ac7f3ec4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        description: "Secluded island with rainforest, beaches, and coral reef."
     }
 ];
 
-// Данные заказов
 const orders = [
     {
         id: "ORD-1122334455",
         date: "20.01.2023",
-        items: [{ name: "Test Boat", price: 250000 }],
-        total: 250000
-    },
-    {
-        id: "ORD-0987654321",
-        date: "15.01.2023",
-        items: [
-            { name: "Test Car", price: 50000 },
-            { name: "Test Bike", price: 25000 }
-        ],
-        total: 75000
-    },
-    {
-        id: "ORD-1234567890",
-        date: "01.01.2023",
-        items: [
-            { name: "Test Yacht", price: 5000000 },
-            { name: "Test Plane", price: 1000000 }
-        ],
-        total: 6000000
+        items: [{ name: "Azimut 77 Yacht", price: 3500000 }],
+        total: 3500000
     }
 ];
 
-// Состояние приложения
-let cart = JSON.parse(localStorage.getItem('luxuryCart')) || [];
-let currentPage = 'main';
-let itemToRemove = null;
-
-// DOM элементы
-const pages = {
-    main: document.getElementById('main-page'),
-    cart: document.getElementById('cart-page'),
-    profile: document.getElementById('profile-page'),
-    history: document.getElementById('history-page')
-};
-
-const modals = {
-    confirm: document.getElementById('confirm-modal'),
-    orderSuccess: document.getElementById('order-success-modal')
-};
-
-// Инициализация
-document.addEventListener('DOMContentLoaded', function() {
-    renderProducts();
-    renderCart();
-    renderOrders();
-    setupEventListeners();
-});
-
-// Рендеринг товаров
-function renderProducts() {
-    const grid = document.getElementById('products-grid');
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    const yachtChecked = document.getElementById('yacht-filter').checked;
-    const planeChecked = document.getElementById('plane-filter').checked;
-    const mansionChecked = document.getElementById('mansion-filter').checked;
-    const islandChecked = document.getElementById('island-filter').checked;
-
-    grid.innerHTML = '';
-
-    products.forEach(product => {
-        let showProduct = false;
-        if (yachtChecked && product.category === 'YACHT') showProduct = true;
-        if (planeChecked && product.category === 'PLANE') showProduct = true;
-        if (mansionChecked && product.category === 'MANSION') showProduct = true;
-        if (islandChecked && product.category === 'ISLAND') showProduct = true;
-
-        if (searchTerm && !product.title.toLowerCase().includes(searchTerm)) {
-            showProduct = false;
-        }
-
-        if (showProduct) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${product.image}" alt="${product.title}" class="product-image">
-                <div class="product-info">
-                    <div class="product-category">${product.category}</div>
-                    <div class="product-title">${product.title}</div>
-                    <div class="product-description">${product.description}</div>
-                    <div class="product-price">$${product.price.toLocaleString()}</div>
-                    <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
-                </div>
-            `;
-            const button = card.querySelector('.add-to-cart-btn');
-            button.addEventListener('click', (e) => {
-                e.stopPropagation();
-                addToCart(product.id);
-            });
-            grid.appendChild(card);
-        }
-    });
-}
-
-// Добавление в корзину
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.title,
-            price: product.price,
-            quantity: 1,
-            category: product.category
-        });
-    }
-
-    saveCart();
-    renderCart();
-    showNotification(`${product.title} added to cart`);
-}
-
-// Удаление из корзины
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    renderCart();
-    modals.confirm.style.display = 'none';
-    showNotification('Item removed from cart');
-}
-
-// Рендеринг корзины
-function renderCart() {
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    
-    cartItems.innerHTML = '';
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<p>Your cart is empty</p>';
-        cartTotal.textContent = 'Total: $0';
-        return;
-    }
-
-    let total = 0;
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-        const itemElement = document.createElement('div');
-        itemElement.className = 'order-card';
-        itemElement.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-weight: bold;">${item.name}</div>
-                    <div>$${item.price.toLocaleString()} × ${item.quantity}</div>
-                </div>
-                <button class="remove-item" data-id="${item.id}" style="background: none; border: 1px solid #ddd; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
-                    Remove
-                </button>
-            </div>
-        `;
-        cartItems.appendChild(itemElement);
-    });
-
-    cartTotal.textContent = `Total: $${total.toLocaleString()}`;
-
-    document.querySelectorAll('.remove-item').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            itemToRemove = parseInt(button.dataset.id);
-            modals.confirm.style.display = 'flex';
-        });
-    });
-}
-
-// Рендеринг истории заказов
-function renderOrders() {
-    const ordersList = document.getElementById('orders-list');
-    ordersList.innerHTML = '';
-
-    orders.forEach(order => {
-        const orderElement = document.createElement('div');
-        orderElement.className = 'order-card';
-        
-        let itemsHtml = '';
-        order.items.forEach(item => {
-            itemsHtml += `<div class="order-item">${item.name}</div>`;
-        });
-
-        orderElement.innerHTML = `
-            <div class="order-header">
-                <div class="order-number">${order.id}</div>
-                <div class="order-date">${order.date}</div>
-            </div>
-            <div class="order-items">${itemsHtml}</div>
-            <div class="order-total">Total: $${order.total.toLocaleString()}</div>
-        `;
-        ordersList.appendChild(orderElement);
-    });
-}
-
-// Оформление заказа
-function checkout() {
-    if (cart.length === 0) {
-        showNotification('Your cart is empty');
-        return;
-    }
-
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
-    
-    document.getElementById('order-number').textContent = orderId;
-    document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
-    
-    cart = [];
-    saveCart();
-    renderCart();
-    modals.orderSuccess.style.display = 'flex';
-}
-
-// Сохранение профиля
-function saveProfile() {
-    const name = document.getElementById('profile-name').value;
-    const email = document.getElementById('profile-email').value;
-    
-    if (!name || !email) {
-        showNotification('Please fill in all fields');
-        return;
-    }
-
-    showNotification('Profile saved successfully');
-}
-
-// Показать уведомление + анимация корзины
-function showNotification(message) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.style.display = 'block';
-    
-    const cartIcon = document.getElementById('cart-icon');
-    cartIcon.style.transform = 'scale(1.2)';
-    cartIcon.style.transition = 'transform 0.3s ease';
-    setTimeout(() => {
-        cartIcon.style.transform = 'scale(1)';
-    }, 300);
-
-    setTimeout(() => {
-        notification.style.display = 'none';
-    }, 3000);
-}
-
-// Сохранение корзины в localStorage
-function saveCart() {
-    localStorage.setItem('luxuryCart', JSON.stringify(cart));
-}
-
-// Переключение страниц
-function navigateTo(page) {
-    Object.values(pages).forEach(p => p.classList.remove('active'));
-    pages[page].classList.add('active');
-    currentPage = page;
-}
-
-// Настройка обработчиков событий
-function setupEventListeners() {
-    document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
-    document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
-    document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
-    document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
-
-    document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
-
-    document.getElementById('search-input').addEventListener('input', renderProducts);
-
-    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', renderProducts);
-    });
-
-    document.getElementById('reset-filters').addEventListener('click', () => {
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
-        renderProducts();
-    });
-
-    document.getElementById('checkout-button').addEventListener('click', checkout);
-    document.getElementById('save-profile').addEventListener('click', saveProfile);
-
-    document.getElementById('close-modal').addEventListener('click', () => {
-        modals.confirm.style.display = 'none';
-    });
-
-    document.getElementById('close-success-modal').addEventListener('click', () => {
-        modals.orderSuccess.style.display = 'none';
-        navigateTo('main');
-    });
-
-    document.getElementById('cancel-delete').addEventListener('click', () => {
-        modals.confirm.style.display = 'none';
-        itemToRemove = null;
-    });
-
-    document.getElementById('confirm-delete').addEventListener('click', () => {
-        if (itemToRemove) {
-            removeFromCart(itemToRemove);
-        }
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modals.confirm) {
-            modals.confirm.style.display = 'none';
-        }
-        if (e.target === modals.orderSuccess) {
-            modals.orderSuccess.style.display = 'none';
-            navigateTo('main');
-        }
-    });
-}
-// ... (все данные products, orders остаются без изменений)
-
-let cart = JSON.parse(localStorage.getItem('luxuryCart')) || [];
+// ===== СОСТОЯНИЕ ПРИЛОЖЕНИЯ =====
+let cart = []; // Будет загружено из localStorage ниже
 let currentPage = 'main';
 let itemToRemove = null;
 let currentProductModalId = null;
 
+// ===== DOM ЭЛЕМЕНТЫ =====
 const pages = {
     main: document.getElementById('main-page'),
     cart: document.getElementById('cart-page'),
@@ -386,10 +127,10 @@ const modals = {
     orderSuccess: document.getElementById('order-success-modal')
 };
 
-// === Тема ===
+// ===== ФУНКЦИИ =====
+
 function initTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.classList.remove('theme-light', 'theme-dark');
     document.body.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 }
@@ -407,7 +148,6 @@ function updateThemeIcon(theme) {
     icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
 
-// === Анимации ===
 function showNotification(message) {
     const notif = document.getElementById('notification');
     notif.textContent = message;
@@ -425,7 +165,6 @@ function closeModal(modal) {
     setTimeout(() => modal.style.display = 'none', 300);
 }
 
-// === Навигация с анимацией ===
 function navigateTo(page) {
     Object.values(pages).forEach(p => p.classList.remove('active'));
     setTimeout(() => {
@@ -434,14 +173,57 @@ function navigateTo(page) {
     }, 10);
 }
 
-// === Остальная логика (без изменений, кроме замены модалок) ===
-document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    renderProducts();
-    renderCart();
-    renderOrders();
-    setupEventListeners();
-});
+// ===== РАБОТА С КОРЗИНОЙ =====
+
+function loadCart() {
+    try {
+        const saved = localStorage.getItem('luxuryCart');
+        return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+        console.warn('Failed to load cart from localStorage:', e);
+        return [];
+    }
+}
+
+function saveCart() {
+    try {
+        localStorage.setItem('luxuryCart', JSON.stringify(cart));
+    } catch (e) {
+        console.warn('Failed to save cart to localStorage:', e);
+    }
+}
+
+function renderProducts() {
+    const grid = document.getElementById('products-grid');
+    const term = document.getElementById('search-input').value.toLowerCase();
+    const filters = {
+        YACHT: document.getElementById('yacht-filter').checked,
+        PLANE: document.getElementById('plane-filter').checked,
+        MANSION: document.getElementById('mansion-filter').checked,
+        ISLAND: document.getElementById('island-filter').checked
+    };
+
+    grid.innerHTML = '';
+
+    products.forEach(product => {
+        const matchesCategory = filters[product.category];
+        const matchesSearch = !term || product.title.toLowerCase().includes(term);
+        if (matchesCategory && matchesSearch) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <div class="product-title">${product.title}</div>
+                    <div class="product-price">$${product.price.toLocaleString()}</div>
+                </div>
+            `;
+            card.addEventListener('click', () => openProductModal(product.id));
+            grid.appendChild(card);
+        }
+    });
+}
 
 function openProductModal(productId) {
     const product = products.find(p => p.id === productId);
@@ -485,10 +267,90 @@ function removeFromCart(productId) {
     showNotification('Item removed from cart');
 }
 
-// ... (renderCart, renderOrders, checkout, saveProfile — без изменений)
+function renderCart() {
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    container.innerHTML = '';
 
-function saveCart() {
-    localStorage.setItem('luxuryCart', JSON.stringify(cart));
+    if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty</p>';
+        totalEl.textContent = 'Total: $0';
+        return;
+    }
+
+    let total = 0;
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+        const el = document.createElement('div');
+        el.className = 'order-card';
+        el.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-weight: bold;">${item.name}</div>
+                    <div>$${item.price.toLocaleString()} × ${item.quantity}</div>
+                </div>
+                <button class="remove-item" data-id="${item.id}">Remove</button>
+            </div>
+        `;
+        container.appendChild(el);
+    });
+
+    totalEl.textContent = `Total: $${total.toLocaleString()}`;
+
+    document.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            itemToRemove = parseInt(btn.dataset.id);
+            openModal(modals.confirm);
+        });
+    });
+}
+
+function renderOrders() {
+    const list = document.getElementById('orders-list');
+    list.innerHTML = '';
+    orders.forEach(order => {
+        const el = document.createElement('div');
+        el.className = 'order-card';
+        let itemsHtml = '';
+        order.items.forEach(item => {
+            itemsHtml += `<div class="order-item">${item.name}</div>`;
+        });
+        el.innerHTML = `
+            <div class="order-header">
+                <div class="order-number">${order.id}</div>
+                <div class="order-date">${order.date}</div>
+            </div>
+            <div class="order-items">${itemsHtml}</div>
+            <div class="order-total">Total: $${order.total.toLocaleString()}</div>
+        `;
+        list.appendChild(el);
+    });
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty');
+        return;
+    }
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
+    document.getElementById('order-number').textContent = orderId;
+    document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
+    cart = [];
+    saveCart();
+    renderCart();
+    openModal(modals.orderSuccess);
+}
+
+function saveProfile() {
+    const name = document.getElementById('profile-name').value.trim();
+    const email = document.getElementById('profile-email').value.trim();
+    if (!name || !email) {
+        showNotification('Please fill in all fields');
+        return;
+    }
+    showNotification('Profile saved successfully');
 }
 
 function setupEventListeners() {
@@ -546,4 +408,23 @@ function setupEventListeners() {
     document.getElementById('save-profile').addEventListener('click', saveProfile);
 }
 
-// ... (остальные функции renderProducts и т.д. — как в предыдущей версии)
+// ===== ЗАПУСК =====
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("🚀 Luxury App initializing...");
+
+    // Загрузить корзину
+    cart = loadCart();
+
+    // Инициализация темы
+    initTheme();
+
+    // Рендеринг
+    renderProducts();
+    renderCart();
+    renderOrders();
+
+    // Настройка событий
+    setupEventListeners();
+
+    console.log("✅ App ready!");
+});
