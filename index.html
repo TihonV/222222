@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="theme-light">
     <header>
         <a href="#" class="logo">Luxury</a>
         <div class="header-icons">
+            <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
             <div class="icon" id="cart-icon" title="Корзина">
                 <i class="fas fa-shopping-cart"></i>
             </div>
@@ -24,7 +27,7 @@
     </header>
 
     <div class="page-container">
-        <!-- Главная страница с товарами -->
+        <!-- Главная -->
         <div id="main-page" class="page active">
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Search products..." id="search-input">
@@ -50,35 +53,30 @@
                 <button class="back-button" id="reset-filters">Reset</button>
             </div>
 
-            <div class="products-grid" id="products-grid">
-                <!-- Товары будут добавляться через JS -->
-            </div>
+            <div class="products-grid" id="products-grid"></div>
         </div>
 
-        <!-- Страница корзины -->
+        <!-- Корзина -->
         <div id="cart-page" class="page">
-            <button class="back-button" id="back-from-cart">← Back</button>
-            <h1 class="page-title">Cart</h1>
-            <div id="cart-items">
-                <!-- Товары в корзине -->
-            </div>
+            <button class="back-button" id="back-from-cart">← Back to Shop</button>
+            <h1 class="page-title">Your Cart</h1>
+            <div id="cart-items"></div>
             <div class="cart-total" id="cart-total">Total: $0</div>
             <button class="checkout-button" id="checkout-button">Checkout</button>
         </div>
 
-        <!-- Страница профиля -->
+        <!-- Профиль -->
         <div id="profile-page" class="page">
-            <button class="back-button" id="back-from-profile">← Back</button>
+            <button class="back-button" id="back-from-profile">← Back to Shop</button>
             <h1 class="page-title">My Profile</h1>
-            
             <form class="profile-form">
                 <div class="form-group">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-input" id="profile-name" value="John Doe">
+                    <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
                 </div>
                 <div class="form-group">
                     <label class="form-label">E-mail</label>
-                    <input type="email" class="form-input" id="profile-email" value="john.doe@example.com">
+                    <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="notifications" checked>
@@ -88,17 +86,28 @@
             </form>
         </div>
 
-        <!-- Страница истории заказов -->
+        <!-- История -->
         <div id="history-page" class="page">
-            <button class="back-button" id="back-from-history">← Back</button>
+            <button class="back-button" id="back-from-history">← Back to Shop</button>
             <h1 class="page-title">Order History</h1>
-            <div id="orders-list">
-                <!-- Заказы будут добавляться через JS -->
-            </div>
+            <div id="orders-list"></div>
         </div>
     </div>
 
-    <!-- Модальное окно подтверждения удаления -->
+    <!-- Модальное окно товара -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content product-modal-content">
+            <span class="close-modal" id="close-product-modal">&times;</span>
+            <div class="modal-product-image" id="modal-product-image"></div>
+            <h2 id="modal-product-title"></h2>
+            <p id="modal-product-category"></p>
+            <p id="modal-product-description"></p>
+            <p class="modal-product-price" id="modal-product-price"></p>
+            <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Подтверждение удаления -->
     <div class="modal" id="confirm-modal">
         <div class="modal-content">
             <span class="close-modal" id="close-modal">&times;</span>
@@ -111,12 +120,12 @@
         </div>
     </div>
 
-    <!-- Модальное окно успешного заказа -->
+    <!-- Успешный заказ -->
     <div class="modal" id="order-success-modal">
         <div class="modal-content">
             <span class="close-modal" id="close-success-modal">&times;</span>
             <h2 class="modal-title">Order placed!</h2>
-            <p>Your order has been successfully placed. We will contact you shortly to confirm details.</p>
+            <p>Your order has been successfully placed.</p>
             <div class="order-details">
                 <p><strong>Order Number:</strong> <span id="order-number"></span></p>
                 <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
@@ -124,7 +133,6 @@
         </div>
     </div>
 
-    <!-- Уведомление -->
     <div class="notification" id="notification"></div>
 
     <script src="main.js"></script>
