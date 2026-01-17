@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxury</title>
+    <!-- Исправлен: убран лишний пробел -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <style>
         :root {
@@ -568,13 +569,11 @@ const orders = [
     { id: "ORD-1122334455", date: "20.01.2023", items: [{ name: "Azimut 77 Yacht", price: 3500000 }], total: 3500000 }
 ];
 
-// ===== СОСТОЯНИЕ =====
 let cart = [];
 let currentPage = 'main';
 let itemToRemove = null;
 let currentProductModalId = null;
 
-// ===== DOM =====
 const pages = {
     main: document.getElementById('main-page'),
     cart: document.getElementById('cart-page'),
@@ -588,7 +587,6 @@ const modals = {
     orderSuccess: document.getElementById('order-success-modal')
 };
 
-// ===== ФУНКЦИИ =====
 function initTheme() {
     const saved = localStorage.getItem('theme') || 'light';
     document.body.setAttribute('data-theme', saved);
@@ -604,33 +602,44 @@ function toggleTheme() {
 }
 
 function updateThemeIcon(theme) {
-    document.getElementById('theme-toggle').querySelector('i').className = 
-        theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    const icon = document.getElementById('theme-toggle');
+    if (icon) {
+        icon.querySelector('i').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
 }
 
 function showNotification(msg) {
     const n = document.getElementById('notification');
-    n.textContent = msg;
-    n.classList.add('show');
-    setTimeout(() => n.classList.remove('show'), 3000);
+    if (n) {
+        n.textContent = msg;
+        n.classList.add('show');
+        setTimeout(() => n.classList.remove('show'), 3000);
+    }
 }
 
 function openModal(m) {
+    if (!m) return;
     m.style.display = 'flex';
     setTimeout(() => m.classList.add('active'), 10);
 }
 
 function closeModal(m) {
+    if (!m) return;
     m.classList.remove('active');
     setTimeout(() => m.style.display = 'none', 300);
 }
 
 function navigateTo(page) {
-    Object.values(pages).forEach(p => p.classList.remove('active'));
-    setTimeout(() => {
-        pages[page].classList.add('active');
-        currentPage = page;
-    }, 10);
+    Object.values(pages).forEach(p => {
+        if (p) p.classList.remove('active');
+    });
+    const targetPage = pages[page];
+    if (targetPage) {
+        setTimeout(() => {
+            targetPage.classList.add('active');
+            currentPage = page;
+        }, 10);
+    }
 }
 
 function loadCart() {
@@ -649,12 +658,14 @@ function saveCart() {
 
 function renderProducts() {
     const grid = document.getElementById('products-grid');
-    const term = document.getElementById('search-input').value.toLowerCase();
+    if (!grid) return;
+
+    const term = document.getElementById('search-input')?.value.toLowerCase() || '';
     const f = {
-        YACHT: document.getElementById('yacht-filter').checked,
-        PLANE: document.getElementById('plane-filter').checked,
-        MANSION: document.getElementById('mansion-filter').checked,
-        ISLAND: document.getElementById('island-filter').checked
+        YACHT: document.getElementById('yacht-filter')?.checked ?? true,
+        PLANE: document.getElementById('plane-filter')?.checked ?? true,
+        MANSION: document.getElementById('mansion-filter')?.checked ?? true,
+        ISLAND: document.getElementById('island-filter')?.checked ?? true
     };
 
     grid.innerHTML = '';
@@ -681,17 +692,25 @@ function renderProducts() {
 function openProductModal(id) {
     const p = products.find(x => x.id === id);
     if (!p) return;
-    document.getElementById('modal-product-image').style.backgroundImage = `url(${p.image})`;
-    document.getElementById('modal-product-title').textContent = p.title;
-    document.getElementById('modal-product-category').textContent = p.category;
-    document.getElementById('modal-product-description').textContent = p.description;
-    document.getElementById('modal-product-price').textContent = `$${p.price.toLocaleString()}`;
+    const imgEl = document.getElementById('modal-product-image');
+    const titleEl = document.getElementById('modal-product-title');
+    const catEl = document.getElementById('modal-product-category');
+    const descEl = document.getElementById('modal-product-description');
+    const priceEl = document.getElementById('modal-product-price');
+
+    if (imgEl) imgEl.style.backgroundImage = `url(${p.image})`;
+    if (titleEl) titleEl.textContent = p.title;
+    if (catEl) catEl.textContent = p.category;
+    if (descEl) descEl.textContent = p.description;
+    if (priceEl) priceEl.textContent = `$${p.price.toLocaleString()}`;
+
     currentProductModalId = id;
     openModal(modals.product);
 }
 
 function addToCart(id) {
     const p = products.find(x => x.id === id);
+    if (!p) return;
     const ex = cart.find(i => i.id === id);
     if (ex) ex.quantity++; else cart.push({ id: p.id, name: p.title, price: p.price, quantity: 1 });
     saveCart(); renderCart(); showNotification(`${p.title} added to cart`);
@@ -705,12 +724,15 @@ function removeFromCart(id) {
 function renderCart() {
     const c = document.getElementById('cart-items');
     const t = document.getElementById('cart-total');
+    if (!c || !t) return;
+
     c.innerHTML = '';
     if (cart.length === 0) {
         c.innerHTML = '<p>Your cart is empty</p>';
         t.textContent = 'Total: $0';
         return;
     }
+
     let total = 0;
     cart.forEach(i => {
         total += i.price * i.quantity;
@@ -724,6 +746,7 @@ function renderCart() {
         `;
         c.appendChild(el);
     });
+
     t.textContent = `Total: $${total.toLocaleString()}`;
     document.querySelectorAll('.remove-item').forEach(btn => {
         btn.addEventListener('click', e => {
@@ -736,6 +759,7 @@ function renderCart() {
 
 function renderOrders() {
     const list = document.getElementById('orders-list');
+    if (!list) return;
     list.innerHTML = '';
     orders.forEach(o => {
         const el = document.createElement('div');
@@ -757,21 +781,25 @@ function checkout() {
     if (cart.length === 0) return showNotification('Your cart is empty');
     const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
-    document.getElementById('order-number').textContent = orderId;
-    document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
+    const numEl = document.getElementById('order-number');
+    const amtEl = document.getElementById('order-total-amount');
+    if (numEl) numEl.textContent = orderId;
+    if (amtEl) amtEl.textContent = `$${total.toLocaleString()}`;
     cart = []; saveCart(); renderCart(); openModal(modals.orderSuccess);
 }
 
 function saveProfile() {
-    const name = document.getElementById('profile-name').value.trim();
-    const email = document.getElementById('profile-email').value.trim();
+    const name = document.getElementById('profile-name')?.value.trim();
+    const email = document.getElementById('profile-email')?.value.trim();
     if (!name || !email) return showNotification('Please fill in all fields');
     showNotification('Profile saved successfully');
 }
 
-function setupAutocomplete() {
+function safeSetupAutocomplete() {
     const input = document.getElementById('search-input');
     const sug = document.getElementById('suggestions');
+    if (!input || !sug) return;
+
     input.addEventListener('input', () => {
         const term = input.value.toLowerCase().trim();
         if (!term) return sug.style.display = 'none';
@@ -795,48 +823,63 @@ function setupAutocomplete() {
         });
         sug.style.display = 'block';
     });
+
     document.addEventListener('click', e => {
         if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
     });
 }
 
 function setupEventListeners() {
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-    document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
-    document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
-    document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
-    document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
-    document.getElementById('search-input').addEventListener('input', renderProducts);
-    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', renderProducts));
-    document.getElementById('reset-filters').addEventListener('click', () => {
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
-        renderProducts();
+    const handlers = [
+        { id: 'theme-toggle', event: 'click', handler: toggleTheme },
+        { id: 'cart-icon', event: 'click', handler: () => navigateTo('cart') },
+        { id: 'profile-icon', event: 'click', handler: () => navigateTo('profile') },
+        { id: 'history-icon', event: 'click', handler: () => navigateTo('history') },
+        { id: 'logo', event: 'click', handler: () => navigateTo('main') },
+        { id: 'back-from-cart', event: 'click', handler: () => navigateTo('main') },
+        { id: 'back-from-profile', event: 'click', handler: () => navigateTo('main') },
+        { id: 'back-from-history', event: 'click', handler: () => navigateTo('main') },
+        { id: 'search-input', event: 'input', handler: renderProducts },
+        { id: 'reset-filters', event: 'click', handler: () => {
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
+            renderProducts();
+        }},
+        { id: 'close-product-modal', event: 'click', handler: () => closeModal(modals.product) },
+        { id: 'modal-add-to-cart', event: 'click', handler: () => {
+            addToCart(currentProductModalId); closeModal(modals.product);
+        }},
+        { id: 'close-modal', event: 'click', handler: () => closeModal(modals.confirm) },
+        { id: 'cancel-delete', event: 'click', handler: () => closeModal(modals.confirm) },
+        { id: 'confirm-delete', event: 'click', handler: () => {
+            if (itemToRemove !== null) removeFromCart(itemToRemove);
+        }},
+        { id: 'close-success-modal', event: 'click', handler: () => {
+            closeModal(modals.orderSuccess); navigateTo('main');
+        }},
+        { id: 'checkout-button', event: 'click', handler: checkout },
+        { id: 'save-profile', event: 'click', handler: saveProfile }
+    ];
+
+    handlers.forEach(({ id, event, handler }) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(event, handler);
     });
-    document.getElementById('close-product-modal').addEventListener('click', () => closeModal(modals.product));
-    document.getElementById('modal-add-to-cart').addEventListener('click', () => {
-        addToCart(currentProductModalId); closeModal(modals.product);
+
+    // Filters
+    document.querySelectorAll('.filter-checkbox').forEach(cb => {
+        cb.addEventListener('change', renderProducts);
     });
-    document.getElementById('close-modal').addEventListener('click', () => closeModal(modals.confirm));
-    document.getElementById('cancel-delete').addEventListener('click', () => closeModal(modals.confirm));
-    document.getElementById('confirm-delete').addEventListener('click', () => {
-        if (itemToRemove !== null) removeFromCart(itemToRemove);
-    });
-    document.getElementById('close-success-modal').addEventListener('click', () => {
-        closeModal(modals.orderSuccess); navigateTo('main');
-    });
+
+    // Modal close on outside click
     window.addEventListener('click', e => {
-        if (e.target === modals.product) closeModal(modals.product);
-        if (e.target === modals.confirm) closeModal(modals.confirm);
-        if (e.target === modals.orderSuccess) { closeModal(modals.orderSuccess); navigateTo('main'); }
+        if (modals.product && e.target === modals.product) closeModal(modals.product);
+        if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
+        if (modals.orderSuccess && e.target === modals.orderSuccess) {
+            closeModal(modals.orderSuccess); navigateTo('main');
+        }
     });
-    document.getElementById('checkout-button').addEventListener('click', checkout);
-    document.getElementById('save-profile').addEventListener('click', saveProfile);
 }
 
-// ===== ЗАПУСК =====
 document.addEventListener('DOMContentLoaded', () => {
     cart = loadCart();
     initTheme();
@@ -844,7 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCart();
     renderOrders();
     setupEventListeners();
-    setupAutocomplete();
+    safeSetupAutocomplete();
 });
 </script>
 </body>
