@@ -84,7 +84,8 @@
         /* Filters */
         .filters {
             display: flex;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
             margin: 20px 0;
             padding: 15px;
             background-color: white;
@@ -117,6 +118,7 @@
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            cursor: default;
         }
 
         .product-card:hover {
@@ -147,10 +149,38 @@
             margin: 5px 0;
         }
 
+        .product-description {
+            font-size: 13px;
+            color: #666;
+            margin: 8px 0;
+            line-height: 1.4;
+        }
+
         .product-price {
             font-size: 18px;
             color: #333;
             font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 8px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #555;
+        }
+
+        .add-to-cart-btn:active {
+            transform: scale(0.98);
         }
 
         /* Cart Page */
@@ -415,7 +445,7 @@
                     <input type="checkbox" id="island-filter" class="filter-checkbox" checked>
                     <label for="island-filter">Island</label>
                 </div>
-                <button class="back-button" id="reset-filters">Reset</button>
+                <button class="back-button" id="reset-filters" style="margin-left: auto; padding: 5px 10px;">Reset</button>
             </div>
 
             <div class="products-grid" id="products-grid">
@@ -616,14 +646,12 @@
             grid.innerHTML = '';
 
             products.forEach(product => {
-                // Фильтрация по категории
                 let showProduct = false;
-                if (product.category === 'YACHT' && yachtChecked) showProduct = true;
-                if (product.category === 'PLANE' && planeChecked) showProduct = true;
-                if (product.category === 'MANSION' && mansionChecked) showProduct = true;
-                if (product.category === 'ISLAND' && islandChecked) showProduct = true;
+                if (yachtChecked && product.category === 'YACHT') showProduct = true;
+                if (planeChecked && product.category === 'PLANE') showProduct = true;
+                if (mansionChecked && product.category === 'MANSION') showProduct = true;
+                if (islandChecked && product.category === 'ISLAND') showProduct = true;
 
-                // Фильтрация по поиску
                 if (searchTerm && !product.title.toLowerCase().includes(searchTerm)) {
                     showProduct = false;
                 }
@@ -636,10 +664,16 @@
                         <div class="product-info">
                             <div class="product-category">${product.category}</div>
                             <div class="product-title">${product.title}</div>
+                            <div class="product-description">${product.description}</div>
                             <div class="product-price">$${product.price.toLocaleString()}</div>
+                            <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
                         </div>
                     `;
-                    card.addEventListener('click', () => addToCart(product.id));
+                    const button = card.querySelector('.add-to-cart-btn');
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        addToCart(product.id);
+                    });
                     grid.appendChild(card);
                 }
             });
@@ -712,7 +746,6 @@
 
             cartTotal.textContent = `Total: $${total.toLocaleString()}`;
 
-            // Добавляем обработчики для кнопок удаления
             document.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -761,12 +794,10 @@
             document.getElementById('order-number').textContent = orderId;
             document.getElementById('order-total-amount').textContent = `$${total.toLocaleString()}`;
             
-            // Очищаем корзину
             cart = [];
             saveCart();
             renderCart();
             
-            // Показываем модальное окно успеха
             modals.orderSuccess.style.display = 'flex';
         }
 
@@ -775,7 +806,6 @@
             const name = document.getElementById('profile-name').value;
             const email = document.getElementById('profile-email').value;
             
-            // Здесь можно добавить валидацию
             if (!name || !email) {
                 showNotification('Please fill in all fields');
                 return;
@@ -784,18 +814,25 @@
             showNotification('Profile saved successfully');
         }
 
-        // Показать уведомление
+        // Показать уведомление + анимация корзины
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.style.display = 'block';
-            
+
+            const cartIcon = document.getElementById('cart-icon');
+            cartIcon.style.transform = 'scale(1.2)';
+            cartIcon.style.transition = 'transform 0.3s ease';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
+
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
         }
 
-        // Сохранение корзины в localStorage
+        // Сохранение корзины
         function saveCart() {
             localStorage.setItem('luxuryCart', JSON.stringify(cart));
         }
@@ -809,21 +846,17 @@
 
         // Настройка обработчиков событий
         function setupEventListeners() {
-            // Навигация
             document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
             document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
             document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
             document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
 
-            // Кнопки "Назад"
             document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
             document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
             document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
 
-            // Поиск
             document.getElementById('search-input').addEventListener('input', renderProducts);
 
-            // Фильтры
             document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', renderProducts);
             });
@@ -833,13 +866,9 @@
                 renderProducts();
             });
 
-            // Оформление заказа
             document.getElementById('checkout-button').addEventListener('click', checkout);
-
-            // Сохранение профиля
             document.getElementById('save-profile').addEventListener('click', saveProfile);
 
-            // Модальные окна
             document.getElementById('close-modal').addEventListener('click', () => {
                 modals.confirm.style.display = 'none';
             });
@@ -860,7 +889,6 @@
                 }
             });
 
-            // Закрытие модальных окон при клике вне их
             window.addEventListener('click', (e) => {
                 if (e.target === modals.confirm) {
                     modals.confirm.style.display = 'none';
