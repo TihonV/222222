@@ -366,3 +366,184 @@ function setupEventListeners() {
         }
     });
 }
+// ... (все данные products, orders остаются без изменений)
+
+let cart = JSON.parse(localStorage.getItem('luxuryCart')) || [];
+let currentPage = 'main';
+let itemToRemove = null;
+let currentProductModalId = null;
+
+const pages = {
+    main: document.getElementById('main-page'),
+    cart: document.getElementById('cart-page'),
+    profile: document.getElementById('profile-page'),
+    history: document.getElementById('history-page')
+};
+
+const modals = {
+    product: document.getElementById('product-modal'),
+    confirm: document.getElementById('confirm-modal'),
+    orderSuccess: document.getElementById('order-success-modal')
+};
+
+// === Тема ===
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.classList.remove('theme-light', 'theme-dark');
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+}
+
+function toggleTheme() {
+    const current = document.body.getAttribute('data-theme');
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('theme-toggle').querySelector('i');
+    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+// === Анимации ===
+function showNotification(message) {
+    const notif = document.getElementById('notification');
+    notif.textContent = message;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 3000);
+}
+
+function openModal(modal) {
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function closeModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => modal.style.display = 'none', 300);
+}
+
+// === Навигация с анимацией ===
+function navigateTo(page) {
+    Object.values(pages).forEach(p => p.classList.remove('active'));
+    setTimeout(() => {
+        pages[page].classList.add('active');
+        currentPage = page;
+    }, 10);
+}
+
+// === Остальная логика (без изменений, кроме замены модалок) ===
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    renderProducts();
+    renderCart();
+    renderOrders();
+    setupEventListeners();
+});
+
+function openProductModal(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    document.getElementById('modal-product-image').style.backgroundImage = `url(${product.image})`;
+    document.getElementById('modal-product-title').textContent = product.title;
+    document.getElementById('modal-product-category').textContent = product.category;
+    document.getElementById('modal-product-description').textContent = product.description;
+    document.getElementById('modal-product-price').textContent = `$${product.price.toLocaleString()}`;
+    
+    currentProductModalId = productId;
+    openModal(modals.product);
+}
+
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existing = cart.find(item => item.id === productId);
+
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            quantity: 1
+        });
+    }
+
+    saveCart();
+    renderCart();
+    showNotification(`${product.title} added to cart`);
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCart();
+    renderCart();
+    closeModal(modals.confirm);
+    showNotification('Item removed from cart');
+}
+
+// ... (renderCart, renderOrders, checkout, saveProfile — без изменений)
+
+function saveCart() {
+    localStorage.setItem('luxuryCart', JSON.stringify(cart));
+}
+
+function setupEventListeners() {
+    // Theme toggle
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // Navigation
+    document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
+    document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
+    document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
+    document.getElementById('logo').addEventListener('click', () => navigateTo('main'));
+
+    document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
+    document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
+    document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
+
+    // Search & filters
+    document.getElementById('search-input').addEventListener('input', renderProducts);
+    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', renderProducts));
+    document.getElementById('reset-filters').addEventListener('click', () => {
+        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
+        renderProducts();
+    });
+
+    // Modals
+    document.getElementById('close-product-modal').addEventListener('click', () => closeModal(modals.product));
+    document.getElementById('modal-add-to-cart').addEventListener('click', () => {
+        addToCart(currentProductModalId);
+        closeModal(modals.product);
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => closeModal(modals.confirm));
+    document.getElementById('cancel-delete').addEventListener('click', () => closeModal(modals.confirm));
+    document.getElementById('confirm-delete').addEventListener('click', () => {
+        if (itemToRemove !== null) removeFromCart(itemToRemove);
+    });
+
+    document.getElementById('close-success-modal').addEventListener('click', () => {
+        closeModal(modals.orderSuccess);
+        navigateTo('main');
+    });
+
+    // Close on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === modals.product) closeModal(modals.product);
+        if (e.target === modals.confirm) closeModal(modals.confirm);
+        if (e.target === modals.orderSuccess) {
+            closeModal(modals.orderSuccess);
+            navigateTo('main');
+        }
+    });
+
+    // Other
+    document.getElementById('checkout-button').addEventListener('click', checkout);
+    document.getElementById('save-profile').addEventListener('click', saveProfile);
+}
+
+// ... (остальные функции renderProducts и т.д. — как в предыдущей версии)
