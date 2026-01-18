@@ -425,7 +425,6 @@
 <header>
     <a href="#" class="logo">Luxury</a>
     <div class="header-icons">
-        <!-- Заменим Font Awesome на SVG -->
         <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-2.69-.4-5.01-2.1-6.12-4.5C13.8 7.5 12 6.6 12 5.5c0-1.1 1.8-2 3.6-2.5C14.4 2.7 13.2 2.5 12 2.5zm0 16c-1.66 0-3.14-.7-4.18-1.78C7.1 17.06 7 16.4 7 15.5c0-1.1 1.8-2 3.6-2.5C11.6 12.7 12.8 12.5 14 12.5c1.66 0 3.14.7 4.18 1.78C18.9 14.44 19 15.1 19 16c0 1.1-1.8 2-3.6 2.5C14.4 18.7 13.2 19 12 19z"/></svg>
         </div>
@@ -451,19 +450,19 @@
 
         <div class="filters">
             <div class="filter-item">
-                <input type="checkbox" id="yacht-filter" class="filter-checkbox" checked>
+                <input type="checkbox" id="yacht-filter" class="filter-checkbox">
                 <label for="yacht-filter">Yacht</label>
             </div>
             <div class="filter-item">
-                <input type="checkbox" id="plane-filter" class="filter-checkbox" checked>
+                <input type="checkbox" id="plane-filter" class="filter-checkbox">
                 <label for="plane-filter">Plane</label>
             </div>
             <div class="filter-item">
-                <input type="checkbox" id="mansion-filter" class="filter-checkbox" checked>
+                <input type="checkbox" id="mansion-filter" class="filter-checkbox">
                 <label for="mansion-filter">Mansion</label>
             </div>
             <div class="filter-item">
-                <input type="checkbox" id="island-filter" class="filter-checkbox" checked>
+                <input type="checkbox" id="island-filter" class="filter-checkbox">
                 <label for="island-filter">Island</label>
             </div>
             <button class="back-button" id="reset-filters">Reset</button>
@@ -659,7 +658,6 @@ function toggleTheme() {
 function updateThemeIcon(theme) {
     const icon = document.getElementById('theme-toggle');
     if (icon && icon.querySelector('svg')) {
-        // Нет иконок Font Awesome — просто меняем цвет
         icon.style.color = theme === 'dark' ? '#fff' : '#333';
     }
 }
@@ -717,18 +715,32 @@ function renderProducts() {
     if (!grid) return;
 
     const term = document.getElementById('search-input')?.value.toLowerCase() || '';
-    const f = {
-        YACHT: document.getElementById('yacht-filter')?.checked ?? true,
-        PLANE: document.getElementById('plane-filter')?.checked ?? true,
-        MANSION: document.getElementById('mansion-filter')?.checked ?? true,
-        ISLAND: document.getElementById('island-filter')?.checked ?? true
-    };
+    const yachtChecked = document.getElementById('yacht-filter')?.checked || false;
+    const planeChecked = document.getElementById('plane-filter')?.checked || false;
+    const mansionChecked = document.getElementById('mansion-filter')?.checked || false;
+    const islandChecked = document.getElementById('island-filter')?.checked || false;
+
+    const noFilterSelected = !yachtChecked && !planeChecked && !mansionChecked && !islandChecked;
 
     grid.innerHTML = '';
+
     products.forEach(p => {
-        const catMatch = f[p.category];
-        const searchMatch = !term || p.title.toLowerCase().includes(term);
-        if (catMatch && searchMatch) {
+        let showProduct = false;
+
+        if (noFilterSelected) {
+            showProduct = true;
+        } else {
+            if (p.category === 'YACHT' && yachtChecked) showProduct = true;
+            if (p.category === 'PLANE' && planeChecked) showProduct = true;
+            if (p.category === 'MANSION' && mansionChecked) showProduct = true;
+            if (p.category === 'ISLAND' && islandChecked) showProduct = true;
+        }
+
+        if (term && !p.title.toLowerCase().includes(term)) {
+            showProduct = false;
+        }
+
+        if (showProduct) {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
@@ -897,7 +909,7 @@ function setupEventListeners() {
         { id: 'back-from-history', event: 'click', handler: () => navigateTo('main') },
         { id: 'search-input', event: 'input', handler: renderProducts },
         { id: 'reset-filters', event: 'click', handler: () => {
-            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
             renderProducts();
         }},
         { id: 'close-product-modal', event: 'click', handler: () => closeModal(modals.product) },
