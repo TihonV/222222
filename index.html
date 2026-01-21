@@ -222,7 +222,7 @@
             position: relative;
         }
 
-        .product-card:hover:not(.product-bought) {
+        .product-card:hover:not(.product-in-cart) {
             transform: translateY(-6px);
             box-shadow: 0 10px 28px var(--shadow);
         }
@@ -242,12 +242,12 @@
             transition: opacity 0.3s ease;
         }
 
-        .product-bought {
+        .product-in-cart {
             opacity: 0.9;
             cursor: default !important;
         }
 
-        .product-bought .product-image {
+        .product-in-cart .product-image {
             opacity: 0.55;
         }
 
@@ -685,8 +685,7 @@ const orders = [
 ];
 
 let cart = [];
-let boughtProducts = new Set(); // для визуального отображения
-let permanentlyBought = new Set(); // для сохранения после checkout
+let inCart = new Set(); // только в памяти, не сохраняется
 let currentPage = 'main';
 let itemToRemove = null;
 let currentProductModalId = null;
@@ -729,6 +728,7 @@ function toggleTheme() {
     updateThemeIcon(next);
 }
 
+// ✅ ИСПРАВЛЕНО: moon.svg в светлом, sun.svg в тёмном
 function updateThemeIcon(theme) {
     if (themeIcon) {
         themeIcon.src = theme === 'dark' ? 'images/sun.svg' : 'images/moon.svg';
@@ -781,18 +781,6 @@ function saveCart() {
     try {
         localStorage.setItem('luxuryCart', JSON.stringify(cart));
     } catch (e) {}
-}
-
-function loadBoughtStatus() {
-    try {
-        const saved = JSON.parse(localStorage.getItem('permanentlyBought')) || [];
-        permanentlyBought = new Set(saved);
-        // Визуально — тоже помечаем как купленные
-        boughtProducts = new Set(saved);
-    } catch (e) {
-        permanentlyBought = new Set();
-        boughtProducts = new Set();
-    }
 }
 
 // ✅ Генерация SVG-надписи "BOUGHT"
@@ -854,11 +842,11 @@ function renderProducts() {
         }
 
         if (showProduct) {
-            const isBought = boughtProducts.has(p.id);
+            const isInCart = inCart.has(p.id);
             const card = document.createElement('div');
             card.className = 'product-card';
-            if (isBought) {
-                card.classList.add('product-bought');
+            if (isInCart) {
+                card.classList.add('product-in-cart');
             }
 
             const wrapper = document.createElement('div');
@@ -872,7 +860,7 @@ function renderProducts() {
             };
             wrapper.appendChild(img);
 
-            if (isBought) {
+            if (isInCart) {
                 const overlay = document.createElement('div');
                 overlay.className = 'bought-svg-overlay';
                 overlay.appendChild(createBoughtSVG());
@@ -890,7 +878,7 @@ function renderProducts() {
             card.appendChild(wrapper);
             card.appendChild(info);
 
-            if (!isBought) {
+            if (!isInCart) {
                 card.addEventListener('click', () => openProductModal(p.id));
             }
 
@@ -922,9 +910,9 @@ function addToCart(id) {
     const p = products.find(x => x.id === id);
     if (!p) return;
 
-    // ✅ Сразу помечаем как "в корзине/куплено" визуально
-    boughtProducts.add(id);
-    renderProducts(); // перерисовываем, чтобы появился BOUGHT
+    // ✅ Добавляем в память (не сохраняем)
+    inCart.add(id);
+    renderProducts();
 
     const ex = cart.find(i => i.id === id);
     if (ex) {
@@ -939,13 +927,10 @@ function addToCart(id) {
 
 function removeFromCart(id) {
     cart = cart.filter(i => i.id !== id);
-    // Убираем визуальную метку, если товар больше не в корзине и не куплен
-    if (!permanentlyBought.has(id)) {
-        boughtProducts.delete(id);
-    }
+    inCart.delete(id); // убираем из памяти
     saveCart();
     renderCart();
-    renderProducts(); // обновляем карточки
+    renderProducts();
     closeModal(modals.confirm);
     showNotification('Item removed from cart');
 }
@@ -1012,15 +997,6 @@ function renderOrders() {
 function checkout() {
     if (cart.length === 0) return showNotification('Your cart is empty');
     
-    // ✅ Теперь сохраняем как ПОСТОЯННО купленные
-    cart.forEach(item => {
-        permanentlyBought.add(item.id);
-    });
-
-    try {
-        localStorage.setItem('permanentlyBought', JSON.stringify(Array.from(permanentlyBought)));
-    } catch (e) {}
-
     const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
     const numEl = document.getElementById('order-number');
@@ -1029,9 +1005,10 @@ function checkout() {
     if (amtEl) amtEl.textContent = `$${total.toLocaleString()}`;
 
     cart = [];
+    inCart.clear(); // очищаем память
     saveCart();
     renderCart();
-    renderProducts(); // обновляем карточки
+    renderProducts();
     openModal(modals.orderSuccess);
 }
 
@@ -1129,7 +1106,7 @@ function setupEventListeners() {
 
 document.addEventListener('DOMContentLoaded', () => {
     cart = loadCart();
-    loadBoughtStatus();
+    // ❌ НЕ загружаем inCart из localStorage — только временно в памяти
     initTheme();
     renderProducts();
     renderCart();
