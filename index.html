@@ -180,9 +180,9 @@
         .filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 12px;
             margin: 18px 0;
-            padding: 14px;
+            padding: 12px;
             background-color: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 3px 8px var(--shadow);
@@ -203,6 +203,27 @@
         label[for] {
             font-weight: 500;
             font-size: 15px;
+        }
+
+        /* Маленькая кнопка Reset */
+        .filter-reset {
+            background: var(--border-color);
+            color: var(--text-color);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .filter-reset:hover {
+            background: var(--text-color);
+            color: var(--header-bg);
         }
 
         .products-grid {
@@ -243,15 +264,27 @@
         }
 
         .product-in-cart {
-            opacity: 0.9;
+            opacity: 0.95;
             cursor: default !important;
         }
 
         .product-in-cart .product-image {
-            opacity: 0.55;
+            opacity: 0.4;
         }
 
-        /* SVG надпись BOUGHT */
+        /* Затемнение фона под BOUGHT */
+        .product-in-cart .product-image-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* SVG надпись BOUGHT — красивая */
         .bought-svg-overlay {
             position: absolute;
             top: 0;
@@ -259,6 +292,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 2;
         }
 
         .product-info {
@@ -525,10 +559,20 @@
 
         /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         @media (max-width: 768px) {
+            .filter-reset {
+                padding: 3px 8px;
+                font-size: 12px;
+                min-width: 50px;
+            }
             .product-image-wrapper { height: 190px; }
             .bought-svg-overlay { transform: scale(0.9); }
         }
         @media (max-width: 480px) {
+            .filter-reset {
+                padding: 2px 6px;
+                font-size: 11px;
+                min-width: 40px;
+            }
             .product-image-wrapper { height: 170px; }
             .bought-svg-overlay { transform: scale(0.8); }
         }
@@ -579,7 +623,8 @@
                 <input type="checkbox" id="island-filter" class="filter-checkbox">
                 <label for="island-filter">Island</label>
             </div>
-            <button class="back-button" id="reset-filters">Reset</button>
+            <!-- Маленькая кнопка Reset -->
+            <div class="filter-reset" id="reset-filters">Reset</div>
         </div>
 
         <div class="products-grid" id="products-grid"></div>
@@ -623,7 +668,7 @@
     </div>
 </div>
 
-<!-- Модальное окно товара -->
+<!-- Модальные окна -->
 <div class="modal" id="product-modal">
     <div class="modal-content product-modal-content">
         <span class="close-modal" id="close-product-modal">&times;</span>
@@ -636,7 +681,6 @@
     </div>
 </div>
 
-<!-- Подтверждение удаления -->
 <div class="modal" id="confirm-modal">
     <div class="modal-content">
         <span class="close-modal" id="close-modal">&times;</span>
@@ -649,7 +693,6 @@
     </div>
 </div>
 
-<!-- Успешный заказ -->
 <div class="modal" id="order-success-modal">
     <div class="modal-content">
         <span class="close-modal" id="close-success-modal">&times;</span>
@@ -685,7 +728,7 @@ const orders = [
 ];
 
 let cart = [];
-let inCart = new Set(); // только в памяти, не сохраняется
+let inCart = new Set();
 let currentPage = 'main';
 let itemToRemove = null;
 let currentProductModalId = null;
@@ -704,6 +747,17 @@ const modals = {
 };
 
 const themeIcon = document.getElementById('theme-icon');
+
+// ✅ Транслитерация: русские буквы → английские
+function transliterate(str) {
+    const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
+    const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
+    let result = str.toLowerCase();
+    for (let i = 0; i < ru.length; i++) {
+        result = result.replace(new RegExp(ru[i], 'g'), en[i]);
+    }
+    return result;
+}
 
 function shuffleArray(array) {
     const result = [...array];
@@ -728,7 +782,6 @@ function toggleTheme() {
     updateThemeIcon(next);
 }
 
-// ✅ ИСПРАВЛЕНО: moon.svg в светлом, sun.svg в тёмном
 function updateThemeIcon(theme) {
     if (themeIcon) {
         themeIcon.src = theme === 'dark' ? 'images/sun.svg' : 'images/moon.svg';
@@ -783,7 +836,7 @@ function saveCart() {
     } catch (e) {}
 }
 
-// ✅ Генерация SVG-надписи "BOUGHT"
+// ✅ Красивый SVG с градиентом и тенью
 function createBoughtSVG() {
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
@@ -792,19 +845,54 @@ function createBoughtSVG() {
     svg.style.width = "100%";
     svg.style.height = "100%";
 
+    // Градиент
+    const defs = document.createElementNS(svgNS, "defs");
+    const gradient = document.createElementNS(svgNS, "linearGradient");
+    gradient.setAttribute("id", "goldGradient");
+    gradient.setAttribute("x1", "0%");
+    gradient.setAttribute("y1", "0%");
+    gradient.setAttribute("x2", "100%");
+    gradient.setAttribute("y2", "100%");
+
+    const stop1 = document.createElementNS(svgNS, "stop");
+    stop1.setAttribute("offset", "0%");
+    stop1.setAttribute("stop-color", "#FFD700");
+    const stop2 = document.createElementNS(svgNS, "stop");
+    stop2.setAttribute("offset", "100%");
+    stop2.setAttribute("stop-color", "#FFA500");
+
+    gradient.appendChild(stop1);
+    gradient.appendChild(stop2);
+    defs.appendChild(gradient);
+    svg.appendChild(defs);
+
+    // Текст с тенью
+    const textShadow = document.createElementNS(svgNS, "text");
+    textShadow.setAttribute("x", "50%");
+    textShadow.setAttribute("y", "53%");
+    textShadow.setAttribute("text-anchor", "middle");
+    textShadow.setAttribute("dominant-baseline", "middle");
+    textShadow.setAttribute("fill", "rgba(0,0,0,0.3)");
+    textShadow.setAttribute("font-weight", "bold");
+    textShadow.setAttribute("font-size", "26");
+    textShadow.setAttribute("font-family", "Arial, sans-serif");
+    textShadow.setAttribute("transform", "scale(1.02)");
+    textShadow.textContent = "BOUGHT";
+
     const text = document.createElementNS(svgNS, "text");
     text.setAttribute("x", "50%");
     text.setAttribute("y", "50%");
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
-    text.setAttribute("fill", "white");
+    text.setAttribute("fill", "url(#goldGradient)");
     text.setAttribute("font-weight", "bold");
-    text.setAttribute("font-size", "24");
+    text.setAttribute("font-size", "26");
     text.setAttribute("font-family", "Arial, sans-serif");
     text.setAttribute("stroke", "black");
-    text.setAttribute("stroke-width", "1");
+    text.setAttribute("stroke-width", "0.5");
     text.textContent = "BOUGHT";
 
+    svg.appendChild(textShadow);
     svg.appendChild(text);
     return svg;
 }
@@ -813,7 +901,10 @@ function renderProducts() {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
 
-    const term = document.getElementById('search-input')?.value.toLowerCase() || '';
+    const term = document.getElementById('search-input')?.value || '';
+    const searchLower = term.toLowerCase().trim();
+    const searchTranslit = transliterate(searchLower);
+
     const yachtChecked = document.getElementById('yacht-filter')?.checked || false;
     const planeChecked = document.getElementById('plane-filter')?.checked || false;
     const mansionChecked = document.getElementById('mansion-filter')?.checked || false;
@@ -837,8 +928,13 @@ function renderProducts() {
             if (p.category === 'ISLAND' && islandChecked) showProduct = true;
         }
 
-        if (term && !p.title.toLowerCase().includes(term)) {
-            showProduct = false;
+        if (term) {
+            const titleLower = p.title.toLowerCase();
+            const matchesOriginal = titleLower.includes(searchLower);
+            const matchesTranslit = titleLower.includes(searchTranslit);
+            if (!matchesOriginal && !matchesTranslit) {
+                showProduct = false;
+            }
         }
 
         if (showProduct) {
@@ -856,7 +952,7 @@ function renderProducts() {
             img.alt = p.title;
             img.className = 'product-image';
             img.onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+';
+                this.src = 'image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+';
             };
             wrapper.appendChild(img);
 
@@ -910,7 +1006,6 @@ function addToCart(id) {
     const p = products.find(x => x.id === id);
     if (!p) return;
 
-    // ✅ Добавляем в память (не сохраняем)
     inCart.add(id);
     renderProducts();
 
@@ -927,7 +1022,7 @@ function addToCart(id) {
 
 function removeFromCart(id) {
     cart = cart.filter(i => i.id !== id);
-    inCart.delete(id); // убираем из памяти
+    inCart.delete(id);
     saveCart();
     renderCart();
     renderProducts();
@@ -1005,7 +1100,7 @@ function checkout() {
     if (amtEl) amtEl.textContent = `$${total.toLocaleString()}`;
 
     cart = [];
-    inCart.clear(); // очищаем память
+    inCart.clear();
     saveCart();
     renderCart();
     renderProducts();
@@ -1025,9 +1120,14 @@ function safeSetupAutocomplete() {
     if (!input || !sug) return;
 
     input.addEventListener('input', () => {
-        const term = input.value.toLowerCase().trim();
+        const term = input.value.trim();
         if (!term) return sug.style.display = 'none';
-        const matches = products.filter(p => p.title.toLowerCase().includes(term)).slice(0, 5);
+        const termLower = term.toLowerCase();
+        const termTranslit = transliterate(termLower);
+        const matches = products.filter(p => 
+            p.title.toLowerCase().includes(termLower) || 
+            p.title.toLowerCase().includes(termTranslit)
+        ).slice(0, 5);
         if (matches.length === 0) return sug.style.display = 'none';
         sug.innerHTML = '';
         matches.forEach(p => {
@@ -1106,7 +1206,6 @@ function setupEventListeners() {
 
 document.addEventListener('DOMContentLoaded', () => {
     cart = loadCart();
-    // ❌ НЕ загружаем inCart из localStorage — только временно в памяти
     initTheme();
     renderProducts();
     renderCart();
