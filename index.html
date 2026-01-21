@@ -243,40 +243,22 @@
         }
 
         .product-bought {
-            opacity: 0.85;
+            opacity: 0.9;
             cursor: default !important;
         }
 
         .product-bought .product-image {
-            opacity: 0.6;
+            opacity: 0.55;
         }
 
-        .product-bought .product-image-wrapper::after {
-            content: "";
+        /* SVG надпись BOUGHT */
+        .bought-svg-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        .bought-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--button-bg);
-            color: var(--header-bg);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 16px;
-            z-index: 2;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            pointer-events: none;
         }
 
         .product-info {
@@ -308,7 +290,8 @@
 
         .add-to-cart-btn,
         .save-button,
-        .checkout-button {
+        .checkout-button,
+        .modal-button {
             width: 100%;
             padding: 12px;
             border: none;
@@ -321,18 +304,31 @@
         }
 
         .add-to-cart-btn,
-        .save-button {
+        .save-button,
+        .modal-button.confirm {
             background-color: var(--button-bg);
             color: var(--header-bg);
         }
 
+        .modal-button.cancel {
+            background-color: var(--border-color);
+            color: var(--text-color);
+        }
+
         .add-to-cart-btn:hover,
-        .save-button:hover {
+        .save-button:hover,
+        .modal-button.confirm:hover {
             background-color: var(--button-hover);
         }
 
+        .modal-button.cancel:hover {
+            background-color: var(--text-color);
+            color: var(--header-bg);
+        }
+
         .add-to-cart-btn:active,
-        .save-button:active {
+        .save-button:active,
+        .modal-button:active {
             transform: scale(0.98);
         }
 
@@ -529,230 +525,12 @@
 
         /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         @media (max-width: 768px) {
-            .page-container {
-                padding: 0 14px;
-                margin: 14px auto;
-            }
-
-            header {
-                padding: 12px 14px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .header-icons {
-                gap: 12px;
-            }
-
-            .icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .icon-img {
-                width: 20px;
-                height: 20px;
-            }
-
-            .search-input {
-                padding: 12px 16px;
-                font-size: 16px;
-                min-height: 48px;
-            }
-
-            .filters {
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .filter-item {
-                gap: 6px;
-            }
-
-            .filter-checkbox {
-                width: 16px;
-                height: 16px;
-            }
-
-            label[for] {
-                font-size: 14px;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-
-            .product-image-wrapper {
-                height: 190px;
-            }
-
-            .bought-overlay {
-                font-size: 15px;
-                padding: 7px 18px;
-            }
-
-            .product-info {
-                padding: 16px;
-            }
-
-            .product-category {
-                font-size: 11px;
-            }
-
-            .product-title {
-                font-size: 16px;
-            }
-
-            .product-price {
-                font-size: 18px;
-            }
-
-            .add-to-cart-btn,
-            .save-button,
-            .checkout-button {
-                padding: 11px;
-                font-size: 16px;
-            }
-
-            .back-button {
-                padding: 9px 16px;
-                font-size: 16px;
-            }
-
-            .form-input {
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            .form-label {
-                font-size: 15px;
-            }
-
-            .modal-content {
-                padding: 24px;
-                width: 94%;
-            }
-
-            .modal-product-image {
-                height: 220px;
-            }
-
-            #modal-product-title {
-                font-size: 22px;
-            }
-
-            .modal-product-price {
-                font-size: 24px;
-            }
-
-            .notification {
-                top: 16px;
-                right: 16px;
-                padding: 12px 20px;
-                font-size: 15px;
-            }
+            .product-image-wrapper { height: 190px; }
+            .bought-svg-overlay { transform: scale(0.9); }
         }
-
         @media (max-width: 480px) {
-            .logo {
-                font-size: 19px;
-            }
-
-            .header-icons {
-                gap: 10px;
-            }
-
-            .icon {
-                width: 32px;
-                height: 32px;
-            }
-
-            .icon-img {
-                width: 18px;
-                height: 18px;
-            }
-
-            .search-input {
-                padding: 10px 14px;
-                font-size: 15px;
-                min-height: 44px;
-            }
-
-            .products-grid {
-                gap: 14px;
-            }
-
-            .product-image-wrapper {
-                height: 170px;
-            }
-
-            .bought-overlay {
-                font-size: 14px;
-                padding: 6px 16px;
-            }
-
-            .product-info {
-                padding: 14px;
-            }
-
-            .product-category {
-                font-size: 10px;
-            }
-
-            .product-title {
-                font-size: 15px;
-            }
-
-            .product-price {
-                font-size: 16px;
-            }
-
-            .add-to-cart-btn,
-            .save-button,
-            .checkout-button {
-                padding: 10px;
-                font-size: 15px;
-            }
-
-            .back-button {
-                padding: 8px 14px;
-                font-size: 15px;
-            }
-
-            .form-input {
-                padding: 9px;
-                font-size: 15px;
-            }
-
-            .form-label {
-                font-size: 14px;
-            }
-
-            .modal-content {
-                padding: 20px;
-            }
-
-            .modal-product-image {
-                height: 190px;
-            }
-
-            #modal-product-title {
-                font-size: 20px;
-            }
-
-            .modal-product-price {
-                font-size: 22px;
-            }
-
-            .notification {
-                top: 12px;
-                right: 12px;
-                padding: 10px 16px;
-                font-size: 14px;
-            }
+            .product-image-wrapper { height: 170px; }
+            .bought-svg-overlay { transform: scale(0.8); }
         }
     </style>
 </head>
@@ -762,7 +540,7 @@
     <a href="#" class="logo">Luxury</a>
     <div class="header-icons">
         <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-            <img src="images/sun.svg" alt="Theme" class="icon-img" id="theme-icon">
+            <img src="images/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
         </div>
         <div class="icon" id="cart-icon" title="Корзина">
             <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
@@ -865,8 +643,8 @@
         <h2 class="modal-title">Confirm deletion</h2>
         <p>Are you sure you want to remove this item from your cart?</p>
         <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-            <button class="back-button" id="cancel-delete" style="flex: 1;">Cancel</button>
-            <button class="add-to-cart-btn" id="confirm-delete" style="flex: 1;">Delete</button>
+            <button class="modal-button cancel" id="cancel-delete">Cancel</button>
+            <button class="modal-button confirm" id="confirm-delete">Delete</button>
         </div>
     </div>
 </div>
@@ -907,7 +685,8 @@ const orders = [
 ];
 
 let cart = [];
-let boughtProducts = new Set();
+let boughtProducts = new Set(); // для визуального отображения
+let permanentlyBought = new Set(); // для сохранения после checkout
 let currentPage = 'main';
 let itemToRemove = null;
 let currentProductModalId = null;
@@ -952,7 +731,7 @@ function toggleTheme() {
 
 function updateThemeIcon(theme) {
     if (themeIcon) {
-        themeIcon.src = theme === 'dark' ? 'images/moon.svg' : 'images/sun.svg';
+        themeIcon.src = theme === 'dark' ? 'images/sun.svg' : 'images/moon.svg';
     }
 }
 
@@ -1004,6 +783,44 @@ function saveCart() {
     } catch (e) {}
 }
 
+function loadBoughtStatus() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('permanentlyBought')) || [];
+        permanentlyBought = new Set(saved);
+        // Визуально — тоже помечаем как купленные
+        boughtProducts = new Set(saved);
+    } catch (e) {
+        permanentlyBought = new Set();
+        boughtProducts = new Set();
+    }
+}
+
+// ✅ Генерация SVG-надписи "BOUGHT"
+function createBoughtSVG() {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", "0 0 200 80");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.style.width = "100%";
+    svg.style.height = "100%";
+
+    const text = document.createElementNS(svgNS, "text");
+    text.setAttribute("x", "50%");
+    text.setAttribute("y", "50%");
+    text.setAttribute("text-anchor", "middle");
+    text.setAttribute("dominant-baseline", "middle");
+    text.setAttribute("fill", "white");
+    text.setAttribute("font-weight", "bold");
+    text.setAttribute("font-size", "24");
+    text.setAttribute("font-family", "Arial, sans-serif");
+    text.setAttribute("stroke", "black");
+    text.setAttribute("stroke-width", "1");
+    text.textContent = "BOUGHT";
+
+    svg.appendChild(text);
+    return svg;
+}
+
 function renderProducts() {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
@@ -1044,17 +861,34 @@ function renderProducts() {
                 card.classList.add('product-bought');
             }
 
-            card.innerHTML = `
-                <div class="product-image-wrapper">
-                    <img src="${p.image}" alt="${p.title}" class="product-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+'; this.onerror=null;">
-                    ${isBought ? '<div class="bought-overlay">BOUGHT</div>' : ''}
-                </div>
-                <div class="product-info">
-                    <div class="product-category">${p.category}</div>
-                    <div class="product-title">${p.title}</div>
-                    <div class="product-price">$${p.price.toLocaleString()}</div>
-                </div>
+            const wrapper = document.createElement('div');
+            wrapper.className = 'product-image-wrapper';
+            const img = document.createElement('img');
+            img.src = p.image;
+            img.alt = p.title;
+            img.className = 'product-image';
+            img.onerror = function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+';
+            };
+            wrapper.appendChild(img);
+
+            if (isBought) {
+                const overlay = document.createElement('div');
+                overlay.className = 'bought-svg-overlay';
+                overlay.appendChild(createBoughtSVG());
+                wrapper.appendChild(overlay);
+            }
+
+            const info = document.createElement('div');
+            info.className = 'product-info';
+            info.innerHTML = `
+                <div class="product-category">${p.category}</div>
+                <div class="product-title">${p.title}</div>
+                <div class="product-price">$${p.price.toLocaleString()}</div>
             `;
+
+            card.appendChild(wrapper);
+            card.appendChild(info);
 
             if (!isBought) {
                 card.addEventListener('click', () => openProductModal(p.id));
@@ -1087,14 +921,33 @@ function openProductModal(id) {
 function addToCart(id) {
     const p = products.find(x => x.id === id);
     if (!p) return;
+
+    // ✅ Сразу помечаем как "в корзине/куплено" визуально
+    boughtProducts.add(id);
+    renderProducts(); // перерисовываем, чтобы появился BOUGHT
+
     const ex = cart.find(i => i.id === id);
-    if (ex) ex.quantity++; else cart.push({ id: p.id, name: p.title, price: p.price, quantity: 1 });
-    saveCart(); renderCart(); showNotification(`${p.title} added to cart`);
+    if (ex) {
+        ex.quantity++;
+    } else {
+        cart.push({ id: p.id, name: p.title, price: p.price, quantity: 1 });
+    }
+    saveCart();
+    renderCart();
+    showNotification(`${p.title} added to cart`);
 }
 
 function removeFromCart(id) {
     cart = cart.filter(i => i.id !== id);
-    saveCart(); renderCart(); closeModal(modals.confirm); showNotification('Item removed from cart');
+    // Убираем визуальную метку, если товар больше не в корзине и не куплен
+    if (!permanentlyBought.has(id)) {
+        boughtProducts.delete(id);
+    }
+    saveCart();
+    renderCart();
+    renderProducts(); // обновляем карточки
+    closeModal(modals.confirm);
+    showNotification('Item removed from cart');
 }
 
 function renderCart() {
@@ -1159,12 +1012,13 @@ function renderOrders() {
 function checkout() {
     if (cart.length === 0) return showNotification('Your cart is empty');
     
+    // ✅ Теперь сохраняем как ПОСТОЯННО купленные
     cart.forEach(item => {
-        boughtProducts.add(item.id);
+        permanentlyBought.add(item.id);
     });
 
     try {
-        localStorage.setItem('boughtProducts', JSON.stringify(Array.from(boughtProducts)));
+        localStorage.setItem('permanentlyBought', JSON.stringify(Array.from(permanentlyBought)));
     } catch (e) {}
 
     const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
@@ -1177,6 +1031,7 @@ function checkout() {
     cart = [];
     saveCart();
     renderCart();
+    renderProducts(); // обновляем карточки
     openModal(modals.orderSuccess);
 }
 
@@ -1239,7 +1094,8 @@ function setupEventListeners() {
         }},
         { id: 'close-product-modal', event: 'click', handler: () => closeModal(modals.product) },
         { id: 'modal-add-to-cart', event: 'click', handler: () => {
-            addToCart(currentProductModalId); closeModal(modals.product);
+            addToCart(currentProductModalId); 
+            closeModal(modals.product);
         }},
         { id: 'close-modal', event: 'click', handler: () => closeModal(modals.confirm) },
         { id: 'cancel-delete', event: 'click', handler: () => closeModal(modals.confirm) },
@@ -1273,12 +1129,7 @@ function setupEventListeners() {
 
 document.addEventListener('DOMContentLoaded', () => {
     cart = loadCart();
-    try {
-        const savedBought = JSON.parse(localStorage.getItem('boughtProducts')) || [];
-        boughtProducts = new Set(savedBought);
-    } catch (e) {
-        boughtProducts = new Set();
-    }
+    loadBoughtStatus();
     initTheme();
     renderProducts();
     renderCart();
