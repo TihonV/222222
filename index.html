@@ -73,11 +73,57 @@
             transition: background-color 0.3s ease;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .logo {
             font-size: 22px;
             font-weight: bold;
-            color: var(--text-color);
+            color: #008080; /* Как на фото */
             text-decoration: none;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .icon {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: transparent;
+            transition: background-color 0.2s, transform 0.15s;
+            padding: 4px;
+        }
+
+        .icon:hover {
+            background-color: var(--border-color);
+            transform: scale(1.12);
+        }
+
+        .icon-img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            transition: filter 0.2s;
+        }
+
+        [data-theme="light"] .icon-img {
+            filter: brightness(0) invert(0);
+        }
+        [data-theme="dark"] .icon-img {
+            filter: brightness(0) invert(1);
+        }
+        .icon:hover .icon-img {
+            filter: brightness(0) invert(1) !important;
         }
 
         .search-wrapper {
@@ -139,44 +185,8 @@
             transition: background-color 0.3s ease;
         }
 
-        .header-icons {
-            display: flex;
+        .header-mobile .header-icons {
             gap: 14px;
-        }
-
-        .icon {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: transparent;
-            transition: background-color 0.2s, transform 0.15s;
-            padding: 4px;
-        }
-
-        .icon:hover {
-            background-color: var(--border-color);
-            transform: scale(1.12);
-        }
-
-        .icon-img {
-            width: 22px;
-            height: 22px;
-            object-fit: contain;
-            transition: filter 0.2s;
-        }
-
-        [data-theme="light"] .icon-img {
-            filter: brightness(0) invert(0);
-        }
-        [data-theme="dark"] .icon-img {
-            filter: brightness(0) invert(1);
-        }
-        .icon:hover .icon-img {
-            filter: brightness(0) invert(1) !important;
         }
 
         .page-container {
@@ -627,7 +637,31 @@
 
 <!-- Челка сверху — только для ПК -->
 <div class="header-top">
-    <a href="#" class="logo">Luxury</a>
+    <div class="header-left">
+        <a href="#" class="logo">Luxury</a>
+        <div class="header-icons">
+            <!-- Search -->
+            <div class="icon" id="search-icon" title="Search">
+                <img src="images/icons/search.svg" alt="Search" class="icon-img">
+            </div>
+            <!-- Cart -->
+            <div class="icon" id="cart-icon" title="Корзина">
+                <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+            </div>
+            <!-- Profile -->
+            <div class="icon" id="profile-icon" title="Профиль">
+                <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+            </div>
+            <!-- History -->
+            <div class="icon" id="history-icon" title="История">
+                <img src="images/icons/history.svg" alt="History" class="icon-img">
+            </div>
+            <!-- Theme -->
+            <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+                <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+            </div>
+        </div>
+    </div>
     <div class="search-wrapper">
         <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
         <div class="search-clear" id="search-clear-pc">
@@ -808,7 +842,7 @@ const modals = {
 
 const themeIcon = document.getElementById('theme-icon');
 
-// Транслитерация: русские буквы → английские
+// Транслитерация
 function transliterate(str) {
     const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
     const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
@@ -842,7 +876,6 @@ function toggleTheme() {
     updateThemeIcon(next);
 }
 
-// ✅ Иконки из images/icons/
 function updateThemeIcon(theme) {
     if (themeIcon) {
         themeIcon.src = theme === 'dark' 
@@ -1207,6 +1240,13 @@ function setupEventListeners() {
         { id: 'cart-icon', event: 'click', handler: () => navigateTo('cart') },
         { id: 'profile-icon', event: 'click', handler: () => navigateTo('profile') },
         { id: 'history-icon', event: 'click', handler: () => navigateTo('history') },
+        { id: 'search-icon', event: 'click', handler: () => {
+            if (window.innerWidth > 768) {
+                document.getElementById('search-input-pc').focus();
+            } else {
+                document.getElementById('search-input-mobile').focus();
+            }
+        }},
         { id: 'logo', event: 'click', handler: () => navigateTo('main') },
         { id: 'back-from-cart', event: 'click', handler: () => navigateTo('main') },
         { id: 'back-from-profile', event: 'click', handler: () => navigateTo('main') },
