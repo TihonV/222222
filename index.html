@@ -16,6 +16,7 @@
 --button-hover: #555;
 --header-bg: white;
 --input-bg: white;
+--accent-color: #008080; /* Цвет для акцентов, как на скриншоте */
 }
 [data-theme="dark"] {
 --bg-color: #121212;
@@ -28,6 +29,7 @@
 --button-hover: #ccc;
 --header-bg: #1a1a1a;
 --input-bg: #2a2a2a;
+--accent-color: #008080;
 }
 * {
 margin: 0;
@@ -53,7 +55,7 @@ display: block;
 opacity: 1;
 transform: translateY(0);
 }
-/* Челка сверху — только для ПК */
+/* Челка сверху — для всех устройств */
 .header-top {
 display: flex;
 justify-content: space-between;
@@ -69,22 +71,22 @@ transition: background-color 0.3s ease;
 .header-left {
 display: flex;
 align-items: center;
-gap: 20px;
+gap: 24px; /* Увеличен отступ между логотипом и иконками */
 }
 .logo {
 font-size: 22px;
 font-weight: bold;
-color: #008080;
+color: var(--accent-color); /* Используем переменную для цвета */
 text-decoration: none;
 }
 .header-icons {
 display: flex;
-gap: 14px;
+gap: 20px; /* Увеличен отступ между иконками */
 }
 .icon {
 cursor: pointer;
-width: 28px;   /* Уменьшено */
-height: 28px;  /* Уменьшено */
+width: 32px;   /* Увеличено до 32px */
+height: 32px;  /* Увеличено до 32px */
 display: flex;
 align-items: center;
 justify-content: center;
@@ -98,8 +100,8 @@ background-color: var(--border-color);
 transform: scale(1.12);
 }
 .icon-img {
-width: 18px;  /* Уменьшено */
-height: 18px; /* Уменьшено */
+width: 22px;  /* Увеличено до 22px */
+height: 22px; /* Увеличено до 22px */
 object-fit: contain;
 transition: filter 0.2s;
 }
@@ -158,27 +160,16 @@ width: 16px;
 height: 16px;
 fill: var(--text-color);
 }
-/* Старый хедер — для мобильных */
+/* Старый хедер — для мобильных (будет скрыт) */
 .header-mobile {
 display: none;
-background-color: var(--header-bg);
-padding: 14px 16px;
-box-shadow: 0 2px 12px var(--shadow);
-position: sticky;
-top: 0;
-z-index: 1000;
-transition: background-color 0.3s ease;
-}
-.header-mobile .header-icons {
-gap: 14px;
 }
 .page-container {
-/* max-width: 1200px; */ /* Убрано */
+max-width: 1200px;
 margin: 18px auto;
-padding: 0 16px; /* Добавлены отступы для красивого вида */
-width: 100%; /* Ширина 100% */
+padding: 0 18px;
 }
-/* Поиск под хедером — только для мобильных */
+/* Поиск под хедером — только для мобильных (будет скрыт) */
 .search-container {
 display: none;
 position: relative;
@@ -189,7 +180,7 @@ display: flex;
 flex-wrap: wrap;
 gap: 12px;
 margin: 18px 0;
-padding: 12px;
+padding: 12px 16px; /* Добавлены горизонтальные отступы */
 background-color: var(--card-bg);
 border-radius: 12px;
 box-shadow: 0 3px 8px var(--shadow);
@@ -202,7 +193,7 @@ gap: 8px;
 .filter-checkbox {
 width: 18px;
 height: 18px;
-accent-color: var(--button-bg);
+accent-color: var(--accent-color); /* Цвет акцента */
 }
 label[for] {
 font-weight: 500;
@@ -228,29 +219,27 @@ color: var(--header-bg);
 }
 .products-grid {
 display: grid;
-grid-template-columns: repeat(4, 1fr); /* Всегда 4 колонки */
+grid-template-columns: repeat(4, 1fr); /* Изменено: всегда 4 колонки для ПК */
 gap: 22px;
 margin: 22px 0;
 }
 .product-card {
 background: var(--card-bg);
-border-radius: 16px;
+border: 1px solid var(--border-color);
+border-radius: 12px;
 overflow: hidden;
-box-shadow: 0 5px 20px var(--shadow);
-cursor: pointer;
+box-shadow: 0 3px 8px var(--shadow);
+cursor: default; /* Убрано pointer */
 transition: transform 0.3s ease, box-shadow 0.3s ease;
 position: relative;
-width: 280px; /* Фиксированная ширина */
-margin: 0 auto; /* Центрирование */
 }
 .product-card:hover:not(.product-in-cart) {
-transform: translateY(-6px);
-box-shadow: 0 10px 28px var(--shadow);
+/* Убран hover-эффект */
 }
 .product-image-wrapper {
 position: relative;
 width: 100%;
-height: 180px; /* Высота изображения */
+height: 210px;
 overflow: hidden;
 }
 .product-image {
@@ -287,25 +276,25 @@ pointer-events: none;
 z-index: 2;
 }
 .product-info {
-padding: 16px;
+padding: 18px;
 }
 .product-category {
 font-size: 12px;
 text-transform: uppercase;
-color: var(--text-secondary);
+color: var(--accent-color); /* Цвет акцента */
 font-weight: bold;
 letter-spacing: 1.3px;
 }
 .product-title {
-font-size: 16px;
+font-size: 17px;
 font-weight: bold;
 margin: 8px 0;
-color: var(--text-color);
+color: var(--accent-color); /* Цвет акцента */
 line-height: 1.35;
 }
 .product-price {
-font-size: 18px;
-color: var(--text-color);
+font-size: 20px;
+color: var(--accent-color); /* Цвет акцента */
 font-weight: bold;
 margin-top: 12px;
 }
@@ -514,16 +503,35 @@ font-size: 20px;
 text-align: right;
 color: var(--text-color);
 }
+
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
 .header-top {
-display: none;
+padding: 10px 12px;
 }
-.header-mobile {
-display: flex;
+.header-left {
+gap: 10px;
+}
+.logo {
+font-size: 18px;
+}
+.header-icons {
+gap: 10px;
+}
+.icon {
+width: 28px;
+height: 28px;
+padding: 2px;
+}
+.icon-img {
+width: 20px;
+height: 20px;
+}
+.search-wrapper {
+display: none; /* Скрыть поисковую строку из хедера на мобильных */
 }
 .search-container {
-display: block;
+display: block; /* Показать поисковую строку под хедером на мобильных */
 }
 .search-input {
 width: 100%;
@@ -540,29 +548,118 @@ font-size: 12px;
 min-width: 50px;
 }
 .products-grid {
-grid-template-columns: 1fr;
+grid-template-columns: 1fr; /* Для мобильных - одна колонка */
 gap: 18px;
 }
-.product-card {
-width: 100%; /* На мобильных - на всю ширину */
-margin: 0;
-}
-.product-image-wrapper { height: 170px; } /* Уменьшена высота для мобильных */
+.product-image-wrapper { height: 190px; }
 .bought-svg-overlay { transform: scale(0.9); }
+
+/* Исправление фильтров для мобильной версии */
+.filters {
+padding: 8px 12px; /* Добавлены горизонтальные отступы */
+margin: 12px 0;
 }
+.filter-item {
+gap: 6px;
+}
+.filter-checkbox {
+width: 16px;
+height: 16px;
+}
+label[for] {
+font-size: 14px;
+}
+}
+
 @media (max-width: 480px) {
 .filter-reset {
 padding: 2px 6px;
 font-size: 11px;
 min-width: 40px;
 }
-.product-image-wrapper { height: 150px; } /* Еще меньше для очень маленьких экранов */
+.product-image-wrapper { height: 170px; }
 .bought-svg-overlay { transform: scale(0.8); }
 }
+
+/* Стили для соответствия скриншоту */
+.header-top {
+box-shadow: none; /* Убрать тень у хедера */
+}
+.filters {
+background-color: transparent; /* Убрать фон у фильтров */
+box-shadow: none; /* Убрать тень у фильтров */
+padding: 0; /* Убрать padding */
+margin: 12px 0; /* Уменьшить margin */
+border: 1px solid var(--border-color); /* Добавить границу */
+border-radius: 8px; /* Закруглить углы */
+}
+.filter-item {
+padding: 8px 12px; /* Добавить padding внутри фильтров */
+}
+.filter-checkbox {
+accent-color: var(--accent-color); /* Цвет акцента */
+}
+.product-card {
+box-shadow: none; /* Убрать тень у карточек */
+border: 1px solid var(--border-color); /* Оставить только границу */
+border-radius: 8px; /* Закруглить углы */
+}
+.product-image-wrapper {
+height: 180px; /* Уменьшить высоту изображения */
+}
+.product-info {
+padding: 12px; /* Уменьшить padding */
+}
+.product-category {
+color: var(--accent-color); /* Цвет акцента */
+font-size: 14px; /* Увеличить размер шрифта */
+}
+.product-title {
+font-size: 16px; /* Уменьшить размер шрифта */
+color: var(--accent-color); /* Цвет акцента */
+}
+.product-price {
+font-size: 18px; /* Уменьшить размер шрифта */
+color: var(--accent-color); /* Цвет акцента */
+}
+/* Убрать эффект "BOUGHT" */
+.product-in-cart {
+opacity: 1;
+}
+.product-in-cart .product-image {
+opacity: 1;
+}
+.product-in-cart .product-image-wrapper::before {
+display: none;
+}
+.bought-svg-overlay {
+display: none;
+}
+
+/* Для мобильной версии: поисковая строка в хедере */
+@media (max-width: 768px) {
+.header-top {
+display: flex;
+flex-direction: column;
+align-items: stretch;
+}
+.header-left {
+justify-content: space-between;
+}
+.search-wrapper {
+display: flex;
+width: 100%;
+margin-top: 10px;
+}
+.search-input {
+width: 100%;
+}
+}
+
 </style>
 </head>
 <body data-theme="light">
-<!-- Челка сверху — только для ПК -->
+<!-- Челка сверху — для всех устройств -->
 <div class="header-top">
 <div class="header-left">
 <a href="#" class="logo">Luxury</a>
@@ -599,7 +696,7 @@ min-width: 40px;
 </div>
 </div>
 </div>
-<!-- Хедер для мобильных -->
+<!-- Хедер для мобильных (скрыт) -->
 <header class="header-mobile">
 <a href="#" class="logo">Luxury</a>
 <div class="header-icons">
@@ -642,7 +739,7 @@ min-width: 40px;
 <input type="checkbox" id="island-filter" class="filter-checkbox">
 <label for="island-filter">Island</label>
 </div>
-<div class="filter-reset" id="reset-filters">Reset</div>
+<!-- Убрана кнопка Reset -->
 </div>
 <div class="products-grid" id="products-grid"></div>
 </div>
@@ -1174,4 +1271,3 @@ safeSetupAutocomplete('search-input-mobile', 'suggestions');
 </script>
 </body>
 </html>
-
