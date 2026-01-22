@@ -59,7 +59,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 background-color: var(--header-bg);
-padding: 14px 24px; /* Увеличен горизонтальный отступ до 24px */
+padding: 14px 16px;
 box-shadow: 0 2px 12px var(--shadow);
 position: sticky;
 top: 0;
@@ -69,7 +69,7 @@ transition: background-color 0.3s ease;
 .header-left {
 display: flex;
 align-items: center;
-gap: 24px; /* Увеличен отступ между логотипом и иконками */
+gap: 20px;
 }
 .logo {
 font-size: 22px;
@@ -79,12 +79,12 @@ text-decoration: none;
 }
 .header-icons {
 display: flex;
-gap: 20px; /* Увеличен отступ между иконками */
+gap: 14px;
 }
 .icon {
 cursor: pointer;
-width: 32px;   /* Увеличено до 32px */
-height: 32px;  /* Увеличено до 32px */
+width: 28px;   /* Уменьшено */
+height: 28px;  /* Уменьшено */
 display: flex;
 align-items: center;
 justify-content: center;
@@ -98,8 +98,8 @@ background-color: var(--border-color);
 transform: scale(1.12);
 }
 .icon-img {
-width: 22px;  /* Увеличено до 22px */
-height: 22px; /* Увеличено до 22px */
+width: 18px;  /* Уменьшено */
+height: 18px; /* Уменьшено */
 object-fit: contain;
 transition: filter 0.2s;
 }
@@ -162,7 +162,7 @@ fill: var(--text-color);
 .header-mobile {
 display: none;
 background-color: var(--header-bg);
-padding: 14px 24px; /* Увеличен горизонтальный отступ до 24px */
+padding: 14px 16px;
 box-shadow: 0 2px 12px var(--shadow);
 position: sticky;
 top: 0;
@@ -170,12 +170,13 @@ z-index: 1000;
 transition: background-color 0.3s ease;
 }
 .header-mobile .header-icons {
-gap: 20px; /* Увеличен отступ между иконками */
+gap: 14px;
 }
 .page-container {
-max-width: 1200px;
+/* max-width: 1200px; */ /* Убрано */
 margin: 18px auto;
-padding: 0 12px; /* Уменьшен отступ от краев сайта */
+padding: 0; /* Убраны горизонтальные отступы */
+width: 100%; /* Ширина 100% */
 }
 /* Поиск под хедером — только для мобильных */
 .search-container {
@@ -227,7 +228,7 @@ color: var(--header-bg);
 }
 .products-grid {
 display: grid;
-grid-template-columns: repeat(4, 1fr); /* ✅ ВСЕГДА 4 колонки */
+grid-template-columns: repeat(4, 1fr); /* Всегда 4 колонки */
 gap: 22px;
 margin: 22px 0;
 }
@@ -247,7 +248,7 @@ box-shadow: 0 10px 28px var(--shadow);
 .product-image-wrapper {
 position: relative;
 width: 100%;
-height: 210px;
+height: 180px; /* Уменьшена высота изображения */
 overflow: hidden;
 }
 .product-image {
@@ -284,7 +285,7 @@ pointer-events: none;
 z-index: 2;
 }
 .product-info {
-padding: 16px; /* ✅ Уменьшен отступ внутри карточки */
+padding: 16px; /* Уменьшен отступ внутри карточки */
 }
 .product-category {
 font-size: 12px;
@@ -294,14 +295,14 @@ font-weight: bold;
 letter-spacing: 1.3px;
 }
 .product-title {
-font-size: 17px;
+font-size: 16px; /* Уменьшен размер шрифта */
 font-weight: bold;
 margin: 8px 0;
 color: var(--text-color);
 line-height: 1.35;
 }
 .product-price {
-font-size: 20px;
+font-size: 18px; /* Уменьшен размер шрифта */
 color: var(--text-color);
 font-weight: bold;
 margin-top: 12px;
@@ -540,7 +541,7 @@ min-width: 50px;
 grid-template-columns: 1fr;
 gap: 18px;
 }
-.product-image-wrapper { height: 190px; }
+.product-image-wrapper { height: 170px; } /* Уменьшена высота для мобильных */
 .bought-svg-overlay { transform: scale(0.9); }
 }
 @media (max-width: 480px) {
@@ -549,7 +550,7 @@ padding: 2px 6px;
 font-size: 11px;
 min-width: 40px;
 }
-.product-image-wrapper { height: 170px; }
+.product-image-wrapper { height: 150px; } /* Еще меньше для очень маленьких экранов */
 .bought-svg-overlay { transform: scale(0.8); }
 }
 </style>
