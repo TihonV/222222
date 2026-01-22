@@ -71,7 +71,7 @@ transition: background-color 0.3s ease;
 .header-left {
 display: flex;
 align-items: center;
-gap: 20px;
+gap: 24px; /* Увеличен отступ между логотипом и иконками */
 }
 .logo {
 font-size: 22px;
@@ -81,12 +81,12 @@ text-decoration: none;
 }
 .header-icons {
 display: flex;
-gap: 14px;
+gap: 20px; /* Увеличен отступ между иконками */
 }
 .icon {
 cursor: pointer;
-width: 28px;   /* Уменьшено */
-height: 28px;  /* Уменьшено */
+width: 32px;   /* Увеличено до 32px */
+height: 32px;  /* Увеличено до 32px */
 display: flex;
 align-items: center;
 justify-content: center;
@@ -100,8 +100,8 @@ background-color: var(--border-color);
 transform: scale(1.12);
 }
 .icon-img {
-width: 18px;  /* Уменьшено */
-height: 18px; /* Уменьшено */
+width: 22px;  /* Увеличено до 22px */
+height: 22px; /* Увеличено до 22px */
 object-fit: contain;
 transition: filter 0.2s;
 }
@@ -180,7 +180,7 @@ display: flex;
 flex-wrap: wrap;
 gap: 12px;
 margin: 18px 0;
-padding: 12px;
+padding: 12px 16px; /* Добавлены горизонтальные отступы */
 background-color: var(--card-bg);
 border-radius: 12px;
 box-shadow: 0 3px 8px var(--shadow);
@@ -519,13 +519,13 @@ font-size: 18px;
 gap: 10px;
 }
 .icon {
-width: 24px;
-height: 24px;
+width: 28px;
+height: 28px;
 padding: 2px;
 }
 .icon-img {
-width: 16px;
-height: 16px;
+width: 20px;
+height: 20px;
 }
 .search-wrapper {
 display: none; /* Скрыть поисковую строку из хедера на мобильных */
@@ -556,7 +556,7 @@ gap: 18px;
 
 /* Исправление фильтров для мобильной версии */
 .filters {
-padding: 8px;
+padding: 8px 12px; /* Добавлены горизонтальные отступы */
 margin: 12px 0;
 }
 .filter-item {
