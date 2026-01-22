@@ -59,12 +59,13 @@
             transform: translateY(0);
         }
 
-        header {
-            background-color: var(--header-bg);
-            padding: 14px 16px;
+        /* Челка сверху — только для ПК */
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: var(--header-bg);
+            padding: 14px 16px;
             box-shadow: 0 2px 12px var(--shadow);
             position: sticky;
             top: 0;
@@ -77,6 +78,65 @@
             font-weight: bold;
             color: var(--text-color);
             text-decoration: none;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-input {
+            width: 240px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.25s ease;
+            font-weight: 500;
+            min-height: 36px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--button-bg);
+            box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.12);
+        }
+
+        .search-clear {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 6px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .search-clear:hover {
+            opacity: 1;
+        }
+
+        .search-clear svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-color);
+        }
+
+        /* Старый хедер — для мобильных */
+        .header-mobile {
+            display: none;
+            background-color: var(--header-bg);
+            padding: 14px 16px;
+            box-shadow: 0 2px 12px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
         }
 
         .header-icons {
@@ -125,56 +185,11 @@
             padding: 0 18px;
         }
 
+        /* Поиск под хедером — только для мобильных */
         .search-container {
+            display: none;
             position: relative;
             margin: 18px 0;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 14px 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 17px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            min-height: 52px;
-            transition: all 0.25s ease;
-            font-weight: 500;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--button-bg);
-            box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.12);
-        }
-
-        #suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-top: none;
-            max-height: 220px;
-            overflow-y: auto;
-            z-index: 1001;
-            display: none;
-            box-shadow: 0 5px 12px var(--shadow);
-            border-radius: 0 0 12px 12px;
-        }
-
-        #suggestions div {
-            padding: 12px 20px;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: background-color 0.2s;
-            font-size: 16px;
-        }
-
-        #suggestions div:hover {
-            background-color: var(--border-color);
         }
 
         .filters {
@@ -272,7 +287,6 @@
             opacity: 0.4;
         }
 
-        /* Затемнение фона под BOUGHT */
         .product-in-cart .product-image-wrapper::before {
             content: "";
             position: absolute;
@@ -284,7 +298,7 @@
             z-index: 1;
         }
 
-        /* SVG надпись BOUGHT — красивая */
+        /* Надпись BOUGHT — как на фото: белая, с чёрной тенью */
         .bought-svg-overlay {
             position: absolute;
             top: 0;
@@ -559,20 +573,51 @@
 
         /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         @media (max-width: 768px) {
+            .header-top {
+                display: none;
+            }
+
+            .header-mobile {
+                display: flex;
+            }
+
+            .search-container {
+                display: block;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 16px;
+                min-height: 48px;
+            }
+
+            .search-clear {
+                display: none;
+            }
+
             .filter-reset {
                 padding: 3px 8px;
                 font-size: 12px;
                 min-width: 50px;
             }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
             .product-image-wrapper { height: 190px; }
             .bought-svg-overlay { transform: scale(0.9); }
         }
+
         @media (max-width: 480px) {
             .filter-reset {
                 padding: 2px 6px;
                 font-size: 11px;
                 min-width: 40px;
             }
+
             .product-image-wrapper { height: 170px; }
             .bought-svg-overlay { transform: scale(0.8); }
         }
@@ -580,11 +625,26 @@
 </head>
 <body data-theme="light">
 
-<header>
+<!-- Челка сверху — только для ПК -->
+<div class="header-top">
+    <a href="#" class="logo">Luxury</a>
+    <div class="search-wrapper">
+        <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
+        <div class="search-clear" id="search-clear-pc">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<!-- Хедер для мобильных -->
+<header class="header-mobile">
     <a href="#" class="logo">Luxury</a>
     <div class="header-icons">
         <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-            <img src="images/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+            <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
         </div>
         <div class="icon" id="cart-icon" title="Корзина">
             <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
@@ -599,13 +659,14 @@
 </header>
 
 <div class="page-container">
+    <!-- Поиск под хедером — только для мобильных -->
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
+        <div id="suggestions"></div>
+    </div>
+
     <!-- Главная -->
     <div id="main-page" class="page active">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search products..." id="search-input">
-            <div id="suggestions"></div>
-        </div>
-
         <div class="filters">
             <div class="filter-item">
                 <input type="checkbox" id="yacht-filter" class="filter-checkbox">
@@ -623,7 +684,6 @@
                 <input type="checkbox" id="island-filter" class="filter-checkbox">
                 <label for="island-filter">Island</label>
             </div>
-            <!-- Маленькая кнопка Reset -->
             <div class="filter-reset" id="reset-filters">Reset</div>
         </div>
 
@@ -748,7 +808,7 @@ const modals = {
 
 const themeIcon = document.getElementById('theme-icon');
 
-// ✅ Транслитерация: русские буквы → английские
+// Транслитерация: русские буквы → английские
 function transliterate(str) {
     const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
     const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
@@ -782,9 +842,12 @@ function toggleTheme() {
     updateThemeIcon(next);
 }
 
+// ✅ Иконки из images/icons/
 function updateThemeIcon(theme) {
     if (themeIcon) {
-        themeIcon.src = theme === 'dark' ? 'images/sun.svg' : 'images/moon.svg';
+        themeIcon.src = theme === 'dark' 
+            ? 'images/icons/sun.svg' 
+            : 'images/icons/moon.svg';
     }
 }
 
@@ -836,7 +899,7 @@ function saveCart() {
     } catch (e) {}
 }
 
-// ✅ Красивый SVG с градиентом и тенью
+// ✅ Надпись BOUGHT — белая с чёрной тенью
 function createBoughtSVG() {
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
@@ -845,34 +908,13 @@ function createBoughtSVG() {
     svg.style.width = "100%";
     svg.style.height = "100%";
 
-    // Градиент
-    const defs = document.createElementNS(svgNS, "defs");
-    const gradient = document.createElementNS(svgNS, "linearGradient");
-    gradient.setAttribute("id", "goldGradient");
-    gradient.setAttribute("x1", "0%");
-    gradient.setAttribute("y1", "0%");
-    gradient.setAttribute("x2", "100%");
-    gradient.setAttribute("y2", "100%");
-
-    const stop1 = document.createElementNS(svgNS, "stop");
-    stop1.setAttribute("offset", "0%");
-    stop1.setAttribute("stop-color", "#FFD700");
-    const stop2 = document.createElementNS(svgNS, "stop");
-    stop2.setAttribute("offset", "100%");
-    stop2.setAttribute("stop-color", "#FFA500");
-
-    gradient.appendChild(stop1);
-    gradient.appendChild(stop2);
-    defs.appendChild(gradient);
-    svg.appendChild(defs);
-
     // Текст с тенью
     const textShadow = document.createElementNS(svgNS, "text");
     textShadow.setAttribute("x", "50%");
     textShadow.setAttribute("y", "53%");
     textShadow.setAttribute("text-anchor", "middle");
     textShadow.setAttribute("dominant-baseline", "middle");
-    textShadow.setAttribute("fill", "rgba(0,0,0,0.3)");
+    textShadow.setAttribute("fill", "black");
     textShadow.setAttribute("font-weight", "bold");
     textShadow.setAttribute("font-size", "26");
     textShadow.setAttribute("font-family", "Arial, sans-serif");
@@ -884,7 +926,7 @@ function createBoughtSVG() {
     text.setAttribute("y", "50%");
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "middle");
-    text.setAttribute("fill", "url(#goldGradient)");
+    text.setAttribute("fill", "white");
     text.setAttribute("font-weight", "bold");
     text.setAttribute("font-size", "26");
     text.setAttribute("font-family", "Arial, sans-serif");
@@ -901,8 +943,13 @@ function renderProducts() {
     const grid = document.getElementById('products-grid');
     if (!grid) return;
 
-    const term = document.getElementById('search-input')?.value || '';
-    const searchLower = term.toLowerCase().trim();
+    let searchLower = '';
+    if (window.innerWidth > 768) {
+        searchLower = document.getElementById('search-input-pc')?.value.trim().toLowerCase() || '';
+    } else {
+        searchLower = document.getElementById('search-input-mobile')?.value.trim().toLowerCase() || '';
+    }
+
     const searchTranslit = transliterate(searchLower);
 
     const yachtChecked = document.getElementById('yacht-filter')?.checked || false;
@@ -928,7 +975,7 @@ function renderProducts() {
             if (p.category === 'ISLAND' && islandChecked) showProduct = true;
         }
 
-        if (term) {
+        if (searchLower) {
             const titleLower = p.title.toLowerCase();
             const matchesOriginal = titleLower.includes(searchLower);
             const matchesTranslit = titleLower.includes(searchTranslit);
@@ -1114,9 +1161,9 @@ function saveProfile() {
     showNotification('Profile saved successfully');
 }
 
-function safeSetupAutocomplete() {
-    const input = document.getElementById('search-input');
-    const sug = document.getElementById('suggestions');
+function safeSetupAutocomplete(inputId, suggestionsId) {
+    const input = document.getElementById(inputId);
+    const sug = document.getElementById(suggestionsId);
     if (!input || !sug) return;
 
     input.addEventListener('input', () => {
@@ -1164,7 +1211,6 @@ function setupEventListeners() {
         { id: 'back-from-cart', event: 'click', handler: () => navigateTo('main') },
         { id: 'back-from-profile', event: 'click', handler: () => navigateTo('main') },
         { id: 'back-from-history', event: 'click', handler: () => navigateTo('main') },
-        { id: 'search-input', event: 'input', handler: renderProducts },
         { id: 'reset-filters', event: 'click', handler: () => {
             document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
             renderProducts();
@@ -1211,7 +1257,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCart();
     renderOrders();
     setupEventListeners();
-    safeSetupAutocomplete();
+
+    // Сброс поиска (ПК)
+    document.getElementById('search-clear-pc').addEventListener('click', () => {
+        document.getElementById('search-input-pc').value = '';
+        renderProducts();
+    });
+
+    // Обновление при изменении поиска
+    document.getElementById('search-input-pc').addEventListener('input', renderProducts);
+    document.getElementById('search-input-mobile').addEventListener('input', renderProducts);
+
+    // Автодополнение
+    safeSetupAutocomplete('search-input-pc', 'suggestions');
+    safeSetupAutocomplete('search-input-mobile', 'suggestions');
 });
 </script>
 </body>
