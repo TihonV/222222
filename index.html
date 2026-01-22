@@ -76,7 +76,7 @@ gap: 20px;
 .logo {
 font-size: 22px;
 font-weight: bold;
-color: var(--accent-color);
+color: var(--accent-color); /* Используем переменную для цвета */
 text-decoration: none;
 }
 .header-icons {
@@ -219,7 +219,7 @@ color: var(--header-bg);
 }
 .products-grid {
 display: grid;
-grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+grid-template-columns: repeat(4, 1fr); /* Изменено: всегда 4 колонки для ПК */
 gap: 22px;
 margin: 22px 0;
 }
@@ -548,7 +548,7 @@ font-size: 12px;
 min-width: 50px;
 }
 .products-grid {
-grid-template-columns: 1fr;
+grid-template-columns: 1fr; /* Для мобильных - одна колонка */
 gap: 18px;
 }
 .product-image-wrapper { height: 190px; }
