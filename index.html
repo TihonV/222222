@@ -1188,5 +1188,117 @@ safeSetupAutocomplete('search-input-pc', 'suggestions');
 safeSetupAutocomplete('search-input-mobile', 'suggestions');
 });
 </script>
+
+<!-- ================================================== -->
+<!-- 🔒 АНТИКРАШЕР — ЗАЩИТА ОТ ПОТЕРИ КРИТИЧЕСКИХ ЭЛЕМЕНТОВ -->
+<!-- ================================================== -->
+<script>
+const CRITICAL_ELEMENTS = [
+  // Страницы
+  'main-page',
+  'cart-page',
+  'profile-page',
+  'history-page',
+  
+  // Контейнеры
+  'products-grid',
+  'cart-items',
+  'orders-list',
+  'page-container',
+  
+  // Модальные окна
+  'product-modal',
+  'confirm-modal',
+  'order-success-modal',
+  
+  // Хедеры
+  'header-top',
+  'header-mobile',
+  
+  // Поля и уведомления
+  'search-input-pc',
+  'search-input-mobile',
+  'notification'
+];
+
+const BACKUP_KEY = 'luxury_shop_antikrasher_snapshot_v1';
+
+function saveSnapshot() {
+  const snapshot = {};
+  let count = 0;
+
+  for (const id of CRITICAL_ELEMENTS) {
+    const el = document.getElementById(id);
+    if (el) {
+      snapshot[id] = el.outerHTML;
+      count++;
+    }
+  }
+
+  if (count > 0) {
+    try {
+      localStorage.setItem(BACKUP_KEY, JSON.stringify(snapshot));
+      console.log('[Антикрашер] Эталон сохранён');
+    } catch (e) {
+      console.warn('[Антикрашер] Не удалось сохранить эталон:', e);
+    }
+  }
+}
+
+function restoreMissingElements() {
+  const raw = localStorage.getItem(BACKUP_KEY);
+  if (!raw) {
+    saveSnapshot();
+    return;
+  }
+
+  let snapshot;
+  try {
+    snapshot = JSON.parse(raw);
+  } catch (e) {
+    console.warn('[Антикрашер] Повреждённый эталон — пересоздаю');
+    saveSnapshot();
+    return;
+  }
+
+  let restored = false;
+  const container = document.querySelector('.page-container') || document.body;
+
+  for (const id of CRITICAL_ELEMENTS) {
+    if (!document.getElementById(id)) {
+      const html = snapshot[id];
+      if (html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html.trim();
+        const newEl = temp.firstElementChild;
+        if (newEl) {
+          if (id.endsWith('-page')) {
+            document.body.appendChild(newEl);
+          } else {
+            container.appendChild(newEl);
+          }
+          restored = true;
+          console.log(`[Антикрашер] Восстановлен элемент #${id}`);
+        }
+      }
+    }
+  }
+
+  if (restored) {
+    if (typeof renderProducts === 'function') renderProducts();
+    if (typeof renderCart === 'function') renderCart();
+    if (typeof renderOrders === 'function') renderOrders();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    restoreMissingElements();
+  }, 300);
+});
+
+window.runAntikrasher = restoreMissingElements;
+</script>
+
 </body>
 </html>
