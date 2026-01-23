@@ -54,8 +54,9 @@ display: block;
 opacity: 1;
 transform: translateY(0);
 }
-/* Челка сверху — только для ПК */
-.header-top {
+
+/* ОСНОВНОЙ ХЕДЕР — ЕДИНЫЙ ДЛЯ ВСЕХ УСТРОЙСТВ */
+.header {
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -113,6 +114,8 @@ filter: brightness(0) invert(1);
 .icon:hover .icon-img {
 filter: brightness(0) invert(1) !important;
 }
+
+/* Поиск — отображается только на ПК */
 .search-wrapper {
 display: flex;
 align-items: center;
@@ -158,31 +161,20 @@ width: 16px;
 height: 16px;
 fill: var(--text-color);
 }
-/* Старый хедер — для мобильных */
-.header-mobile {
-display: none;
-background-color: var(--header-bg);
-padding: 14px 24px;
-box-shadow: 0 2px 12px var(--shadow);
-position: sticky;
-top: 0;
-z-index: 1000;
-transition: background-color 0.3s ease;
-}
-.header-mobile .header-icons {
-gap: 20px;
-}
-.page-container {
-max-width: 1200px;
-margin: 18px auto;
-padding: 0 18px;
-}
-/* Поиск под хедером — только для мобильных */
+
+/* Поиск под хедером — ТОЛЬКО для мобильных */
 .search-container {
 display: none;
 position: relative;
 margin: 18px 0;
 }
+
+.page-container {
+max-width: 1200px;
+margin: 18px auto;
+padding: 0 18px;
+}
+
 .filters {
 display: flex;
 flex-wrap: wrap;
@@ -225,7 +217,7 @@ text-align: center;
 background: var(--text-color);
 color: var(--header-bg);
 }
-/* СЕТКА ТОВАРОВ */
+
 .products-grid {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
@@ -514,7 +506,6 @@ color: var(--text-color);
 }
 
 /* =============== НОВЫЕ СТИЛИ =============== */
-/* Кнопка вопроса */
 .help-button {
   position: fixed;
   bottom: 20px;
@@ -539,10 +530,9 @@ color: var(--text-color);
   width: 28px;
   height: 28px;
   object-fit: contain;
-  filter: invert(1); /* белый значок на тёмном фоне */
+  filter: invert(1);
 }
 
-/* Модальное окно с видео */
 .video-modal {
   display: none;
   position: fixed;
@@ -560,15 +550,13 @@ color: var(--text-color);
 }
 .video-container {
   width: 90%;
-  max-width: 800px;
+  max-width: 500px;
   background: var(--card-bg);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-}
-.video-container video {
-  width: 100%;
-  display: block;
+  padding: 20px;
+  text-align: center;
 }
 .close-video {
   position: absolute;
@@ -586,7 +574,6 @@ color: var(--text-color);
   justify-content: center;
 }
 
-/* Приветственное модальное окно */
 .welcome-modal {
   display: none;
   position: fixed;
@@ -632,203 +619,237 @@ color: var(--text-color);
 
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
-.header-top { display: none; }
-.search-wrapper { display: none; }
-.header-mobile { display: flex; }
-.search-container { display: block; }
-.search-input { width: 100%; padding: 12px 20px; font-size: 16px; min-height: 48px; }
-.search-clear { display: none; }
-.filter-reset { padding: 3px 8px; font-size: 12px; min-width: 50px; }
-.products-grid { grid-template-columns: 1fr; gap: 18px; }
-.product-image-wrapper { height: 190px; }
-.bought-svg-overlay { transform: scale(0.9); }
+  .header {
+    padding: 14px 16px;
+  }
+  .header-left {
+    gap: 16px;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .header-icons {
+    gap: 16px;
+  }
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+  .icon-img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Скрываем поиск в хедере на мобильных */
+  .search-wrapper {
+    display: none;
+  }
+  /* Показываем поиск под хедером */
+  .search-container {
+    display: block;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .search-clear {
+    display: none;
+  }
+
+  .filter-reset {
+    padding: 3px 8px;
+    font-size: 12px;
+    min-width: 50px;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .product-image-wrapper {
+    height: 190px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.9);
+  }
 }
 @media (max-width: 480px) {
-.filter-reset { padding: 2px 6px; font-size: 11px; min-width: 40px; }
-.product-image-wrapper { height: 170px; }
-.bought-svg-overlay { transform: scale(0.8); }
+  .filter-reset {
+    padding: 2px 6px;
+    font-size: 11px;
+    min-width: 40px;
+  }
+  .product-image-wrapper {
+    height: 170px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.8);
+  }
 }
 </style>
 </head>
 <body data-theme="light">
 
-<!-- Челка сверху — только для ПК -->
-<div class="header-top">
-<div class="header-left">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<div class="icon" id="search-icon" title="Search">
-<img src="images/icons/search.svg" alt="Search" class="icon-img">
-</div>
-<div class="icon" id="cart-icon" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<div class="icon" id="profile-icon" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<div class="icon" id="history-icon" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-</div>
-</div>
-</div>
-<div class="search-wrapper">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
-<div class="search-clear" id="search-clear-pc">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<line x1="18" y1="6" x2="6" y2="18"></line>
-<line x1="6" y1="6" x2="18" y2="18"></line>
-</svg>
-</div>
-</div>
-</div>
-
-<!-- Хедер для мобильных -->
-<header class="header-mobile">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<div class="icon" data-action="theme" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
-</div>
-<div class="icon" data-action="cart" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<div class="icon" data-action="profile" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<div class="icon" data-action="history" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-</div>
+<!-- ЕДИНЫЙ ХЕДЕР -->
+<header class="header">
+  <div class="header-left">
+    <a href="#" class="logo">Luxury</a>
+    <div class="header-icons">
+      <div class="icon" id="search-icon" title="Search">
+        <img src="images/icons/search.svg" alt="Search" class="icon-img">
+      </div>
+      <div class="icon" id="cart-icon" title="Корзина">
+        <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+      </div>
+      <div class="icon" id="profile-icon" title="Профиль">
+        <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+      </div>
+      <div class="icon" id="history-icon" title="История">
+        <img src="images/icons/history.svg" alt="History" class="icon-img">
+      </div>
+      <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+        <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+      </div>
+    </div>
+  </div>
+  <!-- Поиск в хедере — только для ПК -->
+  <div class="search-wrapper">
+    <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
+    <div class="search-clear" id="search-clear-pc">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+  </div>
 </header>
 
-<div class="page-container">
 <!-- Поиск под хедером — только для мобильных -->
 <div class="search-container">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
-<div id="suggestions"></div>
+  <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
+  <div id="suggestions"></div>
 </div>
 
-<!-- Главная -->
-<div id="main-page" class="page active">
-<div class="filters">
-<div class="filter-item">
-<input type="checkbox" id="yacht-filter" class="filter-checkbox">
-<label for="yacht-filter">Yacht</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="plane-filter" class="filter-checkbox">
-<label for="plane-filter">Plane</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="mansion-filter" class="filter-checkbox">
-<label for="mansion-filter">Mansion</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="island-filter" class="filter-checkbox">
-<label for="island-filter">Island</label>
-</div>
-<div class="filter-reset" id="reset-filters">Reset</div>
-</div>
-<div class="products-grid" id="products-grid"></div>
-</div>
+<div class="page-container">
+  <!-- Главная -->
+  <div id="main-page" class="page active">
+    <div class="filters">
+      <div class="filter-item">
+        <input type="checkbox" id="yacht-filter" class="filter-checkbox">
+        <label for="yacht-filter">Yacht</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="plane-filter" class="filter-checkbox">
+        <label for="plane-filter">Plane</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mansion-filter" class="filter-checkbox">
+        <label for="mansion-filter">Mansion</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="island-filter" class="filter-checkbox">
+        <label for="island-filter">Island</label>
+      </div>
+      <div class="filter-reset" id="reset-filters">Reset</div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
 
-<!-- Корзина -->
-<div id="cart-page" class="page">
-<button class="back-button" id="back-from-cart">← Back to Shop</button>
-<h1 class="page-title">Your Cart</h1>
-<div id="cart-items"></div>
-<div class="cart-total" id="cart-total">Total: $0</div>
-<button class="checkout-button" id="checkout-button">Checkout</button>
-</div>
+  <!-- Корзина -->
+  <div id="cart-page" class="page">
+    <button class="back-button" id="back-from-cart">← Back to Shop</button>
+    <h1 class="page-title">Your Cart</h1>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: $0</div>
+    <button class="checkout-button" id="checkout-button">Checkout</button>
+  </div>
 
-<!-- Профиль -->
-<div id="profile-page" class="page">
-<button class="back-button" id="back-from-profile">← Back to Shop</button>
-<h1 class="page-title">My Profile</h1>
-<form class="profile-form">
-<div class="form-group">
-<label class="form-label">Name</label>
-<input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
-</div>
-<div class="form-group">
-<label class="form-label">E-mail</label>
-<input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
-</div>
-<div class="checkbox-group">
-<input type="checkbox" id="notifications" checked>
-<label for="notifications">Receive notifications about new products</label>
-</div>
-<button type="button" class="save-button" id="save-profile">Save</button>
-</form>
-</div>
+  <!-- Профиль -->
+  <div id="profile-page" class="page">
+    <button class="back-button" id="back-from-profile">← Back to Shop</button>
+    <h1 class="page-title">My Profile</h1>
+    <form class="profile-form">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="notifications" checked>
+        <label for="notifications">Receive notifications about new products</label>
+      </div>
+      <button type="button" class="save-button" id="save-profile">Save</button>
+    </form>
+  </div>
 
-<!-- История -->
-<div id="history-page" class="page">
-<button class="back-button" id="back-from-history">← Back to Shop</button>
-<h1 class="page-title">Order History</h1>
-<div id="orders-list"></div>
-</div>
+  <!-- История -->
+  <div id="history-page" class="page">
+    <button class="back-button" id="back-from-history">← Back to Shop</button>
+    <h1 class="page-title">Order History</h1>
+    <div id="orders-list"></div>
+  </div>
 </div>
 
 <!-- Модальные окна -->
 <div class="modal" id="product-modal">
-<div class="modal-content product-modal-content">
-<span class="close-modal" id="close-product-modal">&times;</span>
-<div class="modal-product-image" id="modal-product-image"></div>
-<h2 id="modal-product-title"></h2>
-<p id="modal-product-category"></p>
-<p id="modal-product-description"></p>
-<p class="modal-product-price" id="modal-product-price"></p>
-<button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
-</div>
+  <div class="modal-content product-modal-content">
+    <span class="close-modal" id="close-product-modal">&times;</span>
+    <div class="modal-product-image" id="modal-product-image"></div>
+    <h2 id="modal-product-title"></h2>
+    <p id="modal-product-category"></p>
+    <p id="modal-product-description"></p>
+    <p class="modal-product-price" id="modal-product-price"></p>
+    <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+  </div>
 </div>
 
 <div class="modal" id="confirm-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-modal">&times;</span>
-<h2 class="modal-title">Confirm deletion</h2>
-<p>Are you sure you want to remove this item from your cart?</p>
-<div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-<button class="modal-button cancel" id="cancel-delete">Cancel</button>
-<button class="modal-button confirm" id="confirm-delete">Delete</button>
-</div>
-</div>
+  <div class="modal-content">
+    <span class="close-modal" id="close-modal">&times;</span>
+    <h2 class="modal-title">Confirm deletion</h2>
+    <p>Are you sure you want to remove this item from your cart?</p>
+    <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
+      <button class="modal-button cancel" id="cancel-delete">Cancel</button>
+      <button class="modal-button confirm" id="confirm-delete">Delete</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal" id="order-success-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-success-modal">&times;</span>
-<h2 class="modal-title">Order placed!</h2>
-<p>Your order has been successfully placed.</p>
-<div class="order-details" style="margin-top: 20px;">
-<p><strong>Order Number:</strong> <span id="order-number"></span></p>
-<p><strong>Total:</strong> <span id="order-total-amount"></span></p>
-</div>
-</div>
+  <div class="modal-content">
+    <span class="close-modal" id="close-success-modal">&times;</span>
+    <h2 class="modal-title">Order placed!</h2>
+    <p>Your order has been successfully placed.</p>
+    <div class="order-details" style="margin-top: 20px;">
+      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
+      <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
+    </div>
+  </div>
 </div>
 
 <div class="notification" id="notification"></div>
 
-<!-- КНОПКА ВОПРОСА -->
+<!-- КНОПКА ВОПРОСА (везде) -->
 <div class="help-button" id="help-button">
   <img src="images/icons/qw.svg" alt="Help" class="help-icon">
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО С ВИДЕО -->
+<!-- ВИДЕО-МОДАЛКА (сейчас текстовая заглушка) -->
 <div class="video-modal" id="video-modal">
   <div class="video-container">
     <span class="close-video" id="close-video">&times;</span>
-    <video controls>
-      <source src="images/media/ruk.mp4" type="video/mp4">
-      Ваш браузер не поддерживает видео.
-    </video>
+    <div style="padding: 20px; text-align: center;">
+      <p>🎥 Видео-инструкция пока недоступна.</p>
+      <p>Скоро будет добавлена!</p>
+    </div>
   </div>
 </div>
 
-<!-- ПРИВЕТСТВЕННОЕ МОДАЛЬНОЕ ОКНО -->
+<!-- ПРИВЕТСТВИЕ -->
 <div class="welcome-modal" id="welcome-modal">
   <div class="welcome-content">
     <h2>Добро пожаловать!</h2>
@@ -913,12 +934,6 @@ function updateThemeIcon(theme) {
 const pcIcon = document.getElementById('theme-icon');
 if (pcIcon) {
 pcIcon.src = theme === 'dark'
-? 'images/icons/sun.svg'
-: 'images/icons/moon.svg';
-}
-const mobileIcon = document.getElementById('theme-icon-mobile');
-if (mobileIcon) {
-mobileIcon.src = theme === 'dark'
 ? 'images/icons/sun.svg'
 : 'images/icons/moon.svg';
 }
@@ -1225,76 +1240,67 @@ document.addEventListener('click', e => {
 if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
 });
 }
+
 function setupEventListeners() {
-const actions = {
-theme: toggleTheme,
-cart: () => navigateTo('cart'),
-profile: () => navigateTo('profile'),
-history: () => navigateTo('history')
-};
-Object.entries(actions).forEach(([action, handler]) => {
-const pcIdMap = {
-theme: 'theme-toggle',
-cart: 'cart-icon',
-profile: 'profile-icon',
-history: 'history-icon'
-};
-const pcEl = document.getElementById(pcIdMap[action]);
-if (pcEl) pcEl.addEventListener('click', handler);
-document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
-.forEach(el => el.addEventListener('click', handler));
-});
-document.getElementById('search-icon')?.addEventListener('click', () => {
-const input = window.innerWidth > 768
-? document.getElementById('search-input-pc')
-: document.getElementById('search-input-mobile');
-if (input) {
-input.focus();
-input.classList.add('search-highlight');
-setTimeout(() => input.classList.remove('search-highlight'), 2000);
-}
-});
-document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
-document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
-document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
-document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
-document.getElementById('reset-filters')?.addEventListener('click', () => {
-document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-renderProducts();
-});
-document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
-document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
-addToCart(currentProductModalId);
-closeModal(modals.product);
-});
-document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
-document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
-document.getElementById('confirm-delete')?.addEventListener('click', () => {
-if (itemToRemove !== null) removeFromCart(itemToRemove);
-});
-document.getElementById('close-success-modal')?.addEventListener('click', () => {
-closeModal(modals.orderSuccess); navigateTo('main');
-});
-document.getElementById('checkout-button')?.addEventListener('click', checkout);
-document.getElementById('save-profile')?.addEventListener('click', saveProfile);
-document.querySelectorAll('.filter-checkbox').forEach(cb => {
-cb.addEventListener('change', renderProducts);
-});
-window.addEventListener('click', e => {
-if (modals.product && e.target === modals.product) closeModal(modals.product);
-if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
-if (modals.orderSuccess && e.target === modals.orderSuccess) {
-closeModal(modals.orderSuccess); navigateTo('main');
-}
-});
+  // Обработчики для всех иконок — одинаковые ID на всех устройствах
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+  document.getElementById('cart-icon').addEventListener('click', () => navigateTo('cart'));
+  document.getElementById('profile-icon').addEventListener('click', () => navigateTo('profile'));
+  document.getElementById('history-icon').addEventListener('click', () => navigateTo('history'));
+
+  // Поиск
+  document.getElementById('search-icon').addEventListener('click', () => {
+    const input = window.innerWidth > 768
+      ? document.getElementById('search-input-pc')
+      : document.getElementById('search-input-mobile');
+    if (input) {
+      input.focus();
+      input.classList.add('search-highlight');
+      setTimeout(() => input.classList.remove('search-highlight'), 2000);
+    }
+  });
+
+  // Остальные обработчики
+  document.querySelector('.logo').addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-cart').addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-profile').addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-history').addEventListener('click', () => navigateTo('main'));
+  document.getElementById('reset-filters').addEventListener('click', () => {
+    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+    renderProducts();
+  });
+  document.getElementById('close-product-modal').addEventListener('click', () => closeModal(modals.product));
+  document.getElementById('modal-add-to-cart').addEventListener('click', () => {
+    addToCart(currentProductModalId);
+    closeModal(modals.product);
+  });
+  document.getElementById('close-modal').addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('cancel-delete').addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('confirm-delete').addEventListener('click', () => {
+    if (itemToRemove !== null) removeFromCart(itemToRemove);
+  });
+  document.getElementById('close-success-modal').addEventListener('click', () => {
+    closeModal(modals.orderSuccess); navigateTo('main');
+  });
+  document.getElementById('checkout-button').addEventListener('click', checkout);
+  document.getElementById('save-profile').addEventListener('click', saveProfile);
+  document.querySelectorAll('.filter-checkbox').forEach(cb => {
+    cb.addEventListener('change', renderProducts);
+  });
+  window.addEventListener('click', e => {
+    if (modals.product && e.target === modals.product) closeModal(modals.product);
+    if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
+    if (modals.orderSuccess && e.target === modals.orderSuccess) {
+      closeModal(modals.orderSuccess); navigateTo('main');
+    }
+  });
 }
 
 // =============================
-// НОВЫЙ КОД: ПРИВЕТСТВИЕ + ВИДЕО
+// ПРИВЕТСТВИЕ + ВИДЕО (ТЕКСТОВАЯ ЗАГЛУШКА)
 // =============================
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Запуск основного функционала
   cart = loadCart();
   initTheme();
   renderProducts();
@@ -1310,54 +1316,33 @@ document.addEventListener('DOMContentLoaded', () => {
   safeSetupAutocomplete('search-input-pc', 'suggestions');
   safeSetupAutocomplete('search-input-mobile', 'suggestions');
 
-  // Показ приветствия при первом заходе
-  const hasSeenWelcome = localStorage.getItem('luxury_welcome_shown');
-  if (!hasSeenWelcome) {
+  // Приветствие при первом заходе
+  if (!localStorage.getItem('luxury_welcome_shown')) {
     setTimeout(() => {
       document.getElementById('welcome-modal').classList.add('active');
     }, 500);
   }
 });
 
-// Закрытие приветствия
 document.getElementById('close-welcome').addEventListener('click', () => {
   document.getElementById('welcome-modal').classList.remove('active');
   localStorage.setItem('luxury_welcome_shown', 'true');
 });
 
-// Открытие видео-инструкции
 document.getElementById('help-button').addEventListener('click', () => {
-  // Закрываем все существующие модалки
-  Object.values(modals).forEach(modal => {
-    modal.classList.remove('active');
-    modal.style.display = 'none';
-  });
+  // Закрыть все модалки
+  Object.values(modals).forEach(m => { m.classList.remove('active'); m.style.display = 'none'; });
   document.getElementById('order-success-modal').classList.remove('active');
   document.getElementById('order-success-modal').style.display = 'none';
 
-  // Открываем видео
-  const videoModal = document.getElementById('video-modal');
-  videoModal.classList.add('active');
-  
-  // Автозапуск видео (если браузер разрешает)
-  const video = videoModal.querySelector('video');
-  if (video) {
-    video.play().catch(e => console.log('Autoplay blocked:', e));
-  }
+  // Открыть видео-модалку (текстовую)
+  document.getElementById('video-modal').classList.add('active');
 });
 
-// Закрытие видео
 document.getElementById('close-video').addEventListener('click', () => {
-  const videoModal = document.getElementById('video-modal');
-  const video = videoModal.querySelector('video');
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
-  }
-  videoModal.classList.remove('active');
+  document.getElementById('video-modal').classList.remove('active');
 });
 
-// Закрытие видео по клику вне контейнера
 document.getElementById('video-modal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('video-modal')) {
     document.getElementById('close-video').click();
