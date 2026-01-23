@@ -226,12 +226,11 @@ color: var(--header-bg);
 }
 /* СЕТКА ТОВАРОВ */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin: 22px 0;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 22px;
+margin: 22px 0;
 }
-
 .product-card {
 background: var(--card-bg);
 border-radius: 16px;
@@ -512,1432 +511,210 @@ font-size: 20px;
 text-align: right;
 color: var(--text-color);
 }
-
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
-  .header-top {
-    display: none;
-  }
-  .search-wrapper {
-    display: none;
-  }
-  .header-mobile {
-    display: flex;
-  }
-  .search-container {
-    display: block;
-  }
-  .search-input {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-    min-height: 48px;
-  }
-  .search-clear {
-    display: none;
-  }
-  .filter-reset {
-    padding: 3px 8px;
-    font-size: 12px;
-    min-width: 50px;
-  }
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .product-image-wrapper {
-    height: 190px;
-  }
-  .bought-svg-overlay {
-    transform: scale(0.9);
-  }
-}
-@media (max-width: 480px) {
-  .filter-reset {
-    padding: 2px 6px;
-    font-size: 11px;
-    min-width: 40px;
-  }
-  .product-image-wrapper {
-    height: 170px;
-  }
-  .bought-svg-overlay {
-    transform: scale(0.8);
-  }
-}
-</style>
-</head>
-<body data-theme="light">
-<!-- Челка сверху — только для ПК -->
-<div class="header-top">
-  <div class="header-left">
-    <a href="#" class="logo">Luxury</a>
-    <div class="header-icons">
-      <div class="icon" id="search-icon" title="Search">
-        <img src="images/icons/search.svg" alt="Search" class="icon-img">
-      </div>
-      <div class="icon" id="cart-icon" title="Корзина">
-        <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-      </div>
-      <div class="icon" id="profile-icon" title="Профиль">
-        <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-      </div>
-      <div class="icon" id="history-icon" title="История">
-        <img src="images/icons/history.svg" alt="History" class="icon-img">
-      </div>
-      <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-        <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-      </div>
-    </div>
-  </div>
-  <div class="search-wrapper">
-    <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
-    <div class="search-clear" id="search-clear-pc">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- Хедер для мобильных -->
-<header class="header-mobile">
-  <a href="#" class="logo">Luxury</a>
-  <div class="header-icons">
-    <div class="icon" data-action="theme" title="Toggle Dark Mode">
-      <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
-    </div>
-    <div class="icon" data-action="cart" title="Корзина">
-      <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-    </div>
-    <div class="icon" data-action="profile" title="Профиль">
-      <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-    </div>
-    <div class="icon" data-action="history" title="История">
-      <img src="images/icons/history.svg" alt="History" class="icon-img">
-    </div>
-  </div>
-</header>
-
-<div class="page-container">
-  <!-- Поиск под хедером — только для мобильных -->
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
-    <div id="suggestions"></div>
-  </div>
-
-  <!-- Главная -->
-  <div id="main-page" class="page active">
-    <div class="filters">
-      <div class="filter-item">
-        <input type="checkbox" id="yacht-filter" class="filter-checkbox">
-        <label for="yacht-filter">Yacht</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="plane-filter" class="filter-checkbox">
-        <label for="plane-filter">Plane</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="mansion-filter" class="filter-checkbox">
-        <label for="mansion-filter">Mansion</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="island-filter" class="filter-checkbox">
-        <label for="island-filter">Island</label>
-      </div>
-      <div class="filter-reset" id="reset-filters">Reset</div>
-    </div>
-    <div class="products-grid" id="products-grid"></div>
-  </div>
-
-  <!-- Корзина -->
-  <div id="cart-page" class="page">
-    <button class="back-button" id="back-from-cart">← Back to Shop</button>
-    <h1 class="page-title">Your Cart</h1>
-    <div id="cart-items"></div>
-    <div class="cart-total" id="cart-total">Total: $0</div>
-    <button class="checkout-button" id="checkout-button">Checkout</button>
-  </div>
-
-  <!-- Профиль -->
-  <div id="profile-page" class="page">
-    <button class="back-button" id="back-from-profile">← Back to Shop</button>
-    <h1 class="page-title">My Profile</h1>
-    <form class="profile-form">
-      <div class="form-group">
-        <label class="form-label">Name</label>
-        <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
-      </div>
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="notifications" checked>
-        <label for="notifications">Receive notifications about new products</label>
-      </div>
-      <button type="button" class="save-button" id="save-profile">Save</button>
-    </form>
-  </div>
-
-  <!-- История -->
-  <div id="history-page" class="page">
-    <button class="back-button" id="back-from-history">← Back to Shop</button>
-    <h1 class="page-title">Order History</h1>
-    <div id="orders-list"></div>
-  </div>
-</div>
-
-<!-- Модальные окна -->
-<div class="modal" id="product-modal">
-  <div class="modal-content product-modal-content">
-    <span class="close-modal" id="close-product-modal">&times;</span>
-    <div class="modal-product-image" id="modal-product-image"></div>
-    <h2 id="modal-product-title"></h2>
-    <p id="modal-product-category"></p>
-    <p id="modal-product-description"></p>
-    <p class="modal-product-price" id="modal-product-price"></p>
-    <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
-  </div>
-</div>
-
-<div class="modal" id="confirm-modal">
-  <div class="modal-content">
-    <span class="close-modal" id="close-modal">&times;</span>
-    <h2 class="modal-title">Confirm deletion</h2>
-    <p>Are you sure you want to remove this item from your cart?</p>
-    <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-      <button class="modal-button cancel" id="cancel-delete">Cancel</button>
-      <button class="modal-button confirm" id="confirm-delete">Delete</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="order-success-modal">
-  <div class="modal-content">
-    <span class="close-modal" id="close-success-modal">&times;</span>
-    <h2 class="modal-title">Order placed!</h2>
-    <p>Your order has been successfully placed.</p>
-    <div class="order-details" style="margin-top: 20px;">
-      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
-      <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
-    </div>
-  </div>
-</div>
-
-<div class="notification" id="notification"></div>
-
-<script>
-const products = [
-{ id: 1, category: "YACHT", title: "Azimut 77 Yacht", price: 3_500_000, image: "images/yacht/azimut77.jpg", description: "Luxury yacht with modern design and premium amenities." },
-{ id: 2, category: "YACHT", title: "Benetti 164 Superyacht", price: 45_000_000, image: "images/yacht/benetti164.jpg", description: "Superyacht with swimming pool and helicopter pad." },
-{ id: 3, category: "YACHT", title: "Lürssen A+ Yacht", price: 80_000_000, image: "images/yacht/lurssen.jpg", description: "One of the world's largest private yachts with cinema and spa." },
-{ id: 4, category: "PLANE", title: "Gulfstream G650ER", price: 75_000_000, image: "images/plane/gulfstream.jpg", description: "Private jet with long range and luxurious interior." },
-{ id: 5, category: "PLANE", title: "Boeing Business Jet", price: 90_000_000, image: "images/plane/boeing.jpg", description: "Custom-configured Boeing business jet for ultimate comfort." },
-{ id: 6, category: "PLANE", title: "Dassault Falcon 8X", price: 60_000_000, image: "images/plane/falcon8x.jpg", description: "Ultra-long-range business jet with quiet cabin." },
-{ id: 7, category: "MANSION", title: "Beverly Hills Mansion", price: 125_000_000, image: "images/mansion/beverly.jpg", description: "Luxurious mansion in Beverly Hills with panoramic views." },
-{ id: 8, category: "MANSION", title: "Miami Beach Penthouse", price: 85_000_000, image: "images/mansion/miami.jpg", description: "Penthouse with ocean views and private beach access." },
-{ id: 9, category: "MANSION", title: "Dubai Sky Palace", price: 200_000_000, image: "images/mansion/dubai.jpg", description: "Super palace in Dubai.I am fan of MESSI." },
-{ id: 10, category: "ISLAND", title: "Private Caribbean Island", price: 250_000_000, image: "images/island/caribbean.jpg", description: "Private island in the Caribbean with white sand beaches." },
-{ id: 11, category: "ISLAND", title: "Maldives Private Atoll", price: 320_000_000, image: "images/island/maldives.jpg", description: "Entire private atoll in the Maldives with luxury resort." },
-{ id: 12, category: "ISLAND", title: "Fiji Eco-Reserve Island", price: 180_000_000, image: "images/island/fiji.jpg", description: "Sustainable luxury island with coral reef protection zone." }
-];
-const orders = [
-{ id: "ORD-bytihonmetelkin", date: "20.01.2026", items: [{ name: "Azimut 77 Yacht", price: 3500000 }], total: 3500000 }
-];
-let cart = [];
-let inCart = new Set();
-let currentPage = 'main';
-let itemToRemove = null;
-let currentProductModalId = null;
-const pages = {
-main: document.getElementById('main-page'),
-cart: document.getElementById('cart-page'),
-profile: document.getElementById('profile-page'),
-history: document.getElementById('history-page')
-};
-const modals = {
-product: document.getElementById('product-modal'),
-confirm: document.getElementById('confirm-modal'),
-orderSuccess: document.getElementById('order-success-modal')
-};
-
-function transliterate(str) {
-const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
-const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
-let result = str.toLowerCase();
-for (let i = 0; i < ru.length; i++) {
-result = result.replace(new RegExp(ru[i], 'g'), en[i]);
-}
-return result;
-}
-function shuffleArray(array) {
-const result = [...array];
-for (let i = result.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[result[i], result[j]] = [result[j], result[i]];
-}
-return result;
-}
-function initTheme() {
-const isMobile = window.innerWidth <= 768;
-let saved = localStorage.getItem('theme');
-if (isMobile && !saved) {
-saved = 'light';
-localStorage.setItem('theme', 'light');
-}
-const theme = saved || 'light';
-document.body.setAttribute('data-theme', theme);
-updateThemeIcon(theme);
-}
-function toggleTheme() {
-const cur = document.body.getAttribute('data-theme');
-const next = cur === 'dark' ? 'light' : 'dark';
-document.body.setAttribute('data-theme', next);
-localStorage.setItem('theme', next);
-updateThemeIcon(next);
-}
-function updateThemeIcon(theme) {
-// Обновляем ПК-иконку
-const pcIcon = document.getElementById('theme-icon');
-if (pcIcon) {
-pcIcon.src = theme === 'dark'
-? 'images/icons/sun.svg'
-: 'images/icons/moon.svg';
-}
-// Обновляем мобильную иконку
-const mobileIcon = document.getElementById('theme-icon-mobile');
-if (mobileIcon) {
-mobileIcon.src = theme === 'dark'
-? 'images/icons/sun.svg'
-: 'images/icons/moon.svg';
-}
-}
-function showNotification(msg) {
-const n = document.getElementById('notification');
-if (n) {
-n.textContent = msg;
-n.classList.add('show');
-setTimeout(() => n.classList.remove('show'), 3000);
-}
-}
-function openModal(m) {
-if (!m) return;
-m.style.display = 'flex';
-setTimeout(() => m.classList.add('active'), 10);
-}
-function closeModal(m) {
-if (!m) return;
-m.classList.remove('active');
-setTimeout(() => m.style.display = 'none', 300);
-}
-function navigateTo(page) {
-Object.values(pages).forEach(p => {
-if (p) p.classList.remove('active');
-});
-const targetPage = pages[page];
-if (targetPage) {
-setTimeout(() => {
-targetPage.classList.add('active');
-currentPage = page;
-}, 10);
-}
-}
-function loadCart() {
-try {
-return JSON.parse(localStorage.getItem('luxuryCart')) || [];
-} catch (e) {
-return [];
-}
-}
-function saveCart() {
-try {
-localStorage.setItem('luxuryCart', JSON.stringify(cart));
-} catch (e) {}
-}
-function createBoughtSVG() {
-const svgNS = "http://www.w3.org/2000/svg";
-const svg = document.createElementNS(svgNS, "svg");
-svg.setAttribute("viewBox", "0 0 200 80");
-svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-svg.style.width = "100%";
-svg.style.height = "100%";
-const textShadow = document.createElementNS(svgNS, "text");
-textShadow.setAttribute("x", "50%");
-textShadow.setAttribute("y", "53%");
-textShadow.setAttribute("text-anchor", "middle");
-textShadow.setAttribute("dominant-baseline", "middle");
-textShadow.setAttribute("fill", "black");
-textShadow.setAttribute("font-weight", "bold");
-textShadow.setAttribute("font-size", "26");
-textShadow.setAttribute("font-family", "Arial, sans-serif");
-textShadow.setAttribute("transform", "scale(1.02)");
-textShadow.textContent = "BOUGHT";
-const text = document.createElementNS(svgNS, "text");
-text.setAttribute("x", "50%");
-text.setAttribute("y", "50%");
-text.setAttribute("text-anchor", "middle");
-text.setAttribute("dominant-baseline", "middle");
-text.setAttribute("fill", "white");
-text.setAttribute("font-weight", "bold");
-text.setAttribute("font-size", "26");
-text.setAttribute("font-family", "Arial, sans-serif");
-text.setAttribute("stroke", "black");
-text.setAttribute("stroke-width", "0.5");
-text.textContent = "BOUGHT";
-svg.appendChild(textShadow);
-svg.appendChild(text);
-return svg;
-}
-function renderProducts() {
-const grid = document.getElementById('products-grid');
-if (!grid) return;
-let searchLower = '';
-if (window.innerWidth > 768) {
-searchLower = document.getElementById('search-input-pc')?.value.trim().toLowerCase() || '';
-} else {
-searchLower = document.getElementById('search-input-mobile')?.value.trim().toLowerCase() || '';
-}
-const searchTranslit = transliterate(searchLower);
-const yachtChecked = document.getElementById('yacht-filter')?.checked || false;
-const planeChecked = document.getElementById('plane-filter')?.checked || false;
-const mansionChecked = document.getElementById('mansion-filter')?.checked || false;
-const islandChecked = document.getElementById('island-filter')?.checked || false;
-const noFilterSelected = !yachtChecked && !planeChecked && !mansionChecked && !islandChecked;
-grid.innerHTML = '';
-const shuffledProducts = shuffleArray(products);
-shuffledProducts.forEach(p => {
-let showProduct = false;
-if (noFilterSelected) {
-showProduct = true;
-} else {
-if (p.category === 'YACHT' && yachtChecked) showProduct = true;
-if (p.category === 'PLANE' && planeChecked) showProduct = true;
-if (p.category === 'MANSION' && mansionChecked) showProduct = true;
-if (p.category === 'ISLAND' && islandChecked) showProduct = true;
-}
-if (searchLower) {
-const titleLower = p.title.toLowerCase();
-const matchesOriginal = titleLower.includes(searchLower);
-const matchesTranslit = titleLower.includes(searchTranslit);
-if (!matchesOriginal && !matchesTranslit) {
-showProduct = false;
-}
-}
-if (showProduct) {
-const isInCart = inCart.has(p.id);
-const card = document.createElement('div');
-card.className = 'product-card';
-if (isInCart) {
-card.classList.add('product-in-cart');
-}
-const wrapper = document.createElement('div');
-wrapper.className = 'product-image-wrapper';
-const img = document.createElement('img');
-img.src = p.image;
-img.alt = p.title;
-img.className = 'product-image';
-img.onerror = function() {
-this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+';
-};
-wrapper.appendChild(img);
-if (isInCart) {
-const overlay = document.createElement('div');
-overlay.className = 'bought-svg-overlay';
-overlay.appendChild(createBoughtSVG());
-wrapper.appendChild(overlay);
-}
-const info = document.createElement('div');
-info.className = 'product-info';
-info.innerHTML = `
-<div class="product-category">${p.category}</div>
-<div class="product-title">${p.title}</div>
-<div class="product-price">$${p.price.toLocaleString()}</div>
-`;
-card.appendChild(wrapper);
-card.appendChild(info);
-if (!isInCart) {
-card.addEventListener('click', () => openProductModal(p.id));
-}
-grid.appendChild(card);
-}
-});
-}
-function openProductModal(id) {
-const p = products.find(x => x.id === id);
-if (!p) return;
-const imgEl = document.getElementById('modal-product-image');
-const titleEl = document.getElementById('modal-product-title');
-const catEl = document.getElementById('modal-product-category');
-const descEl = document.getElementById('modal-product-description');
-const priceEl = document.getElementById('modal-product-price');
-if (imgEl) imgEl.style.backgroundImage = `url(${p.image})`;
-if (titleEl) titleEl.textContent = p.title;
-if (catEl) catEl.textContent = p.category;
-if (descEl) descEl.textContent = p.description;
-if (priceEl) priceEl.textContent = `$${p.price.toLocaleString()}`;
-currentProductModalId = id;
-openModal(modals.product);
-}
-function addToCart(id) {
-const p = products.find(x => x.id === id);
-if (!p) return;
-inCart.add(id);
-renderProducts();
-const ex = cart.find(i => i.id === id);
-if (ex) {
-ex.quantity++;
-} else {
-cart.push({ id: p.id, name: p.title, price: p.price, quantity: 1 });
-}
-saveCart();
-renderCart();
-showNotification(`${p.title} added to cart`);
-}
-function removeFromCart(id) {
-cart = cart.filter(i => i.id !== id);
-inCart.delete(id);
-saveCart();
-renderCart();
-renderProducts();
-closeModal(modals.confirm);
-showNotification('Item removed from cart');
-}
-function renderCart() {
-const c = document.getElementById('cart-items');
-const t = document.getElementById('cart-total');
-if (!c || !t) return;
-c.innerHTML = '';
-if (cart.length === 0) {
-c.innerHTML = '<p style="text-align:center; padding:24px; color:var(--text-secondary);">Your cart is empty</p>';
-t.textContent = 'Total: $0';
-return;
-}
-let total = 0;
-cart.forEach(i => {
-total += i.price * i.quantity;
-const el = document.createElement('div');
-el.className = 'order-card';
-el.innerHTML = `
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>
-<div style="font-weight: bold;">${i.name}</div>
-<div style="color: var(--text-secondary);">$${i.price.toLocaleString()} × ${i.quantity}</div>
-</div>
-<button class="back-button" style="padding:5px 12px; font-size:14px;" data-id="${i.id}">Remove</button>
-</div>
-`;
-c.appendChild(el);
-});
-t.textContent = `Total: $${total.toLocaleString()}`;
-document.querySelectorAll('[data-id]').forEach(btn => {
-btn.addEventListener('click', e => {
-e.stopPropagation();
-itemToRemove = parseInt(btn.dataset.id);
-openModal(modals.confirm);
-});
-});
-}
-function renderOrders() {
-const list = document.getElementById('orders-list');
-if (!list) return;
-list.innerHTML = '';
-orders.forEach(o => {
-const el = document.createElement('div');
-el.className = 'order-card';
-let itemsHtml = o.items.map(i => `<div style="margin:5px 0;">• ${i.name}</div>`).join('');
-el.innerHTML = `
-<div class="order-header">
-<div class="order-number">${o.id}</div>
-<div class="order-date">${o.date}</div>
-</div>
-<div style="margin:12px 0;">${itemsHtml}</div>
-<div class="order-total">Total: $${o.total.toLocaleString()}</div>
-`;
-list.appendChild(el);
-});
-}
-function checkout() {
-if (cart.length === 0) return showNotification('Your cart is empty');
-const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-const orderId = 'ORD-' + Math.floor(Math.random() * 1000000000);
-const numEl = document.getElementById('order-number');
-const amtEl = document.getElementById('order-total-amount');
-if (numEl) numEl.textContent = orderId;
-if (amtEl) amtEl.textContent = `$${total.toLocaleString()}`;
-cart = [];
-inCart.clear();
-saveCart();
-renderCart();
-renderProducts();
-openModal(modals.orderSuccess);
-}
-function saveProfile() {
-const name = document.getElementById('profile-name')?.value.trim();
-const email = document.getElementById('profile-email')?.value.trim();
-if (!name || !email) return showNotification('Please fill in all fields');
-showNotification('Profile saved successfully');
-}
-function safeSetupAutocomplete(inputId, suggestionsId) {
-const input = document.getElementById(inputId);
-const sug = document.getElementById(suggestionsId);
-if (!input || !sug) return;
-input.addEventListener('input', () => {
-const term = input.value.trim();
-if (!term) return sug.style.display = 'none';
-const termLower = term.toLowerCase();
-const termTranslit = transliterate(termLower);
-const matches = products.filter(p =>
-p.title.toLowerCase().includes(termLower) ||
-p.title.toLowerCase().includes(termTranslit)
-).slice(0, 5);
-if (matches.length === 0) return sug.style.display = 'none';
-sug.innerHTML = '';
-matches.forEach(p => {
-const div = document.createElement('div');
-div.textContent = p.title;
-div.style.padding = '12px 20px';
-div.style.cursor = 'pointer';
-div.style.color = 'var(--text-color)';
-div.style.fontSize = '16px';
-div.addEventListener('mouseenter', () => div.style.backgroundColor = 'var(--border-color)');
-div.addEventListener('mouseleave', () => div.style.backgroundColor = 'transparent');
-div.addEventListener('click', () => {
-input.value = p.title;
-sug.style.display = 'none';
-renderProducts();
-});
-sug.appendChild(div);
-});
-sug.style.display = 'block';
-});
-document.addEventListener('click', e => {
-if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
-});
-}
-function setupEventListeners() {
-  // Общие действия
-  const actions = {
-    theme: toggleTheme,
-    cart: () => navigateTo('cart'),
-    profile: () => navigateTo('profile'),
-    history: () => navigateTo('history')
-  };
-
-  // Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
-  Object.entries(actions).forEach(([action, handler]) => {
-    // ПК-иконки (через id)
-    const pcIdMap = {
-      theme: 'theme-toggle',
-      cart: 'cart-icon',
-      profile: 'profile-icon',
-      history: 'history-icon'
-    };
-    const pcEl = document.getElementById(pcIdMap[action]);
-    if (pcEl) pcEl.addEventListener('click', handler);
-
-    // Мобильные иконки (через data-action)
-    document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
-      .forEach(el => el.addEventListener('click', handler));
-  });
-
-  // Остальные обработчики
-  document.getElementById('search-icon')?.addEventListener('click', () => {
-    const input = window.innerWidth > 768
-      ? document.getElementById('search-input-pc')
-      : document.getElementById('search-input-mobile');
-    if (input) {
-      input.focus();
-      input.classList.add('search-highlight');
-      setTimeout(() => input.classList.remove('search-highlight'), 2000);
-    }
-  });
-
-  document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('reset-filters')?.addEventListener('click', () => {
-    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-    renderProducts();
-  });
-  document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
-  document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
-    addToCart(currentProductModalId);
-    closeModal(modals.product);
-  });
-  document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
-  document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
-  document.getElementById('confirm-delete')?.addEventListener('click', () => {
-    if (itemToRemove !== null) removeFromCart(itemToRemove);
-  });
-  document.getElementById('close-success-modal')?.addEventListener('click', () => {
-    closeModal(modals.orderSuccess); navigateTo('main');
-  });
-  document.getElementById('checkout-button')?.addEventListener('click', checkout);
-  document.getElementById('save-profile')?.addEventListener('click', saveProfile);
-
-  document.querySelectorAll('.filter-checkbox').forEach(cb => {
-    cb.addEventListener('change', renderProducts);
-  });
-
-  window.addEventListener('click', e => {
-    if (modals.product && e.target === modals.product) closeModal(modals.product);
-    if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
-    if (modals.orderSuccess && e.target === modals.orderSuccess) {
-      closeModal(modals.orderSuccess); navigateTo('main');
-    }
-  });
-}
-document.addEventListener('DOMContentLoaded', () => {
-cart = loadCart();
-initTheme();
-renderProducts();
-renderCart();
-renderOrders();
-setupEventListeners();
-document.getElementById('search-clear-pc').addEventListener('click', () => {
-document.getElementById('search-input-pc').value = '';
-renderProducts();
-});
-document.getElementById('search-input-pc').addEventListener('input', renderProducts);
-document.getElementById('search-input-mobile').addEventListener('input', renderProducts);
-safeSetupAutocomplete('search-input-pc', 'suggestions');
-safeSetupAutocomplete('search-input-mobile', 'suggestions');
-});
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxury</title>
-<style>
-:root {
---bg-color: #f5f5f5;
---card-bg: white;
---text-color: #333;
---text-secondary: #666;
---border-color: #ddd;
---shadow: rgba(0,0,0,0.1);
---button-bg: #333;
---button-hover: #555;
---header-bg: white;
---input-bg: white;
-}
-[data-theme="dark"] {
---bg-color: #121212;
---card-bg: #1e1e1e;
---text-color: #f0f0f0;
---text-secondary: #aaa;
---border-color: #333;
---shadow: rgba(0,0,0,0.3);
---button-bg: #f0f0f0;
---button-hover: #ccc;
---header-bg: #1a1a1a;
---input-bg: #2a2a2a;
-}
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-body {
-font-family: 'Segoe UI', 'Arial', sans-serif;
-background-color: var(--bg-color);
-color: var(--text-color);
-transition: background-color 0.3s ease, color 0.3s ease;
-line-height: 1.5;
-padding-bottom: 20px;
-}
-.page {
-display: none;
-opacity: 0;
-transform: translateY(10px);
-transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.page.active {
-display: block;
-opacity: 1;
-transform: translateY(0);
-}
-/* Челка сверху — только для ПК */
 .header-top {
-display: flex;
-justify-content: space-between;
-align-items: center;
-background-color: var(--header-bg);
-padding: 14px 24px;
-box-shadow: 0 2px 12px var(--shadow);
-position: sticky;
-top: 0;
-z-index: 1000;
-transition: background-color 0.3s ease;
-}
-.header-left {
-display: flex;
-align-items: center;
-gap: 24px;
-}
-.logo {
-font-size: 22px;
-font-weight: bold;
-color: #008080;
-text-decoration: none;
-}
-.header-icons {
-display: flex;
-gap: 20px;
-}
-.icon {
-cursor: pointer;
-width: 32px;
-height: 32px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 50%;
-background-color: transparent;
-transition: background-color 0.2s, transform 0.15s;
-padding: 4px;
-}
-.icon:hover {
-background-color: var(--border-color);
-transform: scale(1.12);
-}
-.icon-img {
-width: 22px;
-height: 22px;
-object-fit: contain;
-transition: filter 0.2s;
-}
-[data-theme="light"] .icon-img {
-filter: brightness(0) invert(0);
-}
-[data-theme="dark"] .icon-img {
-filter: brightness(0) invert(1);
-}
-.icon:hover .icon-img {
-filter: brightness(0) invert(1) !important;
+display: none;
 }
 .search-wrapper {
+display: none;
+}
+.header-mobile {
 display: flex;
-align-items: center;
-position: relative;
+}
+.search-container {
+display: block;
 }
 .search-input {
-width: 240px;
-padding: 8px 12px;
-border: 1px solid var(--border-color);
-border-radius: 8px;
-font-size: 14px;
-background-color: var(--input-bg);
-color: var(--text-color);
-transition: all 0.25s ease;
-font-weight: 500;
-min-height: 36px;
-}
-.search-input:focus {
-outline: none;
-border-color: var(--button-bg);
-box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.12);
-}
-.search-input.search-highlight {
-border-color: #ff4444 !important;
-box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.3) !important;
+width: 100%;
+padding: 12px 20px;
+font-size: 16px;
+min-height: 48px;
 }
 .search-clear {
-cursor: pointer;
-width: 24px;
-height: 24px;
-display: flex;
-align-items: center;
-justify-content: center;
-margin-left: 6px;
-opacity: 0.6;
-transition: opacity 0.2s;
-}
-.search-clear:hover {
-opacity: 1;
-}
-.search-clear svg {
-width: 16px;
-height: 16px;
-fill: var(--text-color);
-}
-/* Старый хедер — для мобильных */
-.header-mobile {
 display: none;
-background-color: var(--header-bg);
-padding: 14px 24px;
-box-shadow: 0 2px 12px var(--shadow);
-position: sticky;
-top: 0;
-z-index: 1000;
-transition: background-color 0.3s ease;
-}
-.header-mobile .header-icons {
-gap: 20px;
-}
-.page-container {
-max-width: 1200px;
-margin: 18px auto;
-padding: 0 18px;
-}
-/* Поиск под хедером — только для мобильных */
-.search-container {
-display: none;
-position: relative;
-margin: 18px 0;
-}
-.filters {
-display: flex;
-flex-wrap: wrap;
-gap: 12px;
-margin: 18px 0;
-padding: 12px;
-background-color: var(--card-bg);
-border-radius: 12px;
-box-shadow: 0 3px 8px var(--shadow);
-}
-.filter-item {
-display: flex;
-align-items: center;
-gap: 8px;
-}
-.filter-checkbox {
-width: 18px;
-height: 18px;
-accent-color: var(--button-bg);
-}
-label[for] {
-font-weight: 500;
-font-size: 15px;
 }
 .filter-reset {
-background: var(--border-color);
-color: var(--text-color);
-padding: 4px 10px;
-border-radius: 6px;
-font-size: 13px;
-cursor: pointer;
-transition: background-color 0.2s;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-min-width: 60px;
-text-align: center;
+padding: 3px 8px;
+font-size: 12px;
+min-width: 50px;
 }
-.filter-reset:hover {
-background: var(--text-color);
-color: var(--header-bg);
-}
-/* СЕТКА ТОВАРОВ */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin: 22px 0;
-}
-
-.product-card {
-background: var(--card-bg);
-border-radius: 16px;
-overflow: hidden;
-box-shadow: 0 5px 20px var(--shadow);
-cursor: pointer;
-transition: transform 0.3s ease, box-shadow 0.3s ease;
-position: relative;
-}
-.product-card:hover:not(.product-in-cart) {
-transform: translateY(-6px);
-box-shadow: 0 10px 28px var(--shadow);
+grid-template-columns: 1fr;
+gap: 18px;
 }
 .product-image-wrapper {
-position: relative;
-width: 100%;
-height: 210px;
-overflow: hidden;
-}
-.product-image {
-width: 100%;
-height: 100%;
-object-fit: cover;
-object-position: center;
-transition: opacity 0.3s ease;
-}
-.product-in-cart {
-opacity: 0.95;
-cursor: default !important;
-}
-.product-in-cart .product-image {
-opacity: 0.4;
-}
-.product-in-cart .product-image-wrapper::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-z-index: 1;
+height: 190px;
 }
 .bought-svg-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-pointer-events: none;
-z-index: 2;
+transform: scale(0.9);
 }
-.product-info {
-padding: 18px;
-}
-.product-category {
-font-size: 12px;
-text-transform: uppercase;
-color: var(--text-secondary);
-font-weight: bold;
-letter-spacing: 1.3px;
-}
-.product-title {
-font-size: 17px;
-font-weight: bold;
-margin: 8px 0;
-color: var(--text-color);
-line-height: 1.35;
-}
-.product-price {
-font-size: 20px;
-color: var(--text-color);
-font-weight: bold;
-margin-top: 12px;
-}
-.add-to-cart-btn,
-.save-button,
-.checkout-button,
-.modal-button {
-width: 100%;
-padding: 12px;
-border: none;
-border-radius: 8px;
-font-weight: bold;
-cursor: pointer;
-transition: background-color 0.2s, transform 0.15s;
-font-size: 17px;
-margin-top: 4px;
-}
-.add-to-cart-btn,
-.save-button,
-.modal-button.confirm {
-background-color: var(--button-bg);
-color: var(--header-bg);
-}
-.modal-button.cancel {
-background-color: var(--border-color);
-color: var(--text-color);
-}
-.add-to-cart-btn:hover,
-.save-button:hover,
-.modal-button.confirm:hover {
-background-color: var(--button-hover);
-}
-.modal-button.cancel:hover {
-background-color: var(--text-color);
-color: var(--header-bg);
-}
-.add-to-cart-btn:active,
-.save-button:active,
-.modal-button:active {
-transform: scale(0.98);
-}
-.checkout-button {
-background-color: var(--button-bg);
-color: var(--header-bg);
-margin-top: 20px;
-}
-.back-button {
-background: none;
-border: 1px solid var(--border-color);
-padding: 10px 18px;
-border-radius: 8px;
-cursor: pointer;
-margin-bottom: 18px;
-font-weight: bold;
-color: var(--text-color);
-transition: background-color 0.2s;
-font-size: 17px;
-display: inline-flex;
-align-items: center;
-gap: 6px;
-}
-.back-button:hover {
-background-color: var(--border-color);
-}
-.form-input {
-width: 100%;
-padding: 12px;
-border: 1px solid var(--border-color);
-border-radius: 8px;
-font-size: 17px;
-background-color: var(--input-bg);
-color: var(--text-color);
-margin-top: 4px;
-}
-.form-label {
-display: block;
-margin-bottom: 8px;
-font-weight: bold;
-font-size: 16px;
-}
-.modal {
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0,0,0,0.65);
-z-index: 2000;
-justify-content: center;
-align-items: center;
-opacity: 0;
-transition: opacity 0.35s ease;
-}
-.modal.active {
-opacity: 1;
-}
-.modal-content {
-background: var(--card-bg);
-border-radius: 20px;
-width: 92%;
-max-width: 580px;
-padding: 28px;
-position: relative;
-transform: scale(0.94);
-transition: transform 0.35s ease;
-box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-.modal.active .modal-content {
-transform: scale(1);
-}
-.close-modal {
-position: absolute;
-top: 20px;
-right: 20px;
-font-size: 28px;
-cursor: pointer;
-color: var(--text-secondary);
-font-weight: normal;
-}
-.close-modal:hover {
-color: var(--text-color);
-}
-.product-modal-content {
-text-align: center;
-}
-.modal-product-image {
-width: 100%;
-height: 260px;
-background-size: cover;
-background-position: center;
-border-radius: 16px;
-margin-bottom: 22px;
-}
-#modal-product-category {
-color: var(--text-secondary);
-font-weight: bold;
-text-transform: uppercase;
-letter-spacing: 1.3px;
-font-size: 12px;
-margin-bottom: 8px;
-}
-#modal-product-title {
-font-size: 24px;
-margin-bottom: 14px;
-color: var(--text-color);
-font-weight: bold;
-}
-#modal-product-description {
-color: var(--text-secondary);
-line-height: 1.65;
-margin-bottom: 18px;
-font-size: 16px;
-}
-.modal-product-price {
-font-size: 26px;
-font-weight: bold;
-color: var(--text-color);
-margin: 18px 0;
-}
-.notification {
-position: fixed;
-top: 20px;
-right: 20px;
-background-color: var(--button-bg);
-color: var(--header-bg);
-padding: 14px 24px;
-border-radius: 10px;
-display: none;
-z-index: 3000;
-box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-transform: translateX(120%);
-transition: transform 0.45s ease;
-font-size: 16px;
-font-weight: bold;
-letter-spacing: 0.5px;
-}
-.notification.show {
-transform: translateX(0);
-}
-.order-card {
-border: 1px solid var(--border-color);
-border-radius: 12px;
-padding: 18px;
-margin-bottom: 18px;
-background: var(--card-bg);
-}
-.order-header {
-display: flex;
-justify-content: space-between;
-margin-bottom: 12px;
-padding-bottom: 12px;
-border-bottom: 1px solid var(--border-color);
-}
-.order-number {
-font-weight: bold;
-color: var(--text-color);
-font-size: 17px;
-}
-.order-date {
-color: var(--text-secondary);
-}
-.order-total {
-font-weight: bold;
-font-size: 20px;
-text-align: right;
-color: var(--text-color);
-}
-
-/* МОБИЛЬНАЯ АДАПТАЦИЯ */
-@media (max-width: 768px) {
-  .header-top {
-    display: none;
-  }
-  .search-wrapper {
-    display: none;
-  }
-  .header-mobile {
-    display: flex;
-  }
-  .search-container {
-    display: block;
-  }
-  .search-input {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-    min-height: 48px;
-  }
-  .search-clear {
-    display: none;
-  }
-  .filter-reset {
-    padding: 3px 8px;
-    font-size: 12px;
-    min-width: 50px;
-  }
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .product-image-wrapper {
-    height: 190px;
-  }
-  .bought-svg-overlay {
-    transform: scale(0.9);
-  }
 }
 @media (max-width: 480px) {
-  .filter-reset {
-    padding: 2px 6px;
-    font-size: 11px;
-    min-width: 40px;
-  }
-  .product-image-wrapper {
-    height: 170px;
-  }
-  .bought-svg-overlay {
-    transform: scale(0.8);
-  }
+.filter-reset {
+padding: 2px 6px;
+font-size: 11px;
+min-width: 40px;
+}
+.product-image-wrapper {
+height: 170px;
+}
+.bought-svg-overlay {
+transform: scale(0.8);
+}
 }
 </style>
 </head>
 <body data-theme="light">
 <!-- Челка сверху — только для ПК -->
 <div class="header-top">
-  <div class="header-left">
-    <a href="#" class="logo">Luxury</a>
-    <div class="header-icons">
-      <div class="icon" id="search-icon" title="Search">
-        <img src="images/icons/search.svg" alt="Search" class="icon-img">
-      </div>
-      <div class="icon" id="cart-icon" title="Корзина">
-        <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-      </div>
-      <div class="icon" id="profile-icon" title="Профиль">
-        <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-      </div>
-      <div class="icon" id="history-icon" title="История">
-        <img src="images/icons/history.svg" alt="History" class="icon-img">
-      </div>
-      <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-        <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-      </div>
-    </div>
-  </div>
-  <div class="search-wrapper">
-    <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
-    <div class="search-clear" id="search-clear-pc">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </div>
-  </div>
+<div class="header-left">
+<a href="#" class="logo">Luxury</a>
+<div class="header-icons">
+<div class="icon" id="search-icon" title="Search">
+<img src="images/icons/search.svg" alt="Search" class="icon-img">
 </div>
-
+<div class="icon" id="cart-icon" title="Корзина">
+<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+</div>
+<div class="icon" id="profile-icon" title="Профиль">
+<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+</div>
+<div class="icon" id="history-icon" title="История">
+<img src="images/icons/history.svg" alt="History" class="icon-img">
+</div>
+<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+</div>
+</div>
+</div>
+<div class="search-wrapper">
+<input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
+<div class="search-clear" id="search-clear-pc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<line x1="18" y1="6" x2="6" y2="18"></line>
+<line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+</div>
+</div>
+</div>
 <!-- Хедер для мобильных -->
 <header class="header-mobile">
-  <a href="#" class="logo">Luxury</a>
-  <div class="header-icons">
-    <div class="icon" data-action="theme" title="Toggle Dark Mode">
-      <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
-    </div>
-    <div class="icon" data-action="cart" title="Корзина">
-      <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-    </div>
-    <div class="icon" data-action="profile" title="Профиль">
-      <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-    </div>
-    <div class="icon" data-action="history" title="История">
-      <img src="images/icons/history.svg" alt="History" class="icon-img">
-    </div>
-  </div>
-</header>
-
-<div class="page-container">
-  <!-- Поиск под хедером — только для мобильных -->
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
-    <div id="suggestions"></div>
-  </div>
-
-  <!-- Главная -->
-  <div id="main-page" class="page active">
-    <div class="filters">
-      <div class="filter-item">
-        <input type="checkbox" id="yacht-filter" class="filter-checkbox">
-        <label for="yacht-filter">Yacht</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="plane-filter" class="filter-checkbox">
-        <label for="plane-filter">Plane</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="mansion-filter" class="filter-checkbox">
-        <label for="mansion-filter">Mansion</label>
-      </div>
-      <div class="filter-item">
-        <input type="checkbox" id="island-filter" class="filter-checkbox">
-        <label for="island-filter">Island</label>
-      </div>
-      <div class="filter-reset" id="reset-filters">Reset</div>
-    </div>
-    <div class="products-grid" id="products-grid"></div>
-  </div>
-
-  <!-- Корзина -->
-  <div id="cart-page" class="page">
-    <button class="back-button" id="back-from-cart">← Back to Shop</button>
-    <h1 class="page-title">Your Cart</h1>
-    <div id="cart-items"></div>
-    <div class="cart-total" id="cart-total">Total: $0</div>
-    <button class="checkout-button" id="checkout-button">Checkout</button>
-  </div>
-
-  <!-- Профиль -->
-  <div id="profile-page" class="page">
-    <button class="back-button" id="back-from-profile">← Back to Shop</button>
-    <h1 class="page-title">My Profile</h1>
-    <form class="profile-form">
-      <div class="form-group">
-        <label class="form-label">Name</label>
-        <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
-      </div>
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="notifications" checked>
-        <label for="notifications">Receive notifications about new products</label>
-      </div>
-      <button type="button" class="save-button" id="save-profile">Save</button>
-    </form>
-  </div>
-
-  <!-- История -->
-  <div id="history-page" class="page">
-    <button class="back-button" id="back-from-history">← Back to Shop</button>
-    <h1 class="page-title">Order History</h1>
-    <div id="orders-list"></div>
-  </div>
+<a href="#" class="logo">Luxury</a>
+<div class="header-icons">
+<div class="icon" data-action="theme" title="Toggle Dark Mode">
+<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
 </div>
-
+<div class="icon" data-action="cart" title="Корзина">
+<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+</div>
+<div class="icon" data-action="profile" title="Профиль">
+<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+</div>
+<div class="icon" data-action="history" title="История">
+<img src="images/icons/history.svg" alt="History" class="icon-img">
+</div>
+</div>
+</header>
+<div class="page-container">
+<!-- Поиск под хедером — только для мобильных -->
+<div class="search-container">
+<input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
+<div id="suggestions"></div>
+</div>
+<!-- Главная -->
+<div id="main-page" class="page active">
+<div class="filters">
+<div class="filter-item">
+<input type="checkbox" id="yacht-filter" class="filter-checkbox">
+<label for="yacht-filter">Yacht</label>
+</div>
+<div class="filter-item">
+<input type="checkbox" id="plane-filter" class="filter-checkbox">
+<label for="plane-filter">Plane</label>
+</div>
+<div class="filter-item">
+<input type="checkbox" id="mansion-filter" class="filter-checkbox">
+<label for="mansion-filter">Mansion</label>
+</div>
+<div class="filter-item">
+<input type="checkbox" id="island-filter" class="filter-checkbox">
+<label for="island-filter">Island</label>
+</div>
+<div class="filter-reset" id="reset-filters">Reset</div>
+</div>
+<div class="products-grid" id="products-grid"></div>
+</div>
+<!-- Корзина -->
+<div id="cart-page" class="page">
+<button class="back-button" id="back-from-cart">← Back to Shop</button>
+<h1 class="page-title">Your Cart</h1>
+<div id="cart-items"></div>
+<div class="cart-total" id="cart-total">Total: $0</div>
+<button class="checkout-button" id="checkout-button">Checkout</button>
+</div>
+<!-- Профиль -->
+<div id="profile-page" class="page">
+<button class="back-button" id="back-from-profile">← Back to Shop</button>
+<h1 class="page-title">My Profile</h1>
+<form class="profile-form">
+<div class="form-group">
+<label class="form-label">Name</label>
+<input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
+</div>
+<div class="form-group">
+<label class="form-label">E-mail</label>
+<input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
+</div>
+<div class="checkbox-group">
+<input type="checkbox" id="notifications" checked>
+<label for="notifications">Receive notifications about new products</label>
+</div>
+<button type="button" class="save-button" id="save-profile">Save</button>
+</form>
+</div>
+<!-- История -->
+<div id="history-page" class="page">
+<button class="back-button" id="back-from-history">← Back to Shop</button>
+<h1 class="page-title">Order History</h1>
+<div id="orders-list"></div>
+</div>
+</div>
 <!-- Модальные окна -->
 <div class="modal" id="product-modal">
-  <div class="modal-content product-modal-content">
-    <span class="close-modal" id="close-product-modal">&times;</span>
-    <div class="modal-product-image" id="modal-product-image"></div>
-    <h2 id="modal-product-title"></h2>
-    <p id="modal-product-category"></p>
-    <p id="modal-product-description"></p>
-    <p class="modal-product-price" id="modal-product-price"></p>
-    <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
-  </div>
+<div class="modal-content product-modal-content">
+<span class="close-modal" id="close-product-modal">&times;</span>
+<div class="modal-product-image" id="modal-product-image"></div>
+<h2 id="modal-product-title"></h2>
+<p id="modal-product-category"></p>
+<p id="modal-product-description"></p>
+<p class="modal-product-price" id="modal-product-price"></p>
+<button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
 </div>
-
+</div>
 <div class="modal" id="confirm-modal">
-  <div class="modal-content">
-    <span class="close-modal" id="close-modal">&times;</span>
-    <h2 class="modal-title">Confirm deletion</h2>
-    <p>Are you sure you want to remove this item from your cart?</p>
-    <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-      <button class="modal-button cancel" id="cancel-delete">Cancel</button>
-      <button class="modal-button confirm" id="confirm-delete">Delete</button>
-    </div>
-  </div>
+<div class="modal-content">
+<span class="close-modal" id="close-modal">&times;</span>
+<h2 class="modal-title">Confirm deletion</h2>
+<p>Are you sure you want to remove this item from your cart?</p>
+<div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
+<button class="modal-button cancel" id="cancel-delete">Cancel</button>
+<button class="modal-button confirm" id="confirm-delete">Delete</button>
 </div>
-
+</div>
+</div>
 <div class="modal" id="order-success-modal">
-  <div class="modal-content">
-    <span class="close-modal" id="close-success-modal">&times;</span>
-    <h2 class="modal-title">Order placed!</h2>
-    <p>Your order has been successfully placed.</p>
-    <div class="order-details" style="margin-top: 20px;">
-      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
-      <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
-    </div>
-  </div>
+<div class="modal-content">
+<span class="close-modal" id="close-success-modal">&times;</span>
+<h2 class="modal-title">Order placed!</h2>
+<p>Your order has been successfully placed.</p>
+<div class="order-details" style="margin-top: 20px;">
+<p><strong>Order Number:</strong> <span id="order-number"></span></p>
+<p><strong>Total:</strong> <span id="order-total-amount"></span></p>
 </div>
-
+</div>
+</div>
 <div class="notification" id="notification"></div>
-
 <script>
 const products = [
 { id: 1, category: "YACHT", title: "Azimut 77 Yacht", price: 3_500_000, image: "images/yacht/azimut77.jpg", description: "Luxury yacht with modern design and premium amenities." },
@@ -1972,7 +749,6 @@ product: document.getElementById('product-modal'),
 confirm: document.getElementById('confirm-modal'),
 orderSuccess: document.getElementById('order-success-modal')
 };
-
 function transliterate(str) {
 const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
 const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
@@ -2327,78 +1103,72 @@ if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
 });
 }
 function setupEventListeners() {
-  // Общие действия
-  const actions = {
-    theme: toggleTheme,
-    cart: () => navigateTo('cart'),
-    profile: () => navigateTo('profile'),
-    history: () => navigateTo('history')
-  };
-
-  // Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
-  Object.entries(actions).forEach(([action, handler]) => {
-    // ПК-иконки (через id)
-    const pcIdMap = {
-      theme: 'theme-toggle',
-      cart: 'cart-icon',
-      profile: 'profile-icon',
-      history: 'history-icon'
-    };
-    const pcEl = document.getElementById(pcIdMap[action]);
-    if (pcEl) pcEl.addEventListener('click', handler);
-
-    // Мобильные иконки (через data-action)
-    document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
-      .forEach(el => el.addEventListener('click', handler));
-  });
-
-  // Остальные обработчики
-  document.getElementById('search-icon')?.addEventListener('click', () => {
-    const input = window.innerWidth > 768
-      ? document.getElementById('search-input-pc')
-      : document.getElementById('search-input-mobile');
-    if (input) {
-      input.focus();
-      input.classList.add('search-highlight');
-      setTimeout(() => input.classList.remove('search-highlight'), 2000);
-    }
-  });
-
-  document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
-  document.getElementById('reset-filters')?.addEventListener('click', () => {
-    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-    renderProducts();
-  });
-  document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
-  document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
-    addToCart(currentProductModalId);
-    closeModal(modals.product);
-  });
-  document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
-  document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
-  document.getElementById('confirm-delete')?.addEventListener('click', () => {
-    if (itemToRemove !== null) removeFromCart(itemToRemove);
-  });
-  document.getElementById('close-success-modal')?.addEventListener('click', () => {
-    closeModal(modals.orderSuccess); navigateTo('main');
-  });
-  document.getElementById('checkout-button')?.addEventListener('click', checkout);
-  document.getElementById('save-profile')?.addEventListener('click', saveProfile);
-
-  document.querySelectorAll('.filter-checkbox').forEach(cb => {
-    cb.addEventListener('change', renderProducts);
-  });
-
-  window.addEventListener('click', e => {
-    if (modals.product && e.target === modals.product) closeModal(modals.product);
-    if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
-    if (modals.orderSuccess && e.target === modals.orderSuccess) {
-      closeModal(modals.orderSuccess); navigateTo('main');
-    }
-  });
+// Общие действия
+const actions = {
+theme: toggleTheme,
+cart: () => navigateTo('cart'),
+profile: () => navigateTo('profile'),
+history: () => navigateTo('history')
+};
+// Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
+Object.entries(actions).forEach(([action, handler]) => {
+// ПК-иконки (через id)
+const pcIdMap = {
+theme: 'theme-toggle',
+cart: 'cart-icon',
+profile: 'profile-icon',
+history: 'history-icon'
+};
+const pcEl = document.getElementById(pcIdMap[action]);
+if (pcEl) pcEl.addEventListener('click', handler);
+// Мобильные иконки (через data-action)
+document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
+.forEach(el => el.addEventListener('click', handler));
+});
+// Остальные обработчики
+document.getElementById('search-icon')?.addEventListener('click', () => {
+const input = window.innerWidth > 768
+? document.getElementById('search-input-pc')
+: document.getElementById('search-input-mobile');
+if (input) {
+input.focus();
+input.classList.add('search-highlight');
+setTimeout(() => input.classList.remove('search-highlight'), 2000);
+}
+});
+document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
+document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
+document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
+document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
+document.getElementById('reset-filters')?.addEventListener('click', () => {
+document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+renderProducts();
+});
+document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
+document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
+addToCart(currentProductModalId);
+closeModal(modals.product);
+});
+document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
+document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
+document.getElementById('confirm-delete')?.addEventListener('click', () => {
+if (itemToRemove !== null) removeFromCart(itemToRemove);
+});
+document.getElementById('close-success-modal')?.addEventListener('click', () => {
+closeModal(modals.orderSuccess); navigateTo('main');
+});
+document.getElementById('checkout-button')?.addEventListener('click', checkout);
+document.getElementById('save-profile')?.addEventListener('click', saveProfile);
+document.querySelectorAll('.filter-checkbox').forEach(cb => {
+cb.addEventListener('change', renderProducts);
+});
+window.addEventListener('click', e => {
+if (modals.product && e.target === modals.product) closeModal(modals.product);
+if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
+if (modals.orderSuccess && e.target === modals.orderSuccess) {
+closeModal(modals.orderSuccess); navigateTo('main');
+}
+});
 }
 document.addEventListener('DOMContentLoaded', () => {
 cart = loadCart();
