@@ -224,7 +224,7 @@ text-align: center;
 background: var(--text-color);
 color: var(--header-bg);
 }
-/* ✅ СЕТКА ТОВАРОВ */
+/* СЕТКА ТОВАРОВ */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -515,195 +515,219 @@ color: var(--text-color);
 
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
-.header-top { display: none; }
-.header-mobile { display: flex; }
-.search-container { display: block; }
-.search-input {
-  width: 100%;
-  padding: 12px 20px;
-  font-size: 16px;
-  min-height: 48px;
-}
-.search-clear { display: none; }
-.filter-reset {
-  padding: 3px 8px;
-  font-size: 12px;
-  min-width: 50px;
-}
-/* ✅ На мобильных — 1 товар в ряд */
-.products-grid {
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-.product-image-wrapper { height: 190px; }
-.bought-svg-overlay { transform: scale(0.9); }
+  .header-top {
+    display: none;
+  }
+  .search-wrapper {
+    display: none;
+  }
+  .header-mobile {
+    display: flex;
+  }
+  .search-container {
+    display: block;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .search-clear {
+    display: none;
+  }
+  .filter-reset {
+    padding: 3px 8px;
+    font-size: 12px;
+    min-width: 50px;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .product-image-wrapper {
+    height: 190px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.9);
+  }
 }
 @media (max-width: 480px) {
-.filter-reset {
-  padding: 2px 6px;
-  font-size: 11px;
-  min-width: 40px;
-}
-.product-image-wrapper { height: 170px; }
-.Bought-svg-overlay { transform: scale(0.8); }
+  .filter-reset {
+    padding: 2px 6px;
+    font-size: 11px;
+    min-width: 40px;
+  }
+  .product-image-wrapper {
+    height: 170px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.8);
+  }
 }
 </style>
 </head>
 <body data-theme="light">
 <!-- Челка сверху — только для ПК -->
 <div class="header-top">
-<div class="header-left">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<!-- Search -->
-<div class="icon" id="search-icon" title="Search">
-<img src="images/icons/search.svg" alt="Search" class="icon-img">
+  <div class="header-left">
+    <a href="#" class="logo">Luxury</a>
+    <div class="header-icons">
+      <div class="icon" id="search-icon" title="Search">
+        <img src="images/icons/search.svg" alt="Search" class="icon-img">
+      </div>
+      <div class="icon" id="cart-icon" title="Корзина">
+        <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+      </div>
+      <div class="icon" id="profile-icon" title="Профиль">
+        <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+      </div>
+      <div class="icon" id="history-icon" title="История">
+        <img src="images/icons/history.svg" alt="History" class="icon-img">
+      </div>
+      <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+        <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+      </div>
+    </div>
+  </div>
+  <div class="search-wrapper">
+    <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
+    <div class="search-clear" id="search-clear-pc">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+  </div>
 </div>
-<!-- Cart -->
-<div class="icon" id="cart-icon" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<!-- Profile -->
-<div class="icon" id="profile-icon" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<!-- History -->
-<div class="icon" id="history-icon" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-<!-- Theme -->
-<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-</div>
-</div>
-</div>
-<div class="search-wrapper">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
-<div class="search-clear" id="search-clear-pc">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<line x1="18" y1="6" x2="6" y2="18"></line>
-<line x1="6" y1="6" x2="18" y2="18"></line>
-</svg>
-</div>
-</div>
-</div>
+
 <!-- Хедер для мобильных -->
 <header class="header-mobile">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-</div>
-<div class="icon" id="cart-icon" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<div class="icon" id="profile-icon" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<div class="icon" id="history-icon" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-</div>
+  <a href="#" class="logo">Luxury</a>
+  <div class="header-icons">
+    <div class="icon" data-action="theme" title="Toggle Dark Mode">
+      <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
+    </div>
+    <div class="icon" data-action="cart" title="Корзина">
+      <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+    </div>
+    <div class="icon" data-action="profile" title="Профиль">
+      <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+    </div>
+    <div class="icon" data-action="history" title="История">
+      <img src="images/icons/history.svg" alt="History" class="icon-img">
+    </div>
+  </div>
 </header>
+
 <div class="page-container">
-<!-- Поиск под хедером — только для мобильных -->
-<div class="search-container">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
-<div id="suggestions"></div>
+  <!-- Поиск под хедером — только для мобильных -->
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
+    <div id="suggestions"></div>
+  </div>
+
+  <!-- Главная -->
+  <div id="main-page" class="page active">
+    <div class="filters">
+      <div class="filter-item">
+        <input type="checkbox" id="yacht-filter" class="filter-checkbox">
+        <label for="yacht-filter">Yacht</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="plane-filter" class="filter-checkbox">
+        <label for="plane-filter">Plane</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mansion-filter" class="filter-checkbox">
+        <label for="mansion-filter">Mansion</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="island-filter" class="filter-checkbox">
+        <label for="island-filter">Island</label>
+      </div>
+      <div class="filter-reset" id="reset-filters">Reset</div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+  <!-- Корзина -->
+  <div id="cart-page" class="page">
+    <button class="back-button" id="back-from-cart">← Back to Shop</button>
+    <h1 class="page-title">Your Cart</h1>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: $0</div>
+    <button class="checkout-button" id="checkout-button">Checkout</button>
+  </div>
+
+  <!-- Профиль -->
+  <div id="profile-page" class="page">
+    <button class="back-button" id="back-from-profile">← Back to Shop</button>
+    <h1 class="page-title">My Profile</h1>
+    <form class="profile-form">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="notifications" checked>
+        <label for="notifications">Receive notifications about new products</label>
+      </div>
+      <button type="button" class="save-button" id="save-profile">Save</button>
+    </form>
+  </div>
+
+  <!-- История -->
+  <div id="history-page" class="page">
+    <button class="back-button" id="back-from-history">← Back to Shop</button>
+    <h1 class="page-title">Order History</h1>
+    <div id="orders-list"></div>
+  </div>
 </div>
-<!-- Главная -->
-<div id="main-page" class="page active">
-<div class="filters">
-<div class="filter-item">
-<input type="checkbox" id="yacht-filter" class="filter-checkbox">
-<label for="yacht-filter">Yacht</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="plane-filter" class="filter-checkbox">
-<label for="plane-filter">Plane</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="mansion-filter" class="filter-checkbox">
-<label for="mansion-filter">Mansion</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="island-filter" class="filter-checkbox">
-<label for="island-filter">Island</label>
-</div>
-<div class="filter-reset" id="reset-filters">Reset</div>
-</div>
-<div class="products-grid" id="products-grid"></div>
-</div>
-<!-- Корзина -->
-<div id="cart-page" class="page">
-<button class="back-button" id="back-from-cart">← Back to Shop</button>
-<h1 class="page-title">Your Cart</h1>
-<div id="cart-items"></div>
-<div class="cart-total" id="cart-total">Total: $0</div>
-<button class="checkout-button" id="checkout-button">Checkout</button>
-</div>
-<!-- Профиль -->
-<div id="profile-page" class="page">
-<button class="back-button" id="back-from-profile">← Back to Shop</button>
-<h1 class="page-title">My Profile</h1>
-<form class="profile-form">
-<div class="form-group">
-<label class="form-label">Name</label>
-<input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
-</div>
-<div class="form-group">
-<label class="form-label">E-mail</label>
-<input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
-</div>
-<div class="checkbox-group">
-<input type="checkbox" id="notifications" checked>
-<label for="notifications">Receive notifications about new products</label>
-</div>
-<button type="button" class="save-button" id="save-profile">Save</button>
-</form>
-</div>
-<!-- История -->
-<div id="history-page" class="page">
-<button class="back-button" id="back-from-history">← Back to Shop</button>
-<h1 class="page-title">Order History</h1>
-<div id="orders-list"></div>
-</div>
-</div>
+
 <!-- Модальные окна -->
 <div class="modal" id="product-modal">
-<div class="modal-content product-modal-content">
-<span class="close-modal" id="close-product-modal">&times;</span>
-<div class="modal-product-image" id="modal-product-image"></div>
-<h2 id="modal-product-title"></h2>
-<p id="modal-product-category"></p>
-<p id="modal-product-description"></p>
-<p class="modal-product-price" id="modal-product-price"></p>
-<button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+  <div class="modal-content product-modal-content">
+    <span class="close-modal" id="close-product-modal">&times;</span>
+    <div class="modal-product-image" id="modal-product-image"></div>
+    <h2 id="modal-product-title"></h2>
+    <p id="modal-product-category"></p>
+    <p id="modal-product-description"></p>
+    <p class="modal-product-price" id="modal-product-price"></p>
+    <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+  </div>
 </div>
-</div>
+
 <div class="modal" id="confirm-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-modal">&times;</span>
-<h2 class="modal-title">Confirm deletion</h2>
-<p>Are you sure you want to remove this item from your cart?</p>
-<div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-<button class="modal-button cancel" id="cancel-delete">Cancel</button>
-<button class="modal-button confirm" id="confirm-delete">Delete</button>
+  <div class="modal-content">
+    <span class="close-modal" id="close-modal">&times;</span>
+    <h2 class="modal-title">Confirm deletion</h2>
+    <p>Are you sure you want to remove this item from your cart?</p>
+    <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
+      <button class="modal-button cancel" id="cancel-delete">Cancel</button>
+      <button class="modal-button confirm" id="confirm-delete">Delete</button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div class="modal" id="order-success-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-success-modal">&times;</span>
-<h2 class="modal-title">Order placed!</h2>
-<p>Your order has been successfully placed.</p>
-<div class="order-details" style="margin-top: 20px;">
-<p><strong>Order Number:</strong> <span id="order-number"></span></p>
-<p><strong>Total:</strong> <span id="order-total-amount"></span></p>
+  <div class="modal-content">
+    <span class="close-modal" id="close-success-modal">&times;</span>
+    <h2 class="modal-title">Order placed!</h2>
+    <p>Your order has been successfully placed.</p>
+    <div class="order-details" style="margin-top: 20px;">
+      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
+      <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div class="notification" id="notification"></div>
+
 <script>
 const products = [
 { id: 1, category: "YACHT", title: "Azimut 77 Yacht", price: 3_500_000, image: "images/yacht/azimut77.jpg", description: "Luxury yacht with modern design and premium amenities." },
@@ -738,7 +762,7 @@ product: document.getElementById('product-modal'),
 confirm: document.getElementById('confirm-modal'),
 orderSuccess: document.getElementById('order-success-modal')
 };
-const themeIcon = document.getElementById('theme-icon');
+
 function transliterate(str) {
 const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
 const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
@@ -775,8 +799,17 @@ localStorage.setItem('theme', next);
 updateThemeIcon(next);
 }
 function updateThemeIcon(theme) {
-if (themeIcon) {
-themeIcon.src = theme === 'dark'
+// Обновляем ПК-иконку
+const pcIcon = document.getElementById('theme-icon');
+if (pcIcon) {
+pcIcon.src = theme === 'dark'
+? 'images/icons/sun.svg'
+: 'images/icons/moon.svg';
+}
+// Обновляем мобильную иконку
+const mobileIcon = document.getElementById('theme-icon-mobile');
+if (mobileIcon) {
+mobileIcon.src = theme === 'dark'
 ? 'images/icons/sun.svg'
 : 'images/icons/moon.svg';
 }
@@ -1084,59 +1117,78 @@ if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
 });
 }
 function setupEventListeners() {
-const handlers = [
-{ id: 'theme-toggle', event: 'click', handler: toggleTheme },
-{ id: 'cart-icon', event: 'click', handler: () => navigateTo('cart') },
-{ id: 'profile-icon', event: 'click', handler: () => navigateTo('profile') },
-{ id: 'history-icon', event: 'click', handler: () => navigateTo('history') },
-{ id: 'search-icon', event: 'click', handler: () => {
-const input = window.innerWidth > 768
-? document.getElementById('search-input-pc')
-: document.getElementById('search-input-mobile');
-if (input) {
-input.focus();
-input.classList.add('search-highlight');
-setTimeout(() => input.classList.remove('search-highlight'), 2000);
-}
-}},
-{ id: 'logo', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-cart', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-profile', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-history', event: 'click', handler: () => navigateTo('main') },
-{ id: 'reset-filters', event: 'click', handler: () => {
-document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-renderProducts();
-}},
-{ id: 'close-product-modal', event: 'click', handler: () => closeModal(modals.product) },
-{ id: 'modal-add-to-cart', event: 'click', handler: () => {
-addToCart(currentProductModalId);
-closeModal(modals.product);
-}},
-{ id: 'close-modal', event: 'click', handler: () => closeModal(modals.confirm) },
-{ id: 'cancel-delete', event: 'click', handler: () => closeModal(modals.confirm) },
-{ id: 'confirm-delete', event: 'click', handler: () => {
-if (itemToRemove !== null) removeFromCart(itemToRemove);
-}},
-{ id: 'close-success-modal', event: 'click', handler: () => {
-closeModal(modals.orderSuccess); navigateTo('main');
-}},
-{ id: 'checkout-button', event: 'click', handler: checkout },
-{ id: 'save-profile', event: 'click', handler: saveProfile }
-];
-handlers.forEach(({ id, event, handler }) => {
-const el = document.getElementById(id);
-if (el) el.addEventListener(event, handler);
-});
-document.querySelectorAll('.filter-checkbox').forEach(cb => {
-cb.addEventListener('change', renderProducts);
-});
-window.addEventListener('click', e => {
-if (modals.product && e.target === modals.product) closeModal(modals.product);
-if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
-if (modals.orderSuccess && e.target === modals.orderSuccess) {
-closeModal(modals.orderSuccess); navigateTo('main');
-}
-});
+  // Общие действия
+  const actions = {
+    theme: toggleTheme,
+    cart: () => navigateTo('cart'),
+    profile: () => navigateTo('profile'),
+    history: () => navigateTo('history')
+  };
+
+  // Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
+  Object.entries(actions).forEach(([action, handler]) => {
+    // ПК-иконки (через id)
+    const pcIdMap = {
+      theme: 'theme-toggle',
+      cart: 'cart-icon',
+      profile: 'profile-icon',
+      history: 'history-icon'
+    };
+    const pcEl = document.getElementById(pcIdMap[action]);
+    if (pcEl) pcEl.addEventListener('click', handler);
+
+    // Мобильные иконки (через data-action)
+    document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
+      .forEach(el => el.addEventListener('click', handler));
+  });
+
+  // Остальные обработчики
+  document.getElementById('search-icon')?.addEventListener('click', () => {
+    const input = window.innerWidth > 768
+      ? document.getElementById('search-input-pc')
+      : document.getElementById('search-input-mobile');
+    if (input) {
+      input.focus();
+      input.classList.add('search-highlight');
+      setTimeout(() => input.classList.remove('search-highlight'), 2000);
+    }
+  });
+
+  document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('reset-filters')?.addEventListener('click', () => {
+    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+    renderProducts();
+  });
+  document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
+  document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
+    addToCart(currentProductModalId);
+    closeModal(modals.product);
+  });
+  document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('confirm-delete')?.addEventListener('click', () => {
+    if (itemToRemove !== null) removeFromCart(itemToRemove);
+  });
+  document.getElementById('close-success-modal')?.addEventListener('click', () => {
+    closeModal(modals.orderSuccess); navigateTo('main');
+  });
+  document.getElementById('checkout-button')?.addEventListener('click', checkout);
+  document.getElementById('save-profile')?.addEventListener('click', saveProfile);
+
+  document.querySelectorAll('.filter-checkbox').forEach(cb => {
+    cb.addEventListener('change', renderProducts);
+  });
+
+  window.addEventListener('click', e => {
+    if (modals.product && e.target === modals.product) closeModal(modals.product);
+    if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
+    if (modals.orderSuccess && e.target === modals.orderSuccess) {
+      closeModal(modals.orderSuccess); navigateTo('main');
+    }
+  });
 }
 document.addEventListener('DOMContentLoaded', () => {
 cart = loadCart();
@@ -1382,7 +1434,7 @@ text-align: center;
 background: var(--text-color);
 color: var(--header-bg);
 }
-/* ✅ СЕТКА ТОВАРОВ */
+/* СЕТКА ТОВАРОВ */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1673,195 +1725,219 @@ color: var(--text-color);
 
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
-.header-top { display: none; }
-.header-mobile { display: flex; }
-.search-container { display: block; }
-.search-input {
-  width: 100%;
-  padding: 12px 20px;
-  font-size: 16px;
-  min-height: 48px;
-}
-.search-clear { display: none; }
-.filter-reset {
-  padding: 3px 8px;
-  font-size: 12px;
-  min-width: 50px;
-}
-/* ✅ На мобильных — 1 товар в ряд */
-.products-grid {
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-.product-image-wrapper { height: 190px; }
-.bought-svg-overlay { transform: scale(0.9); }
+  .header-top {
+    display: none;
+  }
+  .search-wrapper {
+    display: none;
+  }
+  .header-mobile {
+    display: flex;
+  }
+  .search-container {
+    display: block;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .search-clear {
+    display: none;
+  }
+  .filter-reset {
+    padding: 3px 8px;
+    font-size: 12px;
+    min-width: 50px;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .product-image-wrapper {
+    height: 190px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.9);
+  }
 }
 @media (max-width: 480px) {
-.filter-reset {
-  padding: 2px 6px;
-  font-size: 11px;
-  min-width: 40px;
-}
-.product-image-wrapper { height: 170px; }
-.Bought-svg-overlay { transform: scale(0.8); }
+  .filter-reset {
+    padding: 2px 6px;
+    font-size: 11px;
+    min-width: 40px;
+  }
+  .product-image-wrapper {
+    height: 170px;
+  }
+  .bought-svg-overlay {
+    transform: scale(0.8);
+  }
 }
 </style>
 </head>
 <body data-theme="light">
 <!-- Челка сверху — только для ПК -->
 <div class="header-top">
-<div class="header-left">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<!-- Search -->
-<div class="icon" id="search-icon" title="Search">
-<img src="images/icons/search.svg" alt="Search" class="icon-img">
+  <div class="header-left">
+    <a href="#" class="logo">Luxury</a>
+    <div class="header-icons">
+      <div class="icon" id="search-icon" title="Search">
+        <img src="images/icons/search.svg" alt="Search" class="icon-img">
+      </div>
+      <div class="icon" id="cart-icon" title="Корзина">
+        <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+      </div>
+      <div class="icon" id="profile-icon" title="Профиль">
+        <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+      </div>
+      <div class="icon" id="history-icon" title="История">
+        <img src="images/icons/history.svg" alt="History" class="icon-img">
+      </div>
+      <div class="icon" id="theme-toggle" title="Toggle Dark Mode">
+        <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
+      </div>
+    </div>
+  </div>
+  <div class="search-wrapper">
+    <input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
+    <div class="search-clear" id="search-clear-pc">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+  </div>
 </div>
-<!-- Cart -->
-<div class="icon" id="cart-icon" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<!-- Profile -->
-<div class="icon" id="profile-icon" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<!-- History -->
-<div class="icon" id="history-icon" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-<!-- Theme -->
-<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-</div>
-</div>
-</div>
-<div class="search-wrapper">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-pc">
-<div class="search-clear" id="search-clear-pc">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<line x1="18" y1="6" x2="6" y2="18"></line>
-<line x1="6" y1="6" x2="18" y2="18"></line>
-</svg>
-</div>
-</div>
-</div>
+
 <!-- Хедер для мобильных -->
 <header class="header-mobile">
-<a href="#" class="logo">Luxury</a>
-<div class="header-icons">
-<div class="icon" id="theme-toggle" title="Toggle Dark Mode">
-<img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon">
-</div>
-<div class="icon" id="cart-icon" title="Корзина">
-<img src="images/icons/cart.svg" alt="Cart" class="icon-img">
-</div>
-<div class="icon" id="profile-icon" title="Профиль">
-<img src="images/icons/profile.svg" alt="Profile" class="icon-img">
-</div>
-<div class="icon" id="history-icon" title="История">
-<img src="images/icons/history.svg" alt="History" class="icon-img">
-</div>
-</div>
+  <a href="#" class="logo">Luxury</a>
+  <div class="header-icons">
+    <div class="icon" data-action="theme" title="Toggle Dark Mode">
+      <img src="images/icons/moon.svg" alt="Theme" class="icon-img" id="theme-icon-mobile">
+    </div>
+    <div class="icon" data-action="cart" title="Корзина">
+      <img src="images/icons/cart.svg" alt="Cart" class="icon-img">
+    </div>
+    <div class="icon" data-action="profile" title="Профиль">
+      <img src="images/icons/profile.svg" alt="Profile" class="icon-img">
+    </div>
+    <div class="icon" data-action="history" title="История">
+      <img src="images/icons/history.svg" alt="History" class="icon-img">
+    </div>
+  </div>
 </header>
+
 <div class="page-container">
-<!-- Поиск под хедером — только для мобильных -->
-<div class="search-container">
-<input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
-<div id="suggestions"></div>
+  <!-- Поиск под хедером — только для мобильных -->
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
+    <div id="suggestions"></div>
+  </div>
+
+  <!-- Главная -->
+  <div id="main-page" class="page active">
+    <div class="filters">
+      <div class="filter-item">
+        <input type="checkbox" id="yacht-filter" class="filter-checkbox">
+        <label for="yacht-filter">Yacht</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="plane-filter" class="filter-checkbox">
+        <label for="plane-filter">Plane</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="mansion-filter" class="filter-checkbox">
+        <label for="mansion-filter">Mansion</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="island-filter" class="filter-checkbox">
+        <label for="island-filter">Island</label>
+      </div>
+      <div class="filter-reset" id="reset-filters">Reset</div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+
+  <!-- Корзина -->
+  <div id="cart-page" class="page">
+    <button class="back-button" id="back-from-cart">← Back to Shop</button>
+    <h1 class="page-title">Your Cart</h1>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: $0</div>
+    <button class="checkout-button" id="checkout-button">Checkout</button>
+  </div>
+
+  <!-- Профиль -->
+  <div id="profile-page" class="page">
+    <button class="back-button" id="back-from-profile">← Back to Shop</button>
+    <h1 class="page-title">My Profile</h1>
+    <form class="profile-form">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="notifications" checked>
+        <label for="notifications">Receive notifications about new products</label>
+      </div>
+      <button type="button" class="save-button" id="save-profile">Save</button>
+    </form>
+  </div>
+
+  <!-- История -->
+  <div id="history-page" class="page">
+    <button class="back-button" id="back-from-history">← Back to Shop</button>
+    <h1 class="page-title">Order History</h1>
+    <div id="orders-list"></div>
+  </div>
 </div>
-<!-- Главная -->
-<div id="main-page" class="page active">
-<div class="filters">
-<div class="filter-item">
-<input type="checkbox" id="yacht-filter" class="filter-checkbox">
-<label for="yacht-filter">Yacht</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="plane-filter" class="filter-checkbox">
-<label for="plane-filter">Plane</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="mansion-filter" class="filter-checkbox">
-<label for="mansion-filter">Mansion</label>
-</div>
-<div class="filter-item">
-<input type="checkbox" id="island-filter" class="filter-checkbox">
-<label for="island-filter">Island</label>
-</div>
-<div class="filter-reset" id="reset-filters">Reset</div>
-</div>
-<div class="products-grid" id="products-grid"></div>
-</div>
-<!-- Корзина -->
-<div id="cart-page" class="page">
-<button class="back-button" id="back-from-cart">← Back to Shop</button>
-<h1 class="page-title">Your Cart</h1>
-<div id="cart-items"></div>
-<div class="cart-total" id="cart-total">Total: $0</div>
-<button class="checkout-button" id="checkout-button">Checkout</button>
-</div>
-<!-- Профиль -->
-<div id="profile-page" class="page">
-<button class="back-button" id="back-from-profile">← Back to Shop</button>
-<h1 class="page-title">My Profile</h1>
-<form class="profile-form">
-<div class="form-group">
-<label class="form-label">Name</label>
-<input type="text" class="form-input" id="profile-name" value="Tihon Metelkin">
-</div>
-<div class="form-group">
-<label class="form-label">E-mail</label>
-<input type="email" class="form-input" id="profile-email" value="tihonmmm2@gmail.com">
-</div>
-<div class="checkbox-group">
-<input type="checkbox" id="notifications" checked>
-<label for="notifications">Receive notifications about new products</label>
-</div>
-<button type="button" class="save-button" id="save-profile">Save</button>
-</form>
-</div>
-<!-- История -->
-<div id="history-page" class="page">
-<button class="back-button" id="back-from-history">← Back to Shop</button>
-<h1 class="page-title">Order History</h1>
-<div id="orders-list"></div>
-</div>
-</div>
+
 <!-- Модальные окна -->
 <div class="modal" id="product-modal">
-<div class="modal-content product-modal-content">
-<span class="close-modal" id="close-product-modal">&times;</span>
-<div class="modal-product-image" id="modal-product-image"></div>
-<h2 id="modal-product-title"></h2>
-<p id="modal-product-category"></p>
-<p id="modal-product-description"></p>
-<p class="modal-product-price" id="modal-product-price"></p>
-<button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+  <div class="modal-content product-modal-content">
+    <span class="close-modal" id="close-product-modal">&times;</span>
+    <div class="modal-product-image" id="modal-product-image"></div>
+    <h2 id="modal-product-title"></h2>
+    <p id="modal-product-category"></p>
+    <p id="modal-product-description"></p>
+    <p class="modal-product-price" id="modal-product-price"></p>
+    <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
+  </div>
 </div>
-</div>
+
 <div class="modal" id="confirm-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-modal">&times;</span>
-<h2 class="modal-title">Confirm deletion</h2>
-<p>Are you sure you want to remove this item from your cart?</p>
-<div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
-<button class="modal-button cancel" id="cancel-delete">Cancel</button>
-<button class="modal-button confirm" id="confirm-delete">Delete</button>
+  <div class="modal-content">
+    <span class="close-modal" id="close-modal">&times;</span>
+    <h2 class="modal-title">Confirm deletion</h2>
+    <p>Are you sure you want to remove this item from your cart?</p>
+    <div class="modal-buttons" style="display: flex; gap: 12px; margin-top: 24px;">
+      <button class="modal-button cancel" id="cancel-delete">Cancel</button>
+      <button class="modal-button confirm" id="confirm-delete">Delete</button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div class="modal" id="order-success-modal">
-<div class="modal-content">
-<span class="close-modal" id="close-success-modal">&times;</span>
-<h2 class="modal-title">Order placed!</h2>
-<p>Your order has been successfully placed.</p>
-<div class="order-details" style="margin-top: 20px;">
-<p><strong>Order Number:</strong> <span id="order-number"></span></p>
-<p><strong>Total:</strong> <span id="order-total-amount"></span></p>
+  <div class="modal-content">
+    <span class="close-modal" id="close-success-modal">&times;</span>
+    <h2 class="modal-title">Order placed!</h2>
+    <p>Your order has been successfully placed.</p>
+    <div class="order-details" style="margin-top: 20px;">
+      <p><strong>Order Number:</strong> <span id="order-number"></span></p>
+      <p><strong>Total:</strong> <span id="order-total-amount"></span></p>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div class="notification" id="notification"></div>
+
 <script>
 const products = [
 { id: 1, category: "YACHT", title: "Azimut 77 Yacht", price: 3_500_000, image: "images/yacht/azimut77.jpg", description: "Luxury yacht with modern design and premium amenities." },
@@ -1896,7 +1972,7 @@ product: document.getElementById('product-modal'),
 confirm: document.getElementById('confirm-modal'),
 orderSuccess: document.getElementById('order-success-modal')
 };
-const themeIcon = document.getElementById('theme-icon');
+
 function transliterate(str) {
 const ru = ["а","б","в","г","д","е","ё","ж","з","и","й","к","л","м","н","о","п","р","с","т","у","ф","х","ц","ч","ш","щ","ъ","ы","ь","э","ю","я"];
 const en = ["a","b","v","g","d","e","e","zh","z","i","y","k","l","m","n","o","p","r","s","t","u","f","kh","ts","ch","sh","shch","","y","","e","yu","ya"];
@@ -1933,8 +2009,17 @@ localStorage.setItem('theme', next);
 updateThemeIcon(next);
 }
 function updateThemeIcon(theme) {
-if (themeIcon) {
-themeIcon.src = theme === 'dark'
+// Обновляем ПК-иконку
+const pcIcon = document.getElementById('theme-icon');
+if (pcIcon) {
+pcIcon.src = theme === 'dark'
+? 'images/icons/sun.svg'
+: 'images/icons/moon.svg';
+}
+// Обновляем мобильную иконку
+const mobileIcon = document.getElementById('theme-icon-mobile');
+if (mobileIcon) {
+mobileIcon.src = theme === 'dark'
 ? 'images/icons/sun.svg'
 : 'images/icons/moon.svg';
 }
@@ -2242,59 +2327,78 @@ if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
 });
 }
 function setupEventListeners() {
-const handlers = [
-{ id: 'theme-toggle', event: 'click', handler: toggleTheme },
-{ id: 'cart-icon', event: 'click', handler: () => navigateTo('cart') },
-{ id: 'profile-icon', event: 'click', handler: () => navigateTo('profile') },
-{ id: 'history-icon', event: 'click', handler: () => navigateTo('history') },
-{ id: 'search-icon', event: 'click', handler: () => {
-const input = window.innerWidth > 768
-? document.getElementById('search-input-pc')
-: document.getElementById('search-input-mobile');
-if (input) {
-input.focus();
-input.classList.add('search-highlight');
-setTimeout(() => input.classList.remove('search-highlight'), 2000);
-}
-}},
-{ id: 'logo', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-cart', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-profile', event: 'click', handler: () => navigateTo('main') },
-{ id: 'back-from-history', event: 'click', handler: () => navigateTo('main') },
-{ id: 'reset-filters', event: 'click', handler: () => {
-document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-renderProducts();
-}},
-{ id: 'close-product-modal', event: 'click', handler: () => closeModal(modals.product) },
-{ id: 'modal-add-to-cart', event: 'click', handler: () => {
-addToCart(currentProductModalId);
-closeModal(modals.product);
-}},
-{ id: 'close-modal', event: 'click', handler: () => closeModal(modals.confirm) },
-{ id: 'cancel-delete', event: 'click', handler: () => closeModal(modals.confirm) },
-{ id: 'confirm-delete', event: 'click', handler: () => {
-if (itemToRemove !== null) removeFromCart(itemToRemove);
-}},
-{ id: 'close-success-modal', event: 'click', handler: () => {
-closeModal(modals.orderSuccess); navigateTo('main');
-}},
-{ id: 'checkout-button', event: 'click', handler: checkout },
-{ id: 'save-profile', event: 'click', handler: saveProfile }
-];
-handlers.forEach(({ id, event, handler }) => {
-const el = document.getElementById(id);
-if (el) el.addEventListener(event, handler);
-});
-document.querySelectorAll('.filter-checkbox').forEach(cb => {
-cb.addEventListener('change', renderProducts);
-});
-window.addEventListener('click', e => {
-if (modals.product && e.target === modals.product) closeModal(modals.product);
-if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
-if (modals.orderSuccess && e.target === modals.orderSuccess) {
-closeModal(modals.orderSuccess); navigateTo('main');
-}
-});
+  // Общие действия
+  const actions = {
+    theme: toggleTheme,
+    cart: () => navigateTo('cart'),
+    profile: () => navigateTo('profile'),
+    history: () => navigateTo('history')
+  };
+
+  // Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
+  Object.entries(actions).forEach(([action, handler]) => {
+    // ПК-иконки (через id)
+    const pcIdMap = {
+      theme: 'theme-toggle',
+      cart: 'cart-icon',
+      profile: 'profile-icon',
+      history: 'history-icon'
+    };
+    const pcEl = document.getElementById(pcIdMap[action]);
+    if (pcEl) pcEl.addEventListener('click', handler);
+
+    // Мобильные иконки (через data-action)
+    document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
+      .forEach(el => el.addEventListener('click', handler));
+  });
+
+  // Остальные обработчики
+  document.getElementById('search-icon')?.addEventListener('click', () => {
+    const input = window.innerWidth > 768
+      ? document.getElementById('search-input-pc')
+      : document.getElementById('search-input-mobile');
+    if (input) {
+      input.focus();
+      input.classList.add('search-highlight');
+      setTimeout(() => input.classList.remove('search-highlight'), 2000);
+    }
+  });
+
+  document.getElementById('logo')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-cart')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-profile')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('back-from-history')?.addEventListener('click', () => navigateTo('main'));
+  document.getElementById('reset-filters')?.addEventListener('click', () => {
+    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+    renderProducts();
+  });
+  document.getElementById('close-product-modal')?.addEventListener('click', () => closeModal(modals.product));
+  document.getElementById('modal-add-to-cart')?.addEventListener('click', () => {
+    addToCart(currentProductModalId);
+    closeModal(modals.product);
+  });
+  document.getElementById('close-modal')?.addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('cancel-delete')?.addEventListener('click', () => closeModal(modals.confirm));
+  document.getElementById('confirm-delete')?.addEventListener('click', () => {
+    if (itemToRemove !== null) removeFromCart(itemToRemove);
+  });
+  document.getElementById('close-success-modal')?.addEventListener('click', () => {
+    closeModal(modals.orderSuccess); navigateTo('main');
+  });
+  document.getElementById('checkout-button')?.addEventListener('click', checkout);
+  document.getElementById('save-profile')?.addEventListener('click', saveProfile);
+
+  document.querySelectorAll('.filter-checkbox').forEach(cb => {
+    cb.addEventListener('change', renderProducts);
+  });
+
+  window.addEventListener('click', e => {
+    if (modals.product && e.target === modals.product) closeModal(modals.product);
+    if (modals.confirm && e.target === modals.confirm) closeModal(modals.confirm);
+    if (modals.orderSuccess && e.target === modals.orderSuccess) {
+      closeModal(modals.orderSuccess); navigateTo('main');
+    }
+  });
 }
 document.addEventListener('DOMContentLoaded', () => {
 cart = loadCart();
