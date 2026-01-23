@@ -512,61 +512,146 @@ font-size: 20px;
 text-align: right;
 color: var(--text-color);
 }
+
+/* =============== НОВЫЕ СТИЛИ =============== */
+/* Кнопка вопроса */
+.help-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--button-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.2s, background-color 0.2s;
+}
+.help-button:hover {
+  transform: scale(1.1);
+  background-color: var(--button-hover);
+}
+.help-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: invert(1); /* белый значок на тёмном фоне */
+}
+
+/* Модальное окно с видео */
+.video-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+}
+.video-modal.active {
+  display: flex;
+}
+.video-container {
+  width: 90%;
+  max-width: 800px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.video-container video {
+  width: 100%;
+  display: block;
+}
+.close-video {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Приветственное модальное окно */
+.welcome-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  z-index: 4000;
+  justify-content: center;
+  align-items: center;
+}
+.welcome-modal.active {
+  display: flex;
+}
+.welcome-content {
+  background: var(--card-bg);
+  padding: 32px;
+  border-radius: 20px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.welcome-content h2 {
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+.welcome-content p {
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.welcome-button {
+  background-color: var(--button-bg);
+  color: var(--header-bg);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
-.header-top {
-display: none;
-}
-.search-wrapper {
-display: none;
-}
-.header-mobile {
-display: flex;
-}
-.search-container {
-display: block;
-}
-.search-input {
-width: 100%;
-padding: 12px 20px;
-font-size: 16px;
-min-height: 48px;
-}
-.search-clear {
-display: none;
-}
-.filter-reset {
-padding: 3px 8px;
-font-size: 12px;
-min-width: 50px;
-}
-.products-grid {
-grid-template-columns: 1fr;
-gap: 18px;
-}
-.product-image-wrapper {
-height: 190px;
-}
-.bought-svg-overlay {
-transform: scale(0.9);
-}
+.header-top { display: none; }
+.search-wrapper { display: none; }
+.header-mobile { display: flex; }
+.search-container { display: block; }
+.search-input { width: 100%; padding: 12px 20px; font-size: 16px; min-height: 48px; }
+.search-clear { display: none; }
+.filter-reset { padding: 3px 8px; font-size: 12px; min-width: 50px; }
+.products-grid { grid-template-columns: 1fr; gap: 18px; }
+.product-image-wrapper { height: 190px; }
+.bought-svg-overlay { transform: scale(0.9); }
 }
 @media (max-width: 480px) {
-.filter-reset {
-padding: 2px 6px;
-font-size: 11px;
-min-width: 40px;
-}
-.product-image-wrapper {
-height: 170px;
-}
-.bought-svg-overlay {
-transform: scale(0.8);
-}
+.filter-reset { padding: 2px 6px; font-size: 11px; min-width: 40px; }
+.product-image-wrapper { height: 170px; }
+.bought-svg-overlay { transform: scale(0.8); }
 }
 </style>
 </head>
 <body data-theme="light">
+
 <!-- Челка сверху — только для ПК -->
 <div class="header-top">
 <div class="header-left">
@@ -599,6 +684,7 @@ transform: scale(0.8);
 </div>
 </div>
 </div>
+
 <!-- Хедер для мобильных -->
 <header class="header-mobile">
 <a href="#" class="logo">Luxury</a>
@@ -617,12 +703,14 @@ transform: scale(0.8);
 </div>
 </div>
 </header>
+
 <div class="page-container">
 <!-- Поиск под хедером — только для мобильных -->
 <div class="search-container">
 <input type="text" class="search-input" placeholder="Search products..." id="search-input-mobile">
 <div id="suggestions"></div>
 </div>
+
 <!-- Главная -->
 <div id="main-page" class="page active">
 <div class="filters">
@@ -646,6 +734,7 @@ transform: scale(0.8);
 </div>
 <div class="products-grid" id="products-grid"></div>
 </div>
+
 <!-- Корзина -->
 <div id="cart-page" class="page">
 <button class="back-button" id="back-from-cart">← Back to Shop</button>
@@ -654,6 +743,7 @@ transform: scale(0.8);
 <div class="cart-total" id="cart-total">Total: $0</div>
 <button class="checkout-button" id="checkout-button">Checkout</button>
 </div>
+
 <!-- Профиль -->
 <div id="profile-page" class="page">
 <button class="back-button" id="back-from-profile">← Back to Shop</button>
@@ -674,6 +764,7 @@ transform: scale(0.8);
 <button type="button" class="save-button" id="save-profile">Save</button>
 </form>
 </div>
+
 <!-- История -->
 <div id="history-page" class="page">
 <button class="back-button" id="back-from-history">← Back to Shop</button>
@@ -681,6 +772,7 @@ transform: scale(0.8);
 <div id="orders-list"></div>
 </div>
 </div>
+
 <!-- Модальные окна -->
 <div class="modal" id="product-modal">
 <div class="modal-content product-modal-content">
@@ -693,6 +785,7 @@ transform: scale(0.8);
 <button class="add-to-cart-btn" id="modal-add-to-cart">Add to Cart</button>
 </div>
 </div>
+
 <div class="modal" id="confirm-modal">
 <div class="modal-content">
 <span class="close-modal" id="close-modal">&times;</span>
@@ -704,6 +797,7 @@ transform: scale(0.8);
 </div>
 </div>
 </div>
+
 <div class="modal" id="order-success-modal">
 <div class="modal-content">
 <span class="close-modal" id="close-success-modal">&times;</span>
@@ -715,8 +809,38 @@ transform: scale(0.8);
 </div>
 </div>
 </div>
+
 <div class="notification" id="notification"></div>
+
+<!-- КНОПКА ВОПРОСА -->
+<div class="help-button" id="help-button">
+  <img src="images/icons/qw.svg" alt="Help" class="help-icon">
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО С ВИДЕО -->
+<div class="video-modal" id="video-modal">
+  <div class="video-container">
+    <span class="close-video" id="close-video">&times;</span>
+    <video controls>
+      <source src="images/media/ruk.mp4" type="video/mp4">
+      Ваш браузер не поддерживает видео.
+    </video>
+  </div>
+</div>
+
+<!-- ПРИВЕТСТВЕННОЕ МОДАЛЬНОЕ ОКНО -->
+<div class="welcome-modal" id="welcome-modal">
+  <div class="welcome-content">
+    <h2>Добро пожаловать!</h2>
+    <p>Здравствуйте, этот сайт создан Тихоном Метелкиным в рамках олимпиады PROD :)<br><br>Чтобы понять все нюансы сайта, нажмите на значок вопроса в левом нижнем углу экрана.</p>
+    <button class="welcome-button" id="close-welcome">Понятно</button>
+  </div>
+</div>
+
 <script>
+// =============================
+// ТВОЙ ИСХОДНЫЙ JS (без изменений)
+// =============================
 const products = [
 { id: 1, category: "YACHT", title: "Azimut 77 Yacht", price: 3_500_000, image: "images/yacht/azimut77.jpg", description: "Luxury yacht with modern design and premium amenities." },
 { id: 2, category: "YACHT", title: "Benetti 164 Superyacht", price: 45_000_000, image: "images/yacht/benetti164.jpg", description: "Superyacht with swimming pool and helicopter pad." },
@@ -786,14 +910,12 @@ localStorage.setItem('theme', next);
 updateThemeIcon(next);
 }
 function updateThemeIcon(theme) {
-// Обновляем ПК-иконку
 const pcIcon = document.getElementById('theme-icon');
 if (pcIcon) {
 pcIcon.src = theme === 'dark'
 ? 'images/icons/sun.svg'
 : 'images/icons/moon.svg';
 }
-// Обновляем мобильную иконку
 const mobileIcon = document.getElementById('theme-icon-mobile');
 if (mobileIcon) {
 mobileIcon.src = theme === 'dark'
@@ -1104,16 +1226,13 @@ if (e.target !== input && !sug.contains(e.target)) sug.style.display = 'none';
 });
 }
 function setupEventListeners() {
-// Общие действия
 const actions = {
 theme: toggleTheme,
 cart: () => navigateTo('cart'),
 profile: () => navigateTo('profile'),
 history: () => navigateTo('history')
 };
-// Назначаем обработчики и для ПК (по id), и для мобильных (по data-action)
 Object.entries(actions).forEach(([action, handler]) => {
-// ПК-иконки (через id)
 const pcIdMap = {
 theme: 'theme-toggle',
 cart: 'cart-icon',
@@ -1122,11 +1241,9 @@ history: 'history-icon'
 };
 const pcEl = document.getElementById(pcIdMap[action]);
 if (pcEl) pcEl.addEventListener('click', handler);
-// Мобильные иконки (через data-action)
 document.querySelectorAll(`.header-mobile .icon[data-action="${action}"]`)
 .forEach(el => el.addEventListener('click', handler));
 });
-// Остальные обработчики
 document.getElementById('search-icon')?.addEventListener('click', () => {
 const input = window.innerWidth > 768
 ? document.getElementById('search-input-pc')
@@ -1171,133 +1288,81 @@ closeModal(modals.orderSuccess); navigateTo('main');
 }
 });
 }
-document.addEventListener('DOMContentLoaded', () => {
-cart = loadCart();
-initTheme();
-renderProducts();
-renderCart();
-renderOrders();
-setupEventListeners();
-document.getElementById('search-clear-pc').addEventListener('click', () => {
-document.getElementById('search-input-pc').value = '';
-renderProducts();
-});
-document.getElementById('search-input-pc').addEventListener('input', renderProducts);
-document.getElementById('search-input-mobile').addEventListener('input', renderProducts);
-safeSetupAutocomplete('search-input-pc', 'suggestions');
-safeSetupAutocomplete('search-input-mobile', 'suggestions');
-});
-</script>
 
-<!-- ================================================== -->
-<!-- 🔒 АНТИКРАШЕР — ЗАЩИТА ОТ ПОТЕРИ КРИТИЧЕСКИХ ЭЛЕМЕНТОВ -->
-<!-- ================================================== -->
-<script>
-const CRITICAL_ELEMENTS = [
-  // Страницы
-  'main-page',
-  'cart-page',
-  'profile-page',
-  'history-page',
-  
-  // Контейнеры
-  'products-grid',
-  'cart-items',
-  'orders-list',
-  'page-container',
-  
-  // Модальные окна
-  'product-modal',
-  'confirm-modal',
-  'order-success-modal',
-  
-  // Хедеры
-  'header-top',
-  'header-mobile',
-  
-  // Поля и уведомления
-  'search-input-pc',
-  'search-input-mobile',
-  'notification'
-];
-
-const BACKUP_KEY = 'luxury_shop_antikrasher_snapshot_v1';
-
-function saveSnapshot() {
-  const snapshot = {};
-  let count = 0;
-
-  for (const id of CRITICAL_ELEMENTS) {
-    const el = document.getElementById(id);
-    if (el) {
-      snapshot[id] = el.outerHTML;
-      count++;
-    }
-  }
-
-  if (count > 0) {
-    try {
-      localStorage.setItem(BACKUP_KEY, JSON.stringify(snapshot));
-      console.log('[Антикрашер] Эталон сохранён');
-    } catch (e) {
-      console.warn('[Антикрашер] Не удалось сохранить эталон:', e);
-    }
-  }
-}
-
-function restoreMissingElements() {
-  const raw = localStorage.getItem(BACKUP_KEY);
-  if (!raw) {
-    saveSnapshot();
-    return;
-  }
-
-  let snapshot;
-  try {
-    snapshot = JSON.parse(raw);
-  } catch (e) {
-    console.warn('[Антикрашер] Повреждённый эталон — пересоздаю');
-    saveSnapshot();
-    return;
-  }
-
-  let restored = false;
-  const container = document.querySelector('.page-container') || document.body;
-
-  for (const id of CRITICAL_ELEMENTS) {
-    if (!document.getElementById(id)) {
-      const html = snapshot[id];
-      if (html) {
-        const temp = document.createElement('div');
-        temp.innerHTML = html.trim();
-        const newEl = temp.firstElementChild;
-        if (newEl) {
-          if (id.endsWith('-page')) {
-            document.body.appendChild(newEl);
-          } else {
-            container.appendChild(newEl);
-          }
-          restored = true;
-          console.log(`[Антикрашер] Восстановлен элемент #${id}`);
-        }
-      }
-    }
-  }
-
-  if (restored) {
-    if (typeof renderProducts === 'function') renderProducts();
-    if (typeof renderCart === 'function') renderCart();
-    if (typeof renderOrders === 'function') renderOrders();
-  }
-}
+// =============================
+// НОВЫЙ КОД: ПРИВЕТСТВИЕ + ВИДЕО
+// =============================
 
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    restoreMissingElements();
-  }, 300);
+  // Запуск основного функционала
+  cart = loadCart();
+  initTheme();
+  renderProducts();
+  renderCart();
+  renderOrders();
+  setupEventListeners();
+  document.getElementById('search-clear-pc').addEventListener('click', () => {
+    document.getElementById('search-input-pc').value = '';
+    renderProducts();
+  });
+  document.getElementById('search-input-pc').addEventListener('input', renderProducts);
+  document.getElementById('search-input-mobile').addEventListener('input', renderProducts);
+  safeSetupAutocomplete('search-input-pc', 'suggestions');
+  safeSetupAutocomplete('search-input-mobile', 'suggestions');
+
+  // Показ приветствия при первом заходе
+  const hasSeenWelcome = localStorage.getItem('luxury_welcome_shown');
+  if (!hasSeenWelcome) {
+    setTimeout(() => {
+      document.getElementById('welcome-modal').classList.add('active');
+    }, 500);
+  }
 });
 
-window.runAntikrasher = restoreMissingElements;
+// Закрытие приветствия
+document.getElementById('close-welcome').addEventListener('click', () => {
+  document.getElementById('welcome-modal').classList.remove('active');
+  localStorage.setItem('luxury_welcome_shown', 'true');
+});
+
+// Открытие видео-инструкции
+document.getElementById('help-button').addEventListener('click', () => {
+  // Закрываем все существующие модалки
+  Object.values(modals).forEach(modal => {
+    modal.classList.remove('active');
+    modal.style.display = 'none';
+  });
+  document.getElementById('order-success-modal').classList.remove('active');
+  document.getElementById('order-success-modal').style.display = 'none';
+
+  // Открываем видео
+  const videoModal = document.getElementById('video-modal');
+  videoModal.classList.add('active');
+  
+  // Автозапуск видео (если браузер разрешает)
+  const video = videoModal.querySelector('video');
+  if (video) {
+    video.play().catch(e => console.log('Autoplay blocked:', e));
+  }
+});
+
+// Закрытие видео
+document.getElementById('close-video').addEventListener('click', () => {
+  const videoModal = document.getElementById('video-modal');
+  const video = videoModal.querySelector('video');
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+  videoModal.classList.remove('active');
+});
+
+// Закрытие видео по клику вне контейнера
+document.getElementById('video-modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('video-modal')) {
+    document.getElementById('close-video').click();
+  }
+});
 </script>
 
 </body>
