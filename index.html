@@ -242,6 +242,10 @@ position: relative;
 width: 100%;
 height: 210px;
 overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #f0f0f0;
 }
 .product-image {
 width: 100%;
@@ -429,6 +433,12 @@ background-size: cover;
 background-position: center;
 border-radius: 16px;
 margin-bottom: 22px;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #f0f0f0;
+color: #999;
+font-size: 14px;
 }
 #modal-product-category {
 color: var(--text-secondary);
@@ -833,18 +843,18 @@ color: var(--text-color);
 
 <div class="notification" id="notification"></div>
 
-<!-- КНОПКА ВОПРОСА (везде) -->
+<!-- КНОПКА ВОПРОСА -->
 <div class="help-button" id="help-button">
   <img src="images/icons/qw.svg" alt="Help" class="help-icon">
 </div>
 
-<!-- ВИДЕО-МОДАЛКА (сейчас текстовая заглушка) -->
+<!-- ВИДЕО-МОДАЛКА -->
 <div class="video-modal" id="video-modal">
   <div class="video-container">
     <span class="close-video" id="close-video">&times;</span>
     <div style="padding: 20px; text-align: center;">
-      <p>🎥 У меня не получилось реализовать все как на скрине. Возможно это особенности девайса. У меня на мониторе нужно увеличить масштаб странички до 150%</p>
-      <p>Здесь еще не реализованное видео, которое возможно будет добавлена!</p>
+      <p>🎥 Инструкция по использованию сайта будет добавлена позже.</p>
+      <p>Пока вы можете просто выбирать товары и добавлять их в корзину!</p>
     </div>
   </div>
 </div>
@@ -1075,13 +1085,23 @@ function renderProducts() {
 
       const wrapper = document.createElement('div');
       wrapper.className = 'product-image-wrapper';
+
+      // Создаём изображение с fallback
       const img = document.createElement('img');
       img.src = p.image;
       img.alt = p.title;
       img.className = 'product-image';
+
+      // Если изображение не загрузилось — покажем текст
       img.onerror = function() {
-        this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgODAwIDE4MCIgZmlsbD0ibm9uZSI+PGNpcmNsZSBjeD0iNDAwIiBjeT0iOTAiIHI9IjcwIiBmaWxsPSJsaWdodGdyZWVuIi8+PC9zdmc+';
+        this.style.display = 'none';
+        const fallback = document.createElement('div');
+        fallback.textContent = '🖼️ No image';
+        fallback.style.fontSize = '14px';
+        fallback.style.color = '#999';
+        this.parentNode.appendChild(fallback);
       };
+
       wrapper.appendChild(img);
 
       if (isInCart) {
@@ -1123,7 +1143,31 @@ function openProductModal(id) {
   const descEl = document.getElementById('modal-product-description');
   const priceEl = document.getElementById('modal-product-price');
 
-  if (imgEl) imgEl.style.backgroundImage = `url(${p.image})`;
+  // Очищаем контейнер
+  imgEl.innerHTML = '';
+  imgEl.style.backgroundImage = '';
+
+  // Пытаемся загрузить изображение
+  const img = document.createElement('img');
+  img.src = p.image;
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.objectFit = 'cover';
+  img.style.borderRadius = '16px';
+
+  img.onload = () => {
+    imgEl.innerHTML = '';
+    imgEl.appendChild(img);
+  };
+
+  img.onerror = () => {
+    imgEl.innerHTML = '🖼️ Изображение недоступно';
+    imgEl.style.display = 'flex';
+    imgEl.style.alignItems = 'center';
+    imgEl.style.justifyContent = 'center';
+    imgEl.style.color = '#999';
+  };
+
   if (titleEl) titleEl.textContent = p.title;
   if (catEl) catEl.textContent = p.type.toUpperCase();
   if (descEl) descEl.textContent = p.description;
@@ -1134,7 +1178,7 @@ function openProductModal(id) {
 }
 
 // =============================
-// КОРЗИНА
+// КОРЗИНА И ПРОЧЕЕ (без изменений)
 // =============================
 function addToCart(id) {
   const p = products.find(x => x.id === id);
@@ -1380,7 +1424,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => {
       console.error('Error loading products:', error);
-      document.getElementById('products-grid').innerHTML = '<p style="text-align:center; color:red; padding:40px;">Failed to load products.</p>';
+      document.getElementById('products-grid').innerHTML = '<p style="text-align:center; color:red; padding:40px;">Не удалось загрузить каталог.</p>';
     });
 });
 
